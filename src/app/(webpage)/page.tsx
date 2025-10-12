@@ -1,12 +1,16 @@
-import { Button } from '@/components/ui/button'
+import HeroSlider from '@/components/HeroSlider'
+import AboutSection from './AboutSection'
+import KeyActivities from './KeyActivities'
+import FeaturedEvents from './FeaturedEvents'
 import React from 'react'
 
 const page = () => {
     return (
         <div>
-
-            <div>Hero Section</div>
-            <Button>Click me</Button>
+            <HeroSlider />
+            <AboutSection />
+            <KeyActivities />
+            <FeaturedEvents />
         </div>
     )
 }
