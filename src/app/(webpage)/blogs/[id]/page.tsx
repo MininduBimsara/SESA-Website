@@ -3,9 +3,13 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Calendar, User, Clock, ArrowLeft, Share2, Facebook, Twitter, Linkedin, Tag, BookOpen } from 'lucide-react'
+import { Calendar, User, Clock, ArrowLeft, BookOpen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useParams } from 'next/navigation'
+import { ArticleContent } from '@/components/ArticleContent'
+import { ShareButtons } from '@/components/ShareButtons'
+import { AuthorCard } from '@/components/AuthorCard'
+import { TagsSection } from '@/components/TagsSection'
 
 interface BlogDetail {
     id: number
@@ -544,84 +548,17 @@ const BlogDetailPage = () => {
                     </p>
                 </div>
 
-                {/* Main Content */}
-                <div
-                    className="prose prose-lg max-w-none mb-8"
-                    dangerouslySetInnerHTML={{ __html: blog.content }}
-                    style={{
-                        color: '#374151',
-                    }}
-                />
+                {/* Main Content using reusable component */}
+                <ArticleContent content={blog.content} />
 
-                {/* Tags */}
-                {blog.tags && blog.tags.length > 0 && (
-                    <div className="mb-8">
-                        <div className="flex items-center gap-2 mb-3">
-                            <Tag className="w-5 h-5 text-rose-500" />
-                            <h3 className="text-lg font-semibold text-gray-900">Tags</h3>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            {blog.tags.map((tag: string, index: number) => (
-                                <span
-                                    key={index}
-                                    className="px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-medium hover:bg-rose-200 transition-colors cursor-pointer"
-                                >
-                                    #{tag}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                )}
+                {/* Tags using reusable component */}
+                <TagsSection tags={blog.tags} />
 
-                {/* Author Info */}
-                <div className="bg-gradient-to-r from-rose-50 to-white border border-rose-200 rounded-xl p-6 mb-8">
-                    <div className="flex items-start gap-4">
-                        <div className="w-16 h-16 rounded-full bg-rose-500 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
-                            {blog.author.charAt(0)}
-                        </div>
-                        <div>
-                            <h4 className="text-xl font-bold text-gray-900 mb-1">
-                                Written by {blog.author}
-                            </h4>
-                            <p className="text-gray-600">
-                                SESA Executive Board Member and passionate software engineer dedicated to sharing knowledge with the community.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                {/* Author Info using reusable component */}
+                <AuthorCard authorName={blog.author} />
 
-                {/* Share Section */}
-                <div className="border-t border-b border-gray-200 py-6 mb-8">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <Share2 className="w-5 h-5 text-gray-600" />
-                            <span className="text-gray-900 font-semibold">Share this article:</span>
-                        </div>
-                        <div className="flex gap-3">
-                            <button
-                                onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, '_blank')}
-                                className="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-colors"
-                                aria-label="Share on Facebook"
-                            >
-                                <Facebook className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={() => window.open(`https://twitter.com/intent/tweet?url=${shareUrl}&text=${blog.title}`, '_blank')}
-                                className="w-10 h-10 rounded-full bg-sky-500 hover:bg-sky-600 text-white flex items-center justify-center transition-colors"
-                                aria-label="Share on Twitter"
-                            >
-                                <Twitter className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`, '_blank')}
-                                className="w-10 h-10 rounded-full bg-blue-700 hover:bg-blue-800 text-white flex items-center justify-center transition-colors"
-                                aria-label="Share on LinkedIn"
-                            >
-                                <Linkedin className="w-5 h-5" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                {/* Share Section using reusable component */}
+                <ShareButtons url={shareUrl} title={blog.title} />
 
                 {/* Back to Blogs Button */}
                 <div className="text-center">
@@ -633,78 +570,6 @@ const BlogDetailPage = () => {
                     </Link>
                 </div>
             </article>
-
-            {/* Add CSS for prose content */}
-            <style jsx global>{`
-                .prose h2 {
-                    font-size: 1.875rem;
-                    font-weight: 700;
-                    color: #111827;
-                    margin-top: 2.5rem;
-                    margin-bottom: 1rem;
-                }
-                .prose h3 {
-                    font-size: 1.5rem;
-                    font-weight: 600;
-                    color: #1f2937;
-                    margin-top: 2rem;
-                    margin-bottom: 0.75rem;
-                }
-                .prose p {
-                    margin-bottom: 1.25rem;
-                    line-height: 1.75;
-                }
-                .prose ul, .prose ol {
-                    margin-bottom: 1.25rem;
-                    padding-left: 1.5rem;
-                }
-                .prose li {
-                    margin-bottom: 0.5rem;
-                    line-height: 1.75;
-                }
-                .prose ul li {
-                    list-style-type: disc;
-                }
-                .prose ol li {
-                    list-style-type: decimal;
-                }
-                .prose strong {
-                    font-weight: 600;
-                    color: #111827;
-                }
-                .prose pre {
-                    background: #1f2937;
-                    color: #f3f4f6;
-                    padding: 1rem;
-                    border-radius: 0.5rem;
-                    overflow-x: auto;
-                    margin: 1.5rem 0;
-                }
-                .prose code {
-                    background: #1f2937;
-                    color: #f3f4f6;
-                    padding: 0.2rem 0.4rem;
-                    border-radius: 0.25rem;
-                    font-size: 0.875em;
-                    font-family: 'Courier New', monospace;
-                }
-                .prose pre code {
-                    background: transparent;
-                    padding: 0;
-                }
-                .prose a {
-                    color: #f43f5e;
-                    text-decoration: underline;
-                    font-weight: 500;
-                }
-                .prose a:hover {
-                    color: #e11d48;
-                }
-                .prose em {
-                    font-style: italic;
-                    color: #4b5563;
-                }
-            `}</style>
         </div>
     )
 }

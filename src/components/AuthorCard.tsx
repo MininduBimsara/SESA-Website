@@ -1,0 +1,33 @@
+'use client'
+
+import React from 'react'
+
+interface AuthorCardProps {
+    authorName: string
+    description?: string
+    className?: string
+}
+
+export const AuthorCard: React.FC<AuthorCardProps> = ({
+    authorName,
+    description = 'SESA Executive Board Member and passionate software engineer dedicated to sharing knowledge with the community.',
+    className = ''
+}) => {
+    return (
+        <div className={`bg-gradient-to-r from-rose-50 to-white border border-rose-200 rounded-xl p-6 mb-8 ${className}`}>
+            <div className="flex items-start gap-4">
+                <div className="w-16 h-16 rounded-full bg-rose-500 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                    {authorName.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                    <h4 className="text-xl font-bold text-gray-900 mb-1">
+                        Written by {authorName}
+                    </h4>
+                    <p className="text-gray-600">
+                        {description}
+                    </p>
+                </div>
+            </div>
+        </div>
+    )
+}

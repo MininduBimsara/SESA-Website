@@ -1,148 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Calendar, User, MapPin, Search, ArrowRight, Newspaper, Award, Users, Briefcase, TrendingUp, ExternalLink } from 'lucide-react'
+import { Calendar, User, Search, ArrowRight, Newspaper, Award, Users, Briefcase, TrendingUp, ExternalLink, Loader2 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import type { News } from '@/types/news'
 
 type NewsCategory = 'all' | 'achievements' | 'announcements' | 'partnerships' | 'student-spotlight' | 'media'
-
-interface NewsItem {
-    id: number
-    title: string
-    summary: string
-    content: string
-    author?: string
-    date: string
-    category: NewsCategory
-    location?: string
-    image: string
-    featured: boolean
-    externalLink?: string
-    tags: string[]
-}
-
-const newsItems: NewsItem[] = [
-    {
-        id: 1,
-        title: "SESA Students Win First Place at National Hackathon 2025",
-        summary: "Our team of talented students secured the championship at the Sri Lanka National Hackathon, competing against 50+ universities.",
-        content: "Full news content here...",
-        date: "January 18, 2025",
-        category: "achievements",
-        location: "Colombo, Sri Lanka",
-        image: "/tech-workshop-and-coding-event-with-students.jpg",
-        featured: true,
-        tags: ["Hackathon", "Achievement", "Competition"]
-    },
-    {
-        id: 2,
-        title: "Partnership Announcement: SESA Collaborates with Leading Tech Companies",
-        summary: "We're excited to announce new partnerships with industry leaders to provide internship and mentorship opportunities for our students.",
-        content: "Full news content here...",
-        date: "January 15, 2025",
-        category: "partnerships",
-        image: "/modern-tech-workspace-with-coding-screens-and-coll.jpg",
-        featured: true,
-        externalLink: "https://example.com",
-        tags: ["Partnership", "Industry", "Opportunities"]
-    },
-    {
-        id: 3,
-        title: "Applications Open for SESA Executive Board 2025/26",
-        summary: "We're looking for passionate leaders to join the next executive board. Applications are now open for all positions.",
-        content: "Full news content here...",
-        date: "January 12, 2025",
-        category: "announcements",
-        image: "/students-collaborating-on-software-development-pro.jpg",
-        featured: true,
-        tags: ["Announcement", "Leadership", "Recruitment"]
-    },
-    {
-        id: 4,
-        title: "Student Spotlight: Hasinthaka Piyumal's Journey to Full-Stack Development",
-        summary: "Meet Hasinthaka, our Web Master, who has contributed significantly to SESA's digital presence and helped numerous students learn web development.",
-        content: "Full news content here...",
-        author: "SESA Editorial Team",
-        date: "January 8, 2025",
-        category: "student-spotlight",
-        image: "/professional-software-engineering-career-developme.jpg",
-        featured: false,
-        tags: ["Student", "Success Story", "Web Development"]
-    },
-    {
-        id: 5,
-        title: "SESA Featured in University Magazine for Community Impact",
-        summary: "Our CSR initiatives and community engagement programs have been recognized by the university's official publication.",
-        content: "Full news content here...",
-        date: "January 5, 2025",
-        category: "media",
-        image: "/students-collaborating-on-software-development-pro.jpg",
-        featured: false,
-        externalLink: "https://example.com",
-        tags: ["Media", "Recognition", "CSR"]
-    },
-    {
-        id: 6,
-        title: "RealHack 5.0 Registration Breaks Records with 200+ Teams",
-        summary: "Our flagship hackathon event has received overwhelming response with record-breaking registrations from universities across the country.",
-        content: "Full news content here...",
-        date: "January 2, 2025",
-        category: "announcements",
-        location: "University of Kelaniya",
-        image: "/tech-workshop-and-coding-event-with-students.jpg",
-        featured: false,
-        tags: ["RealHack", "Event", "Registration"]
-    },
-    {
-        id: 7,
-        title: "SESA Members Land Internships at Top Tech Giants",
-        summary: "Six of our members have secured prestigious internships at leading technology companies including Google, Microsoft, and AWS.",
-        content: "Full news content here...",
-        date: "December 28, 2024",
-        category: "achievements",
-        image: "/professional-software-engineering-career-developme.jpg",
-        featured: false,
-        tags: ["Achievement", "Internship", "Success"]
-    },
-    {
-        id: 8,
-        title: "New AI Workshop Series Announced for Spring Semester",
-        summary: "Get ready for an exciting series of AI and Machine Learning workshops conducted by industry experts and professors.",
-        content: "Full news content here...",
-        date: "December 20, 2024",
-        category: "announcements",
-        image: "/modern-tech-workspace-with-coding-screens-and-coll.jpg",
-        featured: false,
-        tags: ["Workshop", "AI", "Learning"]
-    },
-    {
-        id: 9,
-        title: "Student Spotlight: Sachini Weerakkody's Leadership Journey",
-        summary: "Learn about our Secretary's inspiring path from first-year student to key leadership role in SESA.",
-        content: "Full news content here...",
-        author: "SESA Editorial Team",
-        date: "December 15, 2024",
-        category: "student-spotlight",
-        image: "/students-collaborating-on-software-development-pro.jpg",
-        featured: false,
-        tags: ["Student", "Leadership", "Inspiration"]
-    },
-    {
-        id: 10,
-        title: "SESA Hosts Successful Career Fair with 15+ Tech Companies",
-        summary: "Our annual career fair brought together students and leading tech companies for networking and recruitment opportunities.",
-        content: "Full news content here...",
-        date: "December 10, 2024",
-        category: "achievements",
-        location: "Faculty of Science",
-        image: "/professional-software-engineering-career-developme.jpg",
-        featured: false,
-        tags: ["Career Fair", "Networking", "Recruitment"]
-    }
-]
 
 const categories = [
     { value: 'all', label: 'All News', icon: Newspaper },
@@ -156,17 +22,72 @@ const categories = [
 const NewsPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<NewsCategory>('all')
     const [searchQuery, setSearchQuery] = useState('')
+    const [newsItems, setNewsItems] = useState<News[]>([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
+
+    useEffect(() => {
+        const fetchNews = async () => {
+            try {
+                setLoading(true)
+                const response = await fetch('/api/news')
+                if (!response.ok) {
+                    throw new Error('Failed to fetch news')
+                }
+                const data = await response.json()
+                // Filter only published news
+                const publishedNews = data.filter((item: News) => item.published)
+                setNewsItems(publishedNews)
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An error occurred')
+                console.error('Error fetching news:', err)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchNews()
+    }, [])
 
     const filteredNews = newsItems.filter(item => {
-        const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory
+        const matchesCategory = selectedCategory === 'all' || item.category?.toLowerCase() === selectedCategory
         const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (item.excerpt?.toLowerCase().includes(searchQuery.toLowerCase())) ||
             item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
         return matchesCategory && matchesSearch
     })
 
     const featuredNews = newsItems.filter(item => item.featured)
-    const latestNews = newsItems[0] // Most recent news
+    const latestNews = newsItems.length > 0 ? newsItems[0] : null
+
+    // Format date helper
+    const formatDate = (dateString: string | Date) => {
+        const date = new Date(dateString)
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    }
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <Loader2 className="w-16 h-16 text-rose-500 animate-spin mx-auto mb-4" />
+                    <p className="text-xl text-gray-600">Loading news...</p>
+                </div>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <Newspaper className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Error Loading News</h3>
+                    <p className="text-gray-600">{error}</p>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -197,7 +118,7 @@ const NewsPage = () => {
                                     {latestNews.title}
                                 </h3>
                             </div>
-                            <Link href={`/news/${latestNews.id}`}>
+                            <Link href={`/news/${latestNews.slug}`}>
                                 <Button className="bg-rose-500 hover:bg-rose-600 flex-shrink-0">
                                     Read More
                                     <ArrowRight className="w-4 h-4 ml-2" />
@@ -220,7 +141,12 @@ const NewsPage = () => {
                             {featuredNews.map(item => (
                                 <Card key={item.id} className="hover:shadow-2xl transition-all duration-300 border-2 border-rose-200 flex flex-col">
                                     <div className="relative h-48 w-full">
-                                        <Image src={item.image} alt={item.title} fill className="object-cover rounded-t-xl" />
+                                        <Image
+                                            src={item.image || '/placeholder-news.jpg'}
+                                            alt={item.title}
+                                            fill
+                                            className="object-cover rounded-t-xl"
+                                        />
                                         <div className="absolute top-3 right-3">
                                             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500 text-white">
                                                 Featured
@@ -228,7 +154,7 @@ const NewsPage = () => {
                                         </div>
                                         <div className="absolute top-3 left-3">
                                             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-gray-700 capitalize">
-                                                {item.category.replace('-', ' ')}
+                                                {item.category?.replace('-', ' ') || 'News'}
                                             </span>
                                         </div>
                                     </div>
@@ -237,25 +163,23 @@ const NewsPage = () => {
                                             {item.title}
                                         </CardTitle>
                                         <CardDescription className="text-sm line-clamp-3 mt-2">
-                                            {item.summary}
+                                            {item.excerpt || item.content.substring(0, 150).replace(/<[^>]*>/g, '')}
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <div className="space-y-2 text-sm text-gray-600">
                                             <div className="flex items-center gap-2">
                                                 <Calendar className="w-4 h-4 text-rose-500" />
-                                                <span>{item.date}</span>
+                                                <span>{formatDate(item.createdAt)}</span>
                                             </div>
-                                            {item.location && (
-                                                <div className="flex items-center gap-2">
-                                                    <MapPin className="w-4 h-4 text-rose-500" />
-                                                    <span>{item.location}</span>
-                                                </div>
-                                            )}
+                                            <div className="flex items-center gap-2">
+                                                <User className="w-4 h-4 text-rose-500" />
+                                                <span>{item.author}</span>
+                                            </div>
                                         </div>
                                     </CardContent>
                                     <CardFooter>
-                                        <Link href={`/news/${item.id}`} className="w-full">
+                                        <Link href={`/news/${item.slug}`} className="w-full">
                                             <Button className="w-full bg-rose-500 hover:bg-rose-600">
                                                 Read Full Story
                                                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -332,23 +256,16 @@ const NewsPage = () => {
                                     <Card key={item.id} className="hover:shadow-xl transition-all duration-300 flex flex-col group">
                                         <div className="relative h-48 w-full overflow-hidden rounded-t-xl">
                                             <Image
-                                                src={item.image}
+                                                src={item.image || '/placeholder-news.jpg'}
                                                 alt={item.title}
                                                 fill
                                                 className="object-cover group-hover:scale-110 transition-transform duration-300"
                                             />
                                             <div className="absolute top-3 left-3">
                                                 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-gray-700 capitalize">
-                                                    {item.category.replace('-', ' ')}
+                                                    {item.category?.replace('-', ' ') || 'News'}
                                                 </span>
                                             </div>
-                                            {item.externalLink && (
-                                                <div className="absolute top-3 right-3">
-                                                    <span className="px-2 py-1 rounded-full bg-blue-500 text-white">
-                                                        <ExternalLink className="w-4 h-4" />
-                                                    </span>
-                                                </div>
-                                            )}
                                         </div>
 
                                         <CardHeader className="flex-grow">
@@ -356,7 +273,7 @@ const NewsPage = () => {
                                                 {item.title}
                                             </CardTitle>
                                             <CardDescription className="text-sm line-clamp-3 mt-2">
-                                                {item.summary}
+                                                {item.excerpt || item.content.substring(0, 150).replace(/<[^>]*>/g, '')}
                                             </CardDescription>
                                         </CardHeader>
 
@@ -364,20 +281,12 @@ const NewsPage = () => {
                                             <div className="space-y-2 text-sm text-gray-600">
                                                 <div className="flex items-center gap-2">
                                                     <Calendar className="w-4 h-4 text-rose-500" />
-                                                    <span>{item.date}</span>
+                                                    <span>{formatDate(item.createdAt)}</span>
                                                 </div>
-                                                {item.location && (
-                                                    <div className="flex items-center gap-2">
-                                                        <MapPin className="w-4 h-4 text-rose-500" />
-                                                        <span className="line-clamp-1">{item.location}</span>
-                                                    </div>
-                                                )}
-                                                {item.author && (
-                                                    <div className="flex items-center gap-2">
-                                                        <User className="w-4 h-4 text-rose-500" />
-                                                        <span className="line-clamp-1">{item.author}</span>
-                                                    </div>
-                                                )}
+                                                <div className="flex items-center gap-2">
+                                                    <User className="w-4 h-4 text-rose-500" />
+                                                    <span className="line-clamp-1">{item.author}</span>
+                                                </div>
                                             </div>
 
                                             {/* Tags */}
@@ -394,7 +303,7 @@ const NewsPage = () => {
                                         </CardContent>
 
                                         <CardFooter className="flex gap-2">
-                                            <Link href={`/news/${item.id}`} className="flex-1">
+                                            <Link href={`/news/${item.slug}`} className="flex-1">
                                                 <Button
                                                     variant="outline"
                                                     className="w-full group-hover:bg-rose-500 group-hover:text-white group-hover:border-rose-500 transition-colors"
@@ -403,15 +312,6 @@ const NewsPage = () => {
                                                     <ArrowRight className="w-4 h-4 ml-2" />
                                                 </Button>
                                             </Link>
-                                            {item.externalLink && (
-                                                <Button
-                                                    variant="outline"
-                                                    className="px-3"
-                                                    onClick={() => window.open(item.externalLink, '_blank')}
-                                                >
-                                                    <ExternalLink className="w-4 h-4" />
-                                                </Button>
-                                            )}
                                         </CardFooter>
                                     </Card>
                                 ))}

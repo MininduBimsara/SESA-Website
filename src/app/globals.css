@@ -7,6 +7,9 @@
 @import "swiper/css/pagination";
 @import "swiper/css/effect-fade";
 
+/* Custom styles */
+@import "../styles/news-article.css";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
