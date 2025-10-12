@@ -13,9 +13,9 @@ const slides = [
     {
         id: 1,
         title: 'Empowering Future Software Engineers',
-        subtitle: 'Join a community of passionate developers and innovators shaping the future of technology',
-        cta: 'Join Now',
-        ctaLink: '/about',
+        subtitle: 'Follow our community of passionate developers and innovators shaping the future of technology',
+        cta: 'Follow Us',
+        ctaLink: 'https://facebook.com/sesa.uok',
         image: '/students-collaborating-on-software-development-pro.jpg',
         badge: 'SESA Innovation & Leadership Network',
     },
@@ -30,7 +30,7 @@ const slides = [
     },
     {
         id: 3,
-        title: 'Join Our Coding Events and Workshops',
+        title: 'Discover Our Coding Events and Workshops',
         subtitle: 'Participate in hackathons, workshops, and tech talks led by industry professionals',
         cta: 'View Events',
         ctaLink: '/events',

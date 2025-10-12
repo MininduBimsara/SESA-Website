@@ -3,15 +3,17 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Facebook } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { socialMediaLinks } from './SocialLinks'
 
 const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
     { label: 'Events', href: '/events' },
     { label: 'Team', href: '/team' },
-    { label: 'Resources', href: '/resources' },
+    { label: 'Blogs', href: '/blogs' },
+    { label: 'News', href: '/news' },
 ]
 
 type NavbarTheme = 'dark' | 'light'
@@ -127,15 +129,18 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                             />
                         </Link>
                     ))}
-                    <Link
-                        href="/join"
+                    <a
+                        href={socialMediaLinks.facebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={cn(
-                            'rounded-full px-5 py-2 text-white shadow-[0_15px_30px_rgba(244,63,94,0.2)] transition-transform duration-300 hover:scale-105',
+                            'rounded-full px-5 py-2 text-white shadow-[0_15px_30px_rgba(244,63,94,0.2)] transition-transform duration-300 hover:scale-105 flex items-center gap-2',
                             isLight ? 'bg-gradient-to-r from-rose-500 via-rose-500 to-rose-400' : 'bg-gradient-to-r from-rose-500 via-rose-500 to-rose-400'
                         )}
                     >
-                        Join Now
-                    </Link>
+                        <Facebook className="w-4 h-4" />
+                        Follow Us
+                    </a>
                 </nav>
 
                 <button
@@ -191,13 +196,16 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                                     </span>
                                 </Link>
                             ))}
-                            <Link
-                                href="/join"
-                                className="mt-2 flex items-center justify-center rounded-full bg-gradient-to-r from-rose-500 to-rose-400 px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(244,63,94,0.2)]"
+                            <a
+                                href={socialMediaLinks.facebook}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-2 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-rose-400 px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(244,63,94,0.2)]"
                                 onClick={() => setIsOpen(false)}
                             >
-                                Become a Member
-                            </Link>
+                                <Facebook className="w-4 h-4" />
+                                Follow Us on Facebook
+                            </a>
                         </div>
                     </motion.nav>
                 )}
