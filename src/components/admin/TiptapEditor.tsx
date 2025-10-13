@@ -1,6 +1,7 @@
 'use client';
 
 import { useEditor, EditorContent } from '@tiptap/react';
+import { useEffect } from 'react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
@@ -74,6 +75,13 @@ const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
         },
     });
 
+    // Update editor content when prop changes (e.g., when editing existing news)
+    useEffect(() => {
+        if (editor && content !== editor.getHTML()) {
+            editor.commands.setContent(content);
+        }
+    }, [editor, content]);
+
     if (!editor) {
         return null;
     }
@@ -102,7 +110,7 @@ const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
     return (
         <div className="border-2 border-gray-200 rounded-lg bg-white shadow-sm">
             {/* Toolbar */}
-            <div className="border-b-2 border-gray-200 p-3 flex flex-wrap gap-1 bg-gradient-to-r from-gray-50 to-white sticky top-0 z-10">
+            <div className="border-b-2 border-gray-200 p-3 flex flex-wrap gap-1 bg-gradient-to-r from-gray-50 to-white sticky top-[84px] z-10">
                 {/* Text Formatting */}
                 <Button
                     type="button"

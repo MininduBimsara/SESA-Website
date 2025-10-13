@@ -159,23 +159,42 @@ const NewsForm: React.FC<NewsFormProps> = ({ news, onClose, onSuccess }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-6xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
+            <div className="min-h-screen">
                 {/* Header */}
-                <div className="sticky top-0 bg-white border-b p-4 flex items-center justify-between z-10">
+                <div className="sticky top-0 bg-white border-b p-6 flex items-center justify-between z-50 shadow-sm">
                     <h2 className="text-2xl font-bold text-gray-900">
                         {news ? 'Edit News Article' : 'Create News Article'}
                     </h2>
-                    <button
-                        onClick={onClose}
-                        className="text-gray-500 hover:text-gray-700 transition-colors"
-                    >
-                        <X size={24} />
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={onClose}
+                            disabled={isSubmitting}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            type="submit"
+                            form="news-form"
+                            className="bg-green-600 hover:bg-green-700"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? 'Saving...' : news ? 'Update Article' : 'Save Article'}
+                        </Button>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="text-gray-500 hover:text-gray-700 transition-colors"
+                        >
+                            <X size={24} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                <form id="news-form" onSubmit={handleSubmit} className="max-w-7xl mx-auto px-8 pt-8 pb-24 space-y-6">
                     {/* Title */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -235,6 +254,7 @@ const NewsForm: React.FC<NewsFormProps> = ({ news, onClose, onSuccess }) => {
                         {!showPreview ? (
                             <div className={errors.content ? 'border-2 border-red-500 rounded-lg' : ''}>
                                 <TiptapEditor
+                                    key={news?.id || 'new'} // Force re-render when editing different news
                                     content={formData.content}
                                     onChange={(content) => handleChange('content', content)}
                                 />
@@ -408,24 +428,8 @@ const NewsForm: React.FC<NewsFormProps> = ({ news, onClose, onSuccess }) => {
                         </div>
                     )}
 
-                    {/* Form Actions */}
-                    <div className="flex justify-end gap-3 pt-4 border-t">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            onClick={onClose}
-                            disabled={isSubmitting}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            className="bg-green-600 hover:bg-green-700"
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? 'Saving...' : news ? 'Update Article' : 'Create Article'}
-                        </Button>
-                    </div>
+                    {/* Bottom spacing to prevent content being hidden under sticky header */}
+                    <div className="h-20"></div>
                 </form>
             </div>
         </div>
