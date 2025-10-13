@@ -44,3 +44,8 @@ package-lock.json
 .idea
 
 /src/generated/prisma
+
+# Uploaded images (keep directory structure)
+/public/uploads/**
+!/public/uploads/.gitkeep
+!/public/uploads/team/.gitkeep

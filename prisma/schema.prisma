@@ -73,12 +73,68 @@ model Member {
   name     String
   position String
   image    String?
+  linkedin String?
+  github   String?
+  email    String?
+  order    Int     @default(0)
   teamId   String  @db.ObjectId
-  team     Team    @relation(fields: [teamId], references: [id])
+  team     Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+model Blog {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  content     String   // HTML content
+  excerpt     String?
+  slug        String   @unique
+  author      String
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  image       String?
+  category    String?
+  tags        String[]
+  readTime    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model SiteConfig {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   key   String @unique
   value String // can store text or JSON string
+}
+
+model Testimonial {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  role      String
+  image     String?
+  quote     String
+  featured  Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Statistic {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  label     String
+  value     String
+  icon      String   // Icon name from lucide-react
+  color     String   @default("rose") // rose, blue, purple, green
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Partner {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  logo      String
+  website   String?
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

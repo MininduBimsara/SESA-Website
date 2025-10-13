@@ -43,9 +43,9 @@ const AboutPage = () => {
                                     unity among students throughout their academic journey.
                                 </p>
                                 <p>
-                                    As the <strong>only degree programme in software engineering offered in the state
-                                        university system in Sri Lanka</strong>, we take pride in representing a unique and
-                                    pioneering academic community.
+                                    We represent one of the <strong>pioneering software engineering degree programmes
+                                    in Sri Lanka&apos;s state university system</strong>, fostering innovation and
+                                    excellence in software engineering education.
                                 </p>
                             </div>
                         </div>

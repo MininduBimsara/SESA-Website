@@ -1,134 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Calendar, User, Clock, Search, ArrowRight, TrendingUp, BookOpen, Code, Lightbulb, Users, Briefcase } from 'lucide-react'
+import { Calendar, User, Clock, Search, ArrowRight, TrendingUp, BookOpen, Code, Lightbulb, Users, Briefcase, Loader2 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import type { Blog } from '@/types/blog'
 
 type BlogCategory = 'all' | 'technical' | 'career' | 'events' | 'tutorials' | 'community'
-
-interface BlogPost {
-    id: number
-    title: string
-    excerpt: string
-    content: string
-    author: string
-    date: string
-    readTime: string
-    category: BlogCategory
-    tags: string[]
-    image: string
-    featured: boolean
-}
-
-const blogPosts: BlogPost[] = [
-    {
-        id: 1,
-        title: "Getting Started with React and Next.js: A Beginner's Guide",
-        excerpt: "Learn the fundamentals of React and Next.js, two of the most popular frameworks for building modern web applications.",
-        content: "Full article content here...",
-        author: "Hasinthaka Piyumal",
-        date: "January 15, 2025",
-        readTime: "8 min read",
-        category: "tutorials",
-        tags: ["React", "Next.js", "Web Development"],
-        image: "/modern-tech-workspace-with-coding-screens-and-coll.jpg",
-        featured: true
-    },
-    {
-        id: 2,
-        title: "RealHack 4.0: Our Journey to Innovation",
-        excerpt: "A recap of our biggest hackathon event, featuring stories from participants, judges, and organizers.",
-        content: "Full article content here...",
-        author: "Imansha Dilshan",
-        date: "January 10, 2025",
-        readTime: "6 min read",
-        category: "events",
-        tags: ["Hackathon", "RealHack", "Innovation"],
-        image: "/tech-workshop-and-coding-event-with-students.jpg",
-        featured: true
-    },
-    {
-        id: 3,
-        title: "Preparing for Technical Interviews: Tips from Industry Experts",
-        excerpt: "Essential strategies and common questions to help you ace your next software engineering interview.",
-        content: "Full article content here...",
-        author: "Yasiru Upananda",
-        date: "January 5, 2025",
-        readTime: "10 min read",
-        category: "career",
-        tags: ["Career", "Interviews", "Tips"],
-        image: "/professional-software-engineering-career-developme.jpg",
-        featured: true
-    },
-    {
-        id: 4,
-        title: "Building Scalable APIs with Node.js and Express",
-        excerpt: "Learn best practices for creating robust and scalable REST APIs using Node.js and Express framework.",
-        content: "Full article content here...",
-        author: "Minindu Abeywardene",
-        date: "December 28, 2024",
-        readTime: "12 min read",
-        category: "technical",
-        tags: ["Node.js", "Express", "API", "Backend"],
-        image: "/modern-tech-workspace-with-coding-screens-and-coll.jpg",
-        featured: false
-    },
-    {
-        id: 5,
-        title: "The Power of Community: How SESA Shaped My University Experience",
-        excerpt: "A personal reflection on the impact of being part of the Software Engineering Students' Association.",
-        content: "Full article content here...",
-        author: "Sachini Weerakkody",
-        date: "December 20, 2024",
-        readTime: "5 min read",
-        category: "community",
-        tags: ["Community", "Experience", "SESA"],
-        image: "/students-collaborating-on-software-development-pro.jpg",
-        featured: false
-    },
-    {
-        id: 6,
-        title: "Understanding Data Structures: Arrays, Lists, and Trees",
-        excerpt: "A comprehensive guide to fundamental data structures every software engineer should know.",
-        content: "Full article content here...",
-        author: "Chathura Hapukotuwa",
-        date: "December 15, 2024",
-        readTime: "15 min read",
-        category: "tutorials",
-        tags: ["Data Structures", "Algorithms", "Programming"],
-        image: "/modern-tech-workspace-with-coding-screens-and-coll.jpg",
-        featured: false
-    },
-    {
-        id: 7,
-        title: "Internship Opportunities: Where to Look and How to Apply",
-        excerpt: "A practical guide to finding and securing internships in the software engineering field.",
-        content: "Full article content here...",
-        author: "Asal Handapangoda",
-        date: "December 10, 2024",
-        readTime: "7 min read",
-        category: "career",
-        tags: ["Internship", "Career", "Opportunities"],
-        image: "/professional-software-engineering-career-developme.jpg",
-        featured: false
-    },
-    {
-        id: 8,
-        title: "Introduction to Machine Learning with Python",
-        excerpt: "Get started with machine learning using Python, scikit-learn, and popular ML libraries.",
-        content: "Full article content here...",
-        author: "Hasinthaka Piyumal",
-        date: "December 5, 2024",
-        readTime: "14 min read",
-        category: "technical",
-        tags: ["Machine Learning", "Python", "AI"],
-        image: "/modern-tech-workspace-with-coding-screens-and-coll.jpg",
-        featured: false
-    }
-]
 
 const categories = [
     { value: 'all', label: 'All Posts', icon: BookOpen },
@@ -140,18 +20,75 @@ const categories = [
 ]
 
 const BlogsPage = () => {
+    const [blogPosts, setBlogPosts] = useState<Blog[]>([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
     const [selectedCategory, setSelectedCategory] = useState<BlogCategory>('all')
     const [searchQuery, setSearchQuery] = useState('')
 
-    const filteredPosts = blogPosts.filter(post => {
+    const formatDate = (dateString: string | Date) => {
+        const date = new Date(dateString)
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    }
+
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                setLoading(true)
+                const response = await fetch('/api/blogs')
+                if (!response.ok) {
+                    throw new Error('Failed to fetch blogs')
+                }
+                const data = await response.json()
+                // Filter only published blogs
+                const publishedBlogs = Array.isArray(data) ? data.filter((item: Blog) => item.published) : []
+                setBlogPosts(publishedBlogs)
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An error occurred')
+                console.error('Error fetching blogs:', err)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchBlogs()
+    }, [])
+
+    const filteredPosts = Array.isArray(blogPosts) ? blogPosts.filter(post => {
         const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory
         const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (post.excerpt && post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())) ||
             post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
         return matchesCategory && matchesSearch
-    })
+    }) : []
 
-    const featuredPosts = blogPosts.filter(post => post.featured)
+    const featuredPosts = Array.isArray(blogPosts) ? blogPosts.filter(post => post.featured) : []
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <Loader2 className="w-16 h-16 text-rose-500 animate-spin mx-auto mb-4" />
+                    <p className="text-xl text-gray-600">Loading blog posts...</p>
+                </div>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Blogs</h2>
+                    <p className="text-gray-600 mb-4">{error}</p>
+                    <Button onClick={() => window.location.reload()} className="bg-rose-500 hover:bg-rose-600">
+                        Try Again
+                    </Button>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -181,25 +118,35 @@ const BlogsPage = () => {
                             {featuredPosts.map(post => (
                                 <Card key={post.id} className="hover:shadow-2xl transition-all duration-300 border-2 border-rose-200 flex flex-col">
                                     <div className="relative h-48 w-full">
-                                        <Image src={post.image} alt={post.title} fill className="object-cover rounded-t-xl" />
+                                        {post.image ? (
+                                            <Image src={post.image} alt={post.title} fill className="object-cover rounded-t-xl" />
+                                        ) : (
+                                            <div className="w-full h-full bg-gradient-to-br from-rose-400 to-rose-600 flex items-center justify-center">
+                                                <BookOpen className="w-16 h-16 text-white/50" />
+                                            </div>
+                                        )}
                                         <div className="absolute top-3 right-3">
                                             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500 text-white">
                                                 Featured
                                             </span>
                                         </div>
-                                        <div className="absolute top-3 left-3">
-                                            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-gray-700 capitalize">
-                                                {post.category}
-                                            </span>
-                                        </div>
+                                        {post.category && (
+                                            <div className="absolute top-3 left-3">
+                                                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-gray-700 capitalize">
+                                                    {post.category}
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
                                     <CardHeader className="flex-grow">
                                         <CardTitle className="text-xl line-clamp-2 hover:text-rose-600 transition-colors">
                                             {post.title}
                                         </CardTitle>
-                                        <CardDescription className="text-sm line-clamp-3 mt-2">
-                                            {post.excerpt}
-                                        </CardDescription>
+                                        {post.excerpt && (
+                                            <CardDescription className="text-sm line-clamp-3 mt-2">
+                                                {post.excerpt}
+                                            </CardDescription>
+                                        )}
                                     </CardHeader>
                                     <CardContent>
                                         <div className="flex items-center gap-4 text-sm text-gray-600">
@@ -207,18 +154,20 @@ const BlogsPage = () => {
                                                 <User className="w-4 h-4" />
                                                 <span>{post.author}</span>
                                             </div>
-                                            <div className="flex items-center gap-1">
-                                                <Clock className="w-4 h-4" />
-                                                <span>{post.readTime}</span>
-                                            </div>
+                                            {post.readTime && (
+                                                <div className="flex items-center gap-1">
+                                                    <Clock className="w-4 h-4" />
+                                                    <span>{post.readTime}</span>
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="flex items-center gap-2 text-sm text-gray-500 mt-2">
                                             <Calendar className="w-4 h-4" />
-                                            <span>{post.date}</span>
+                                            <span>{formatDate(post.createdAt)}</span>
                                         </div>
                                     </CardContent>
                                     <CardFooter>
-                                        <Link href={`/blogs/${post.id}`} className="w-full">
+                                        <Link href={`/blogs/${post.slug}`} className="w-full">
                                             <Button className="w-full bg-rose-500 hover:bg-rose-600">
                                                 Read More
                                                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -294,26 +243,36 @@ const BlogsPage = () => {
                                 {filteredPosts.map((post) => (
                                     <Card key={post.id} className="hover:shadow-xl transition-all duration-300 flex flex-col group">
                                         <div className="relative h-48 w-full overflow-hidden rounded-t-xl">
-                                            <Image
-                                                src={post.image}
-                                                alt={post.title}
-                                                fill
-                                                className="object-cover group-hover:scale-110 transition-transform duration-300"
-                                            />
-                                            <div className="absolute top-3 left-3">
-                                                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-gray-700 capitalize">
-                                                    {post.category}
-                                                </span>
-                                            </div>
+                                            {post.image ? (
+                                                <Image
+                                                    src={post.image}
+                                                    alt={post.title}
+                                                    fill
+                                                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-gradient-to-br from-rose-400 to-rose-600 flex items-center justify-center">
+                                                    <BookOpen className="w-16 h-16 text-white/50" />
+                                                </div>
+                                            )}
+                                            {post.category && (
+                                                <div className="absolute top-3 left-3">
+                                                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-gray-700 capitalize">
+                                                        {post.category}
+                                                    </span>
+                                                </div>
+                                            )}
                                         </div>
 
                                         <CardHeader className="flex-grow">
                                             <CardTitle className="text-xl line-clamp-2 group-hover:text-rose-600 transition-colors cursor-pointer">
                                                 {post.title}
                                             </CardTitle>
-                                            <CardDescription className="text-sm line-clamp-3 mt-2">
-                                                {post.excerpt}
-                                            </CardDescription>
+                                            {post.excerpt && (
+                                                <CardDescription className="text-sm line-clamp-3 mt-2">
+                                                    {post.excerpt}
+                                                </CardDescription>
+                                            )}
                                         </CardHeader>
 
                                         <CardContent>
@@ -322,14 +281,16 @@ const BlogsPage = () => {
                                                     <User className="w-4 h-4" />
                                                     <span className="line-clamp-1">{post.author}</span>
                                                 </div>
-                                                <div className="flex items-center gap-1">
-                                                    <Clock className="w-4 h-4" />
-                                                    <span>{post.readTime}</span>
-                                                </div>
+                                                {post.readTime && (
+                                                    <div className="flex items-center gap-1">
+                                                        <Clock className="w-4 h-4" />
+                                                        <span>{post.readTime}</span>
+                                                    </div>
+                                                )}
                                             </div>
                                             <div className="flex items-center gap-2 text-sm text-gray-500">
                                                 <Calendar className="w-4 h-4" />
-                                                <span>{post.date}</span>
+                                                <span>{formatDate(post.createdAt)}</span>
                                             </div>
 
                                             {/* Tags */}
@@ -346,7 +307,7 @@ const BlogsPage = () => {
                                         </CardContent>
 
                                         <CardFooter>
-                                            <Link href={`/blogs/${post.id}`} className="w-full">
+                                            <Link href={`/blogs/${post.slug}`} className="w-full">
                                                 <Button variant="outline" className="w-full group-hover:bg-rose-500 group-hover:text-white group-hover:border-rose-500 transition-colors">
                                                     Read Article
                                                     <ArrowRight className="w-4 h-4 ml-2" />

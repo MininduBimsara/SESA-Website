@@ -13,6 +13,9 @@ import {
     LogOut,
     X,
     Shield,
+    Quote,
+    BarChart3,
+    Handshake,
 } from "lucide-react";
 import { useAuth } from "@/lib/useAuth";
 
@@ -46,6 +49,21 @@ const menuItems = [
         title: "Blogs",
         href: "/admin/blogs",
         icon: FileText,
+    },
+    {
+        title: "Testimonials",
+        href: "/admin/testimonials",
+        icon: Quote,
+    },
+    {
+        title: "Statistics",
+        href: "/admin/statistics",
+        icon: BarChart3,
+    },
+    {
+        title: "Partners",
+        href: "/admin/partners",
+        icon: Handshake,
     },
     {
         title: "Admins",
