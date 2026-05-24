@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Facebook } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import { FacebookIcon } from './icons/SocialIcons'
 import { cn } from '@/lib/utils'
 import { socialMediaLinks } from './SocialLinks'
 
@@ -138,7 +139,7 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                             isLight ? 'bg-gradient-to-r from-rose-500 via-rose-500 to-rose-400' : 'bg-gradient-to-r from-rose-500 via-rose-500 to-rose-400'
                         )}
                     >
-                        <Facebook className="w-4 h-4" />
+                        <FacebookIcon className="w-4 h-4" />
                         Follow Us
                     </a>
                 </nav>
@@ -203,7 +204,7 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                                 className="mt-2 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-rose-400 px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(244,63,94,0.2)]"
                                 onClick={() => setIsOpen(false)}
                             >
-                                <Facebook className="w-4 h-4" />
+                                <FacebookIcon className="w-4 h-4" />
                                 Follow Us on Facebook
                             </a>
                         </div>

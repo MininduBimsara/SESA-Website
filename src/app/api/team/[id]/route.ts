@@ -4,11 +4,12 @@ import { prisma } from "@/lib/prisma";
 // GET single team
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const team = await prisma.team.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         members: {
           orderBy: {
@@ -35,13 +36,14 @@ export async function GET(
 // PUT update team
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
 
     const team = await prisma.team.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         year: body.year,
         name: body.name,
@@ -63,17 +65,18 @@ export async function PUT(
 // DELETE team
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     // First delete all members of this team
     await prisma.member.deleteMany({
-      where: { teamId: params.id },
+      where: { teamId: id },
     });
 
     // Then delete the team
     await prisma.team.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ message: "Team deleted successfully" });

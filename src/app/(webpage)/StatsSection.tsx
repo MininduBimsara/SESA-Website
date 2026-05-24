@@ -1,5 +1,6 @@
 import React from 'react'
-import { Users, LucideIcon } from 'lucide-react'
+import { Users } from 'lucide-react'
+import type { ComponentType, SVGProps } from 'react'
 import * as LucideIcons from 'lucide-react'
 import prisma from '@/lib/prisma'
 
@@ -19,7 +20,7 @@ async function getStatistics() {
 const StatsSection = async () => {
     const statistics = await getStatistics()
 
-    const getIconComponent = (iconName: string): LucideIcon => {
+    const getIconComponent = (iconName: string): ComponentType<SVGProps<SVGSVGElement> & { className?: string }> => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const Icon = (LucideIcons as any)[iconName]
         return Icon || Users

@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Mail, Linkedin, Github } from 'lucide-react'
+import { Mail } from 'lucide-react'
+import { LinkedinIcon, GithubIcon } from '@/components/icons/SocialIcons'
 
 interface TeamMember {
     id: string
@@ -130,7 +131,7 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                                         rel="noopener noreferrer"
                                                         className="w-8 h-8 rounded-full bg-rose-100 hover:bg-rose-200 flex items-center justify-center transition-colors"
                                                     >
-                                                        <Linkedin className="w-4 h-4 text-rose-600" />
+                                                        <LinkedinIcon className="w-4 h-4 text-rose-600" />
                                                     </a>
                                                 )}
                                                 {member.github && (
@@ -140,7 +141,7 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                                         rel="noopener noreferrer"
                                                         className="w-8 h-8 rounded-full bg-rose-100 hover:bg-rose-200 flex items-center justify-center transition-colors"
                                                     >
-                                                        <Github className="w-4 h-4 text-rose-600" />
+                                                        <GithubIcon className="w-4 h-4 text-rose-600" />
                                                     </a>
                                                 )}
                                             </div>

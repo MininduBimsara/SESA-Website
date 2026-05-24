@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { Share2, Facebook, Twitter, Linkedin } from 'lucide-react'
+import { Share2 } from 'lucide-react'
+import { FacebookIcon, TwitterIcon, LinkedinIcon } from './icons/SocialIcons'
 
 interface ShareButtonsProps {
     url: string
@@ -23,21 +24,21 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ url, title, classNam
                         className="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-colors"
                         aria-label="Share on Facebook"
                     >
-                        <Facebook className="w-5 h-5" />
+                        <FacebookIcon className="w-5 h-5" />
                     </button>
                     <button
                         onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank')}
                         className="w-10 h-10 rounded-full bg-sky-500 hover:bg-sky-600 text-white flex items-center justify-center transition-colors"
                         aria-label="Share on Twitter"
                     >
-                        <Twitter className="w-5 h-5" />
+                        <TwitterIcon className="w-5 h-5" />
                     </button>
                     <button
                         onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank')}
                         className="w-10 h-10 rounded-full bg-blue-700 hover:bg-blue-800 text-white flex items-center justify-center transition-colors"
                         aria-label="Share on LinkedIn"
                     >
-                        <Linkedin className="w-5 h-5" />
+                        <LinkedinIcon className="w-5 h-5" />
                     </button>
                 </div>
             </div>
