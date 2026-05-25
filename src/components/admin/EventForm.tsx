@@ -457,7 +457,7 @@ export const EventForm = ({ event, onClose, onSubmit }: EventFormProps) => {
                                     <div>
                                         <DatePicker
                                             selected={formData.startTime}
-                                            onChange={(time) => handleTimeChange(time, 'startTime')}
+                                            onChange={(time: Date | null) => handleTimeChange(time, 'startTime')}
                                             showTimeSelect
                                             showTimeSelectOnly
                                             timeIntervals={15}
@@ -471,7 +471,7 @@ export const EventForm = ({ event, onClose, onSubmit }: EventFormProps) => {
                                     <div>
                                         <DatePicker
                                             selected={formData.endTime}
-                                            onChange={(time) => handleTimeChange(time, 'endTime')}
+                                            onChange={(time: Date | null) => handleTimeChange(time, 'endTime')}
                                             showTimeSelect
                                             showTimeSelectOnly
                                             timeIntervals={15}
