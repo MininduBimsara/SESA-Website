@@ -27,6 +27,314 @@ interface TeamPageClientProps {
     teamData: TeamData
 }
 
+// Helper to generate initials for avatar fallback (filtering common titles)
+const getMemberInitials = (name: string) => {
+    if (!name) return 'S';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    
+    const titles = ['dr.', 'ms.', 'mr.', 'prof.', 'dr', 'ms', 'mr', 'prof'];
+    const filteredParts = parts.filter(p => !titles.includes(p.toLowerCase()));
+    
+    if (filteredParts.length === 0) return parts[0].substring(0, 2).toUpperCase();
+    if (filteredParts.length === 1) return filteredParts[0].substring(0, 2).toUpperCase();
+    
+    return (filteredParts[0][0] + filteredParts[1][0]).toUpperCase();
+};
+
+// Categorize team members into tiers
+const categorizeMembers = (members: TeamMember[]) => {
+    const tier1: TeamMember[] = []; // Senior Treasurer, Senior Advisor, President
+    const tier2: TeamMember[] = []; // Vice President, Secretary, Vice Secretary, Junior Treasurer
+    const tier3: TeamMember[] = []; // Heads of Departments & Web Master
+    const tier4: TeamMember[] = []; // Committee Members / Others
+
+    members.forEach(member => {
+        const pos = (member.position || '').toLowerCase().replace(/\s+/g, ' ').trim();
+        
+        if (pos === 'senior treasurer' || pos === 'senior advisor' || pos === 'president') {
+            tier1.push(member);
+        } else if (
+            pos === 'vice president' || 
+            pos === 'secretary' || 
+            pos === 'vice secretary' || 
+            pos === 'junior treasurer'
+        ) {
+            tier2.push(member);
+        } else if (pos.startsWith('head of') || pos === 'web master' || pos === 'webmaster') {
+            tier3.push(member);
+        } else {
+            tier4.push(member);
+        }
+    });
+
+    return { tier1, tier2, tier3, tier4 };
+};
+
+// Elegant section divider with a red dot
+const SectionDivider = () => (
+    <div className="relative py-4 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-100/60"></div>
+        </div>
+        <div className="relative bg-white px-4">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#EC1640]/40"></div>
+        </div>
+    </div>
+);
+
+// Individual Member Card with premium design details
+const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tier2' | 'tier3' | 'tier4' }) => {
+    let cardClass = "";
+    let imgContainerClass = "";
+    let nameClass = "";
+    let positionClass = "";
+    let badgeText = "";
+    
+    const initials = getMemberInitials(member.name);
+
+    if (tier === 'tier1') {
+        cardClass = "relative bg-white rounded-[2rem] p-8 border border-slate-100 hover:border-[#EC1640]/30 shadow-md hover:shadow-[0_25px_60px_rgba(236,22,64,0.12)] hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[320px] border-t-4 border-t-[#EC1640]";
+        imgContainerClass = "relative mx-auto mb-6 w-32 h-32 md:w-36 md:h-36 p-1 rounded-full bg-gradient-to-tr from-slate-200 to-slate-100 group-hover:from-[#EC1640] group-hover:to-rose-500 transition-all duration-500 shadow-md";
+        nameClass = "text-lg md:text-xl font-bold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
+        positionClass = "text-xs font-semibold text-slate-500 bg-slate-100/80 group-hover:bg-[#EC1640]/10 group-hover:text-[#EC1640] px-3.5 py-1.5 rounded-full inline-block mt-2.5 transition-all duration-300 uppercase tracking-wider text-center";
+        badgeText = "Leadership";
+    } else if (tier === 'tier2') {
+        cardClass = "relative bg-white rounded-2xl p-6 border border-slate-100 hover:border-[#EC1640]/20 shadow-sm hover:shadow-[0_18px_45px_rgba(236,22,64,0.08)] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[280px] border-t-3 border-t-[#EC1640]/60";
+        imgContainerClass = "relative mx-auto mb-5 w-28 h-28 p-0.5 rounded-full bg-slate-100 group-hover:bg-[#EC1640]/30 transition-all duration-500 shadow-sm";
+        nameClass = "text-base font-semibold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
+        positionClass = "text-[11px] font-semibold text-slate-500 bg-slate-50 group-hover:bg-[#EC1640]/5 group-hover:text-[#EC1640] px-3 py-1 rounded-full inline-block mt-2 transition-all duration-300 uppercase tracking-wider text-center";
+        badgeText = "Executive";
+    } else if (tier === 'tier3') {
+        cardClass = "relative bg-white rounded-2xl p-6 border border-slate-100 hover:border-[#EC1640]/15 shadow-sm hover:shadow-[0_15px_35px_rgba(15,23,42,0.06)] hover:-translate-y-1 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[260px] border-t-2 border-t-[#EC1640]/30";
+        imgContainerClass = "relative mx-auto mb-4 w-24 h-24 p-0.5 rounded-full bg-slate-100 group-hover:bg-[#EC1640]/20 transition-all duration-500 shadow-sm";
+        nameClass = "text-sm font-semibold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
+        positionClass = "text-[11px] font-medium text-slate-500 bg-slate-50/50 group-hover:bg-slate-100/80 px-2.5 py-1 rounded-full inline-block mt-2 transition-all duration-300 uppercase tracking-wider text-center";
+        badgeText = "Dept Head";
+    } else {
+        // Tier 4: Committee
+        cardClass = "relative bg-white rounded-xl p-5 border border-slate-100 hover:border-slate-200 shadow-sm hover:shadow-[0_10px_25px_rgba(15,23,42,0.04)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-between h-full min-h-[220px]";
+        imgContainerClass = "relative mx-auto mb-3.5 w-20 h-20 p-0.5 rounded-full bg-slate-50 group-hover:bg-slate-100 transition-all duration-500 shadow-sm";
+        nameClass = "text-xs font-semibold font-serif text-slate-900 text-center leading-snug";
+        positionClass = "text-[9px] font-medium text-slate-400 mt-1.5 uppercase tracking-wider text-center";
+        badgeText = "";
+    }
+
+    return (
+        <div className={`${cardClass} group`}>
+            {/* Top Badge */}
+            {badgeText && (
+                <div 
+                    className={
+                        tier === 'tier1' 
+                            ? "absolute top-4 right-4 bg-[#EC1640]/5 border border-[#EC1640]/20 text-[#EC1640] text-[8px] font-bold tracking-widest px-2 py-0.5 rounded-full uppercase"
+                            : tier === 'tier2'
+                            ? "absolute top-3 right-3 bg-slate-50 border border-slate-150 text-slate-400 group-hover:text-[#EC1640] group-hover:bg-[#EC1640]/5 group-hover:border-[#EC1640]/10 text-[8px] font-semibold tracking-wider px-2 py-0.5 rounded-full uppercase transition-all duration-300"
+                            : "absolute top-3 right-3 bg-slate-50 text-slate-400 text-[8px] font-medium tracking-wider px-1.5 py-0.5 rounded uppercase"
+                    }
+                >
+                    {badgeText}
+                </div>
+            )}
+
+            {/* Profile Image */}
+            <div className={imgContainerClass}>
+                <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-50 flex items-center justify-center">
+                    {member.image ? (
+                        <Image
+                            src={member.image}
+                            alt={member.name}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 300px"
+                            className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                        />
+                    ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#EC1640]/10 to-rose-500/5 text-[#EC1640] font-bold text-lg font-serif flex items-center justify-center">
+                            {initials}
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* Member Info */}
+            <div className="text-center flex-grow flex flex-col justify-between w-full mt-2">
+                <div className="flex flex-col items-center">
+                    <h3 className={nameClass}>
+                        {member.name}
+                    </h3>
+                    <p className={positionClass}>
+                        {member.position}
+                    </p>
+                </div>
+
+                {/* Social Links */}
+                {(member.email || member.linkedin || member.github) ? (
+                    <div className="flex justify-center gap-2 mt-5 pt-3 border-t border-slate-100/60 w-full">
+                        {member.email && (
+                            <a
+                                href={`mailto:${member.email}`}
+                                className="w-8 h-8 rounded-full bg-slate-50/50 hover:bg-[#EC1640] text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300 border border-slate-100 hover:border-[#EC1640] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
+                                title="Email"
+                            >
+                                <Mail className="w-3.5 h-3.5" />
+                            </a>
+                        )}
+                        {member.linkedin && (
+                            <a
+                                href={member.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-8 h-8 rounded-full bg-slate-50/50 hover:bg-[#EC1640] text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300 border border-slate-100 hover:border-[#EC1640] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
+                                title="LinkedIn"
+                            >
+                                <LinkedinIcon className="w-3.5 h-3.5" />
+                            </a>
+                        )}
+                        {member.github && (
+                            <a
+                                href={member.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-8 h-8 rounded-full bg-slate-50/50 hover:bg-[#EC1640] text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300 border border-slate-100 hover:border-[#EC1640] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
+                                title="GitHub"
+                            >
+                                <GithubIcon className="w-3.5 h-3.5" />
+                            </a>
+                        )}
+                    </div>
+                ) : (
+                    <div className="h-4" /> // placeholder spacer to keep height alignment
+                )}
+            </div>
+        </div>
+    );
+};
+
+// Component to render a complete grouped board section
+const BoardSection = ({ 
+    members, 
+    mounted, 
+    containerVariants, 
+    itemVariants 
+}: { 
+    members: TeamMember[]; 
+    mounted: boolean; 
+    containerVariants: any; 
+    itemVariants: any; 
+}) => {
+    const { tier1, tier2, tier3, tier4 } = categorizeMembers(members);
+    
+    return (
+        <div className="max-w-7xl mx-auto space-y-12">
+            {/* Tier 1: Advisory & Presidency */}
+            {tier1.length > 0 && (
+                <div className="space-y-6">
+                    <div className="text-center mb-8 mt-4">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50/50 backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#EC1640]"></span>
+                            Advisory & Presidency
+                        </div>
+                    </div>
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center max-w-5xl mx-auto"
+                    >
+                        {tier1.map((member) => (
+                            <motion.div key={member.id} variants={itemVariants}>
+                                <MemberCard member={member} tier="tier1" />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            )}
+            
+            {tier1.length > 0 && (tier2.length > 0 || tier3.length > 0 || tier4.length > 0) && <SectionDivider />}
+            
+            {/* Tier 2: Executive Board */}
+            {tier2.length > 0 && (
+                <div className="space-y-6">
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50/50 backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#EC1640]/70"></span>
+                            Executive Committee
+                        </div>
+                    </div>
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto"
+                    >
+                        {tier2.map((member) => (
+                            <motion.div key={member.id} variants={itemVariants}>
+                                <MemberCard member={member} tier="tier2" />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            )}
+            
+            {tier2.length > 0 && (tier3.length > 0 || tier4.length > 0) && <SectionDivider />}
+            
+            {/* Tier 3: Department Heads */}
+            {tier3.length > 0 && (
+                <div className="space-y-6">
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50/50 backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#EC1640]/55"></span>
+                            Heads of Departments & Web Master
+                        </div>
+                    </div>
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+                    >
+                        {tier3.map((member) => (
+                            <motion.div key={member.id} variants={itemVariants}>
+                                <MemberCard member={member} tier="tier3" />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            )}
+            
+            {tier3.length > 0 && tier4.length > 0 && <SectionDivider />}
+            
+            {/* Tier 4: Committee Members */}
+            {tier4.length > 0 && (
+                <div className="space-y-6">
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50/50 backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                            Committee Members
+                        </div>
+                    </div>
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 max-w-7xl mx-auto"
+                    >
+                        {tier4.map((member) => (
+                            <motion.div key={member.id} variants={itemVariants}>
+                                <MemberCard member={member} tier="tier4" />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            )}
+        </div>
+    );
+};
+
 const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
     const [mounted, setMounted] = useState(false)
 
@@ -39,18 +347,19 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.1
+                staggerChildren: 0.08
             }
         }
     }
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: { opacity: 0, y: 15 },
         visible: {
             opacity: 1,
             y: 0,
             transition: {
-                duration: 0.5
+                duration: 0.4,
+                ease: "easeOut"
             }
         }
     }
@@ -77,98 +386,27 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
 
             {/* Current Executive Board Card */}
             <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
-                <div className="text-center mb-10 space-y-3">
+                <div className="text-center mb-12 space-y-3">
                     <span className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
                         Leadership
                     </span>
                     <h2 className="text-3xl md:text-4xl font-semibold font-serif text-slate-950">
-                        Current Executive Board
+                        Current Executive Board & Committee
                     </h2>
                 </div>
 
-                <div className="max-w-7xl mx-auto">
-                    <motion.div
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate={mounted ? "visible" : "hidden"}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
-                    >
-                        {teamData.currentBoard.map((member) => (
-                            <motion.div
-                                key={member.id}
-                                variants={itemVariants}
-                                className="group"
-                            >
-                                <div className="relative bg-white rounded-2xl p-6 border-2 border-slate-200 hover:border-[#EC1640] transition-all duration-300 hover:shadow-xl flex flex-col justify-between h-full min-h-[260px]">
-                                    {/* Profile Image */}
-                                    <div className="relative mx-auto mb-5 w-28 h-28">
-                                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#EC1640]/40 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity blur-md"></div>
-                                        <div className="relative w-full h-full rounded-full border-4 border-slate-100 group-hover:border-[#EC1640] overflow-hidden bg-slate-50 transition-colors">
-                                            <Image
-                                                src={member.image || '/placeholder-user.jpg'}
-                                                alt={member.name}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {/* Member Info */}
-                                    <div className="text-center flex-grow flex flex-col justify-between">
-                                        <div>
-                                            <h3 className="text-base font-semibold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors leading-snug">
-                                                {member.name}
-                                            </h3>
-                                            <p className="text-slate-500 text-xs font-medium uppercase tracking-wider mt-1">
-                                                {member.position}
-                                            </p>
-                                        </div>
-
-                                        {/* Social Links */}
-                                        {(member.email || member.linkedin || member.github) && (
-                                            <div className="flex justify-center gap-2 mt-4 pt-3 border-t border-slate-100">
-                                                {member.email && (
-                                                    <a
-                                                        href={`mailto:${member.email}`}
-                                                        className="w-7 h-7 rounded-full bg-slate-50 hover:bg-rose-50 flex items-center justify-center transition-colors group/item border border-slate-100"
-                                                    >
-                                                        <Mail className="w-3.5 h-3.5 text-slate-500 group-hover/item:text-[#EC1640]" />
-                                                    </a>
-                                                )}
-                                                {member.linkedin && (
-                                                    <a
-                                                        href={member.linkedin}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="w-7 h-7 rounded-full bg-slate-50 hover:bg-rose-50 flex items-center justify-center transition-colors group/item border border-slate-100"
-                                                    >
-                                                        <LinkedinIcon className="w-3.5 h-3.5 text-slate-500 group-hover/item:text-[#EC1640]" />
-                                                    </a>
-                                                )}
-                                                {member.github && (
-                                                    <a
-                                                        href={member.github}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="w-7 h-7 rounded-full bg-slate-50 hover:bg-rose-50 flex items-center justify-center transition-colors group/item border border-slate-100"
-                                                    >
-                                                        <GithubIcon className="w-3.5 h-3.5 text-slate-500 group-hover/item:text-[#EC1640]" />
-                                                    </a>
-                                                )}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
+                <BoardSection 
+                    members={teamData.currentBoard} 
+                    mounted={mounted} 
+                    containerVariants={containerVariants} 
+                    itemVariants={itemVariants} 
+                />
             </section>
 
             {/* Previous Executive Board Card */}
             {teamData.previousBoard.length > 0 && (
                 <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
-                    <div className="text-center mb-10 space-y-3">
+                    <div className="text-center mb-12 space-y-3">
                         <span className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
                             Alumni
                         </span>
@@ -181,47 +419,12 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                         </p>
                     </div>
 
-                    <div className="max-w-7xl mx-auto">
-                        <motion.div
-                            variants={containerVariants}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
-                        >
-                            {teamData.previousBoard.map((member) => (
-                                <motion.div
-                                    key={member.id}
-                                    variants={itemVariants}
-                                    className="group"
-                                >
-                                    <div className="relative bg-white rounded-2xl p-6 border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-lg flex flex-col justify-between h-full min-h-[220px]">
-                                        {/* Profile Image */}
-                                        <div className="relative mx-auto mb-4 w-24 h-24">
-                                            <div className="relative w-full h-full rounded-full border-3 border-slate-100 group-hover:border-slate-300 overflow-hidden bg-slate-50">
-                                                <Image
-                                                    src={member.image || '/placeholder-user.jpg'}
-                                                    alt={member.name}
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        {/* Member Info */}
-                                        <div className="text-center flex-grow flex flex-col justify-center">
-                                            <h3 className="text-sm font-semibold font-serif text-slate-800 leading-snug">
-                                                {member.name}
-                                            </h3>
-                                            <p className="text-slate-500 text-[0.7rem] uppercase tracking-wider mt-1">
-                                                {member.position}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    </div>
+                    <BoardSection 
+                        members={teamData.previousBoard} 
+                        mounted={mounted} 
+                        containerVariants={containerVariants} 
+                        itemVariants={itemVariants} 
+                    />
                 </section>
             )}
 
