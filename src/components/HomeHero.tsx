@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Menu, X, ArrowRight } from 'lucide-react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules'
+import { FacebookIcon, InstagramIcon, YoutubeIcon, WhatsappIcon } from './icons/SocialIcons'
 
 // Note: Swiper CSS is already imported globally in src/app/globals.css
 
@@ -20,10 +21,10 @@ const navLinks = [
 ]
 
 const socialLinks = [
-    { label: 'Instagram', href: 'https://instagram.com' },
-    { label: 'Facebook', href: 'https://facebook.com/sesa.uok' },
-    { label: 'YouTube', href: 'https://youtube.com' },
-    { label: 'WhatsApp', href: 'https://wa.me' },
+    { label: 'Instagram', href: 'https://instagram.com', icon: InstagramIcon },
+    { label: 'Facebook', href: 'https://facebook.com/sesa.uok', icon: FacebookIcon },
+    { label: 'YouTube', href: 'https://youtube.com', icon: YoutubeIcon },
+    { label: 'WhatsApp', href: 'https://wa.me', icon: WhatsappIcon },
 ]
 
 const slides = [
@@ -161,7 +162,7 @@ export default function HomeHero() {
                     
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="border border-white/10 hover:border-white/30 rounded-full w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors focus:outline-none text-white"
+                        className="lg:hidden border border-white/10 hover:border-white/30 rounded-full w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors focus:outline-none text-white"
                         aria-label="Toggle menu"
                     >
                         {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -321,22 +322,27 @@ export default function HomeHero() {
             </Swiper>
 
             {/* Social Links Side Overlay */}
-            <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-30 hidden md:flex">
-                <div className="h-20 w-px bg-white/20 mx-auto" />
-                {socialLinks.map((s, i) => (
-                    <motion.a
-                        key={s.label}
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                        className="text-white/40 hover:text-white text-[0.65rem] tracking-[0.25em] uppercase font-bold transition-colors rotate-90 origin-right whitespace-nowrap mb-6 hover:translate-x-[-2px]"
-                    >
-                        {s.label}
-                    </motion.a>
-                ))}
+            <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-5 z-30 hidden md:flex">
+                <div className="h-16 w-px bg-gradient-to-b from-transparent to-white/20 mb-2" />
+                {socialLinks.map((s, i) => {
+                    const Icon = s.icon
+                    return (
+                        <motion.a
+                            key={s.label}
+                            href={s.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
+                            className="text-white/40 hover:text-[#EC1640] transition-all duration-300 hover:scale-110 p-1.5"
+                            aria-label={s.label}
+                        >
+                            <Icon className="w-5 h-5" />
+                        </motion.a>
+                    )
+                })}
+                <div className="h-16 w-px bg-gradient-to-t from-transparent to-white/20 mt-2" />
             </div>
 
             {/* Bottom Panel Info */}
@@ -355,28 +361,7 @@ export default function HomeHero() {
                 {/* Center: Custom Pill Pagination */}
                 <div className="swiper-pag-custom flex items-center gap-2.5 pointer-events-auto" />
 
-                {/* Right Side: Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1 }}
-                    className="flex items-center gap-3 hidden sm:flex text-right"
-                >
-                    <span className="text-white/40 text-[0.55rem] tracking-[0.2em] uppercase font-bold">SCROLL DOWN</span>
-                    <div className="w-5 h-8 border-2 border-white/20 rounded-full flex justify-center p-1.5">
-                        <motion.div 
-                            animate={{
-                                y: [0, 8, 0],
-                            }}
-                            transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                ease: "easeInOut"
-                            }}
-                            className="w-1 h-1.5 bg-[#EC1640] rounded-full" 
-                        />
-                    </div>
-                </motion.div>
+
             </div>
 
             {/* Custom Styles for Swiper Pagination & Slide Zoom */}

@@ -5,10 +5,8 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
-import { FacebookIcon } from './icons/SocialIcons'
+import { Menu, X, Search, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { socialMediaLinks } from './SocialLinks'
 
 const navLinks = [
     { label: 'Home', href: '/' },
@@ -30,6 +28,7 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
     const isHomepage = pathname === '/'
     const [isOpen, setIsOpen] = useState(false)
     const [hasScrolled, setHasScrolled] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('')
 
     useEffect(() => {
         const handleScroll = () => {
@@ -47,15 +46,20 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
         }
     }, [])
 
+    const handleSearchSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (searchQuery.trim()) {
+            window.location.href = `/blogs?search=${encodeURIComponent(searchQuery)}`
+        }
+    }
+
     const resolvedTheme = useMemo<NavbarTheme>(() => {
         if (hasScrolled) return 'light'
         return initialTheme
     }, [hasScrolled, initialTheme])
 
     const isLight = resolvedTheme === 'light'
-
     const isDetached = hasScrolled
-
     const isVisible = !isHomepage || hasScrolled
 
     return (
@@ -78,36 +82,24 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                     'flex items-center justify-between mx-auto transition-colors duration-300 pointer-events-auto',
                     isDetached
                         ? [
-                            'w-[min(92%,1100px)] rounded-full border px-4 py-2 backdrop-blur-lg mt-6 shadow-[0_18px_45px_rgba(0,0,0,0.08)]',
+                            'w-[min(92%,1200px)] rounded-full border px-6 py-2.5 backdrop-blur-lg mt-6 shadow-[0_18px_45px_rgba(0,0,0,0.08)]',
                             isLight
-                                ? 'border-[#EC1640]/25 bg-white/95 text-slate-800 shadow-[0_18px_45px_rgba(236,22,64,0.12)]'
+                                ? 'border-slate-200 bg-white/95 text-slate-800 shadow-[0_18px_45px_rgba(0,0,0,0.05)]'
                                 : 'border-white/10 bg-slate-950/80 text-slate-100 shadow-[0_30px_60px_rgba(15,23,42,0.35)]',
                         ]
                         : [
-                            'w-full border-b px-6 py-2.5 rounded-none mt-0',
+                            'w-full border-b px-8 py-4 rounded-none mt-0',
                             isLight
-                                ? 'border-white/0 bg-white/0 text-slate-700'
-                                : 'border-white/0 bg-slate-950/0 text-slate-100'
+                                ? 'border-slate-200/50 bg-white text-slate-800'
+                                : 'border-white/5 bg-slate-950/50 backdrop-blur-md text-slate-100'
                         ]
                 )}
             >
-                <Link
-                    href="/"
-                    className="flex items-center gap-3 rounded-full px-2 py-1 transition-colors"
-                >
-                    <Image
-                        src="/SESA_Logo_Black-01.png"
-                        alt="SESA Logo"
-                        width={110}
-                        height={36}
-                        className={cn("h-8 w-auto object-contain", !isLight && "brightness-0 invert")}
-                    />
-                </Link>
-
+                {/* Desktop Left Navigation Links */}
                 <nav
                     className={cn(
-                        'hidden items-center gap-8 pr-4 text-sm font-medium md:flex',
-                        isLight ? 'text-slate-600' : 'text-slate-200'
+                        'hidden items-center gap-7 text-[0.875rem] font-medium md:flex',
+                        isLight ? 'text-slate-700' : 'text-white/80'
                     )}
                 >
                     {navLinks.map((link) => (
@@ -115,47 +107,78 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                             key={link.label}
                             href={link.href}
                             className={cn(
-                                'group relative transition-colors duration-300',
-                                isLight ? 'hover:text-[#EC1640]' : 'hover:text-[#EC1640]'
+                                'group relative py-1 transition-colors duration-300',
+                                isLight ? 'hover:text-[#EC1640]' : 'hover:text-white'
                             )}
                         >
                             {link.label}
-                            <span
-                                className={cn(
-                                    'absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full bg-[#EC1640]'
-                                )}
-                            />
+                            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#EC1640] transition-all duration-300 group-hover:w-full" />
                         </Link>
                     ))}
-                    <a
-                        href={socialMediaLinks.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={cn(
-                            'rounded-full px-5 py-2 text-white shadow-[0_15px_30px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-105 flex items-center gap-2',
-                            'bg-black hover:bg-[#EC1640]'
-                        )}
-                    >
-                        <FacebookIcon className="w-4 h-4" />
-                        Follow Us
-                    </a>
                 </nav>
 
-                <button
-                    type="button"
-                    className={cn(
-                        'mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full border transition md:hidden',
-                        isLight
-                            ? 'border-[#EC1640]/25 text-[#EC1640] hover:border-[#EC1640]/40 hover:text-[#EC1640]'
-                            : 'border-white/20 text-white hover:border-[#EC1640] hover:text-[#EC1640]'
-                    )}
-                    onClick={() => setIsOpen((prev) => !prev)}
-                    aria-label="Toggle navigation menu"
-                >
-                    {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                </button>
+                {/* SESA Logo Centered */}
+                <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-auto">
+                    <Link href="/" className="flex items-center gap-2">
+                        <Image
+                            src="/SESA_Logo_Black-01.png"
+                            alt="SESA Logo"
+                            width={115}
+                            height={38}
+                            className={cn("h-8 w-auto object-contain transition-all duration-300", !isLight && "brightness-0 invert")}
+                        />
+                    </Link>
+                </div>
+
+                {/* Desktop Right Side elements: Search, Join Us & Drawer Toggle */}
+                <div className="flex items-center gap-3">
+                    <form onSubmit={handleSearchSubmit} className="relative hidden md:flex items-center">
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className={cn(
+                                "text-[0.875rem] rounded-full pl-4 pr-9 py-2 border focus:outline-none transition-all w-36 focus:w-52",
+                                isLight 
+                                    ? "bg-slate-100/80 hover:bg-slate-100 focus:bg-white text-slate-800 placeholder-slate-400 border-slate-200 focus:border-slate-350" 
+                                    : "bg-white/10 hover:bg-white/15 focus:bg-white/20 text-white placeholder-white/40 border-white/10 focus:border-white/30"
+                            )}
+                        />
+                        <button type="submit" className={cn("absolute right-3.5 transition-colors", isLight ? "text-slate-400 hover:text-slate-650" : "text-white/50 hover:text-white")}>
+                            <Search className="w-3.5 h-3.5" />
+                        </button>
+                    </form>
+
+                    <Link
+                        href="/about"
+                        className={cn(
+                            "text-[0.825rem] font-semibold px-5 py-2 rounded-full transition-all hover:scale-[1.02] active:scale-95 shadow-sm hidden sm:inline-block",
+                            isLight
+                                ? "bg-black hover:bg-slate-900 text-white"
+                                : "bg-[#EC1640] hover:bg-[#d61237] text-white shadow-[#EC1640]/10"
+                        )}
+                    >
+                        Join Us
+                    </Link>
+
+                    <button
+                        type="button"
+                        className={cn(
+                            'inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors md:hidden',
+                            isLight
+                                ? 'border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300'
+                                : 'border-white/10 text-white hover:bg-white/10 hover:border-white/25'
+                        )}
+                        onClick={() => setIsOpen((prev) => !prev)}
+                        aria-label="Toggle navigation menu"
+                    >
+                        {isOpen ? <X className="h-4.5 w-4.5" /> : <Menu className="h-4.5 w-4.5" />}
+                    </button>
+                </div>
             </motion.div>
 
+            {/* Mobile / Full Drawer Menu */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.nav
@@ -164,45 +187,55 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                         exit={{ opacity: 0, y: -12 }}
                         transition={{ duration: 0.25 }}
                         className={cn(
-                            'pointer-events-auto mx-auto mt-3 w-[min(92%,1100px)] overflow-hidden rounded-3xl border px-6 py-6 shadow-[0_24px_60px_rgba(236,22,64,0.12)] md:hidden',
+                            'pointer-events-auto mx-auto mt-3 w-[min(92%,500px)] overflow-hidden rounded-3xl border px-6 py-6 shadow-2xl z-55 relative',
                             isLight
-                                ? 'border-slate-100 bg-white text-slate-700'
-                                : 'border-white/10 bg-slate-950/95 text-slate-100'
+                                ? 'border-slate-200 bg-white text-slate-750'
+                                : 'border-white/10 bg-slate-950/95 text-white'
                         )}
                     >
-                        <div className="flex flex-col gap-4 text-base font-medium">
+                        <div className="flex flex-col gap-3">
+                            <form onSubmit={handleSearchSubmit} className="relative flex items-center mb-1">
+                                <input
+                                    type="text"
+                                    placeholder="Search articles and events..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className={cn(
+                                        "w-full pl-5 pr-10 py-3 border text-sm rounded-full focus:outline-none",
+                                        isLight
+                                            ? "bg-slate-50 border-slate-200 text-slate-800 placeholder-slate-400"
+                                            : "bg-white/5 border-white/10 text-white placeholder-white/40"
+                                    )}
+                                />
+                                <button type="submit" className="absolute right-4 text-slate-400 hover:text-[#EC1640] transition-colors">
+                                    <Search className="w-4 h-4" />
+                                </button>
+                            </form>
+
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.label}
                                     href={link.href}
                                     className={cn(
-                                        'flex items-center justify-between rounded-2xl border px-4 py-3 transition',
+                                        'flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-semibold transition-all',
                                         isLight
-                                            ? 'border-slate-100 bg-slate-50 hover:border-[#EC1640]/30 hover:bg-[#EC1640]/5 text-slate-800'
-                                            : 'border-white/10 bg-white/5 hover:border-[#EC1640]/60 hover:bg-[#EC1640]/10 text-white'
+                                            ? 'border-slate-100 bg-slate-50 hover:border-[#EC1640]/30 hover:bg-[#EC1640]/5 text-slate-850'
+                                            : 'border-white/10 bg-white/5 hover:border-[#EC1640]/50 hover:bg-white/10 text-white'
                                     )}
                                     onClick={() => setIsOpen(false)}
                                 >
                                     <span>{link.label}</span>
-                                    <span
-                                        className={cn(
-                                            'text-xs uppercase tracking-[0.3em] text-[#EC1640]'
-                                        )}
-                                    >
-                                        Explore
-                                    </span>
+                                    <ArrowRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
                                 </Link>
                             ))}
-                            <a
-                                href={socialMediaLinks.facebook}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="mt-2 flex items-center justify-center gap-2 rounded-full bg-black hover:bg-[#EC1640] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(0,0,0,0.15)] transition-all duration-300"
+
+                            <Link
+                                href="/about"
+                                className="mt-2 text-center rounded-full bg-[#EC1640] hover:bg-[#d61237] text-white px-5 py-3 text-sm font-semibold shadow-lg shadow-rose-900/10 transition-colors"
                                 onClick={() => setIsOpen(false)}
                             >
-                                <FacebookIcon className="w-4 h-4" />
-                                Follow Us on Facebook
-                            </a>
+                                Join Us
+                            </Link>
                         </div>
                     </motion.nav>
                 )}

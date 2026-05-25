@@ -56,33 +56,42 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
     }
 
     return (
-        <div className="min-h-screen bg-white">
-            {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-rose-500 via-rose-600 to-rose-700 py-20 px-4 md:px-8 lg:px-16 text-white">
-                <div className="max-w-7xl mx-auto text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: -30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                            Meet Our Executive Board {teamData.currentYear}/{(teamData.currentYear + 1).toString().slice(-2)}
-                        </h1>
-                        <p className="text-xl md:text-2xl text-rose-100 max-w-3xl mx-auto">
-                            The minds driving innovation, teamwork, and growth at SESA.
-                        </p>
-                    </motion.div>
+        <div className="w-full max-w-[1600px] mx-auto px-3 pt-24 pb-8 md:px-5 md:pt-28 bg-white flex flex-col gap-6 md:gap-8">
+            {/* Hero Section Card */}
+            <section className="relative rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-neutral-900 to-slate-950 text-white border border-white/5 shadow-2xl py-20 px-6 md:px-10 lg:px-12 text-center overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+                <div 
+                    className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay" 
+                    style={{ backgroundImage: 'url(/modern-tech-workspace-with-coding-screens-and-coll.jpg)' }} 
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+                <div className="relative z-10 space-y-4">
+                    <span className="text-[#EC1640] text-xs font-semibold uppercase tracking-[0.2em]">EXECUTIVE COMMITTEE</span>
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium font-serif text-white tracking-normal leading-tight">
+                        Meet Our Executive Board
+                    </h1>
+                    <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-light">
+                        The minds driving innovation, teamwork, and growth at SESA for {teamData.currentYear}/{(teamData.currentYear + 1).toString().slice(-2)}.
+                    </p>
                 </div>
             </section>
 
-            {/* Current Executive Board */}
-            <section className="py-16 px-4 md:px-8 lg:px-16 bg-white">
+            {/* Current Executive Board Card */}
+            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
+                <div className="text-center mb-10 space-y-3">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                        Leadership
+                    </span>
+                    <h2 className="text-3xl md:text-4xl font-semibold font-serif text-slate-950">
+                        Current Executive Board
+                    </h2>
+                </div>
+
                 <div className="max-w-7xl mx-auto">
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate={mounted ? "visible" : "hidden"}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
                     >
                         {teamData.currentBoard.map((member) => (
                             <motion.div
@@ -90,11 +99,11 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                 variants={itemVariants}
                                 className="group"
                             >
-                                <div className="relative bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-rose-400 transition-all duration-300 hover:shadow-xl">
+                                <div className="relative bg-white rounded-2xl p-6 border-2 border-slate-200 hover:border-[#EC1640] transition-all duration-300 hover:shadow-xl flex flex-col justify-between h-full min-h-[260px]">
                                     {/* Profile Image */}
-                                    <div className="relative mx-auto mb-6 w-32 h-32">
-                                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-rose-400 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity blur-md"></div>
-                                        <div className="relative w-full h-full rounded-full border-4 border-rose-200 group-hover:border-rose-400 overflow-hidden bg-gray-100 transition-colors">
+                                    <div className="relative mx-auto mb-5 w-28 h-28">
+                                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#EC1640]/40 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity blur-md"></div>
+                                        <div className="relative w-full h-full rounded-full border-4 border-slate-100 group-hover:border-[#EC1640] overflow-hidden bg-slate-50 transition-colors">
                                             <Image
                                                 src={member.image || '/placeholder-user.jpg'}
                                                 alt={member.name}
@@ -105,23 +114,25 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                     </div>
 
                                     {/* Member Info */}
-                                    <div className="text-center">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-rose-600 transition-colors">
-                                            {member.name}
-                                        </h3>
-                                        <p className="text-rose-600 text-sm font-medium mb-4">
-                                            {member.position}
-                                        </p>
+                                    <div className="text-center flex-grow flex flex-col justify-between">
+                                        <div>
+                                            <h3 className="text-base font-semibold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors leading-snug">
+                                                {member.name}
+                                            </h3>
+                                            <p className="text-slate-500 text-xs font-medium uppercase tracking-wider mt-1">
+                                                {member.position}
+                                            </p>
+                                        </div>
 
                                         {/* Social Links */}
                                         {(member.email || member.linkedin || member.github) && (
-                                            <div className="flex justify-center gap-3 mt-4">
+                                            <div className="flex justify-center gap-2 mt-4 pt-3 border-t border-slate-100">
                                                 {member.email && (
                                                     <a
                                                         href={`mailto:${member.email}`}
-                                                        className="w-8 h-8 rounded-full bg-rose-100 hover:bg-rose-200 flex items-center justify-center transition-colors"
+                                                        className="w-7 h-7 rounded-full bg-slate-50 hover:bg-rose-50 flex items-center justify-center transition-colors group/item border border-slate-100"
                                                     >
-                                                        <Mail className="w-4 h-4 text-rose-600" />
+                                                        <Mail className="w-3.5 h-3.5 text-slate-500 group-hover/item:text-[#EC1640]" />
                                                     </a>
                                                 )}
                                                 {member.linkedin && (
@@ -129,9 +140,9 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                                         href={member.linkedin}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="w-8 h-8 rounded-full bg-rose-100 hover:bg-rose-200 flex items-center justify-center transition-colors"
+                                                        className="w-7 h-7 rounded-full bg-slate-50 hover:bg-rose-50 flex items-center justify-center transition-colors group/item border border-slate-100"
                                                     >
-                                                        <LinkedinIcon className="w-4 h-4 text-rose-600" />
+                                                        <LinkedinIcon className="w-3.5 h-3.5 text-slate-500 group-hover/item:text-[#EC1640]" />
                                                     </a>
                                                 )}
                                                 {member.github && (
@@ -139,9 +150,9 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                                         href={member.github}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="w-8 h-8 rounded-full bg-rose-100 hover:bg-rose-200 flex items-center justify-center transition-colors"
+                                                        className="w-7 h-7 rounded-full bg-slate-50 hover:bg-rose-50 flex items-center justify-center transition-colors group/item border border-slate-100"
                                                     >
-                                                        <GithubIcon className="w-4 h-4 text-rose-600" />
+                                                        <GithubIcon className="w-3.5 h-3.5 text-slate-500 group-hover/item:text-[#EC1640]" />
                                                     </a>
                                                 )}
                                             </div>
@@ -154,32 +165,29 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                 </div>
             </section>
 
-            {/* Previous Executive Board Section */}
+            {/* Previous Executive Board Card */}
             {teamData.previousBoard.length > 0 && (
-                <section className="py-16 px-4 md:px-8 lg:px-16 bg-gray-50">
-                    <div className="max-w-7xl mx-auto">
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            viewport={{ once: true }}
-                            className="text-center mb-16"
-                        >
-                            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                                Honoring Our Previous Executive Board
-                                {teamData.previousYear && ` (${teamData.previousYear}/${(teamData.previousYear + 1).toString().slice(-2)})`}
-                            </h2>
-                            <p className="text-xl text-gray-600">
-                                With gratitude for their dedication and leadership.
-                            </p>
-                        </motion.div>
+                <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
+                    <div className="text-center mb-10 space-y-3">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                            Alumni
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-semibold font-serif text-slate-950">
+                            Honoring Our Previous Executive Board
+                            {teamData.previousYear && ` (${teamData.previousYear}/${(teamData.previousYear + 1).toString().slice(-2)})`}
+                        </h2>
+                        <p className="text-sm text-slate-500 max-w-xl mx-auto font-normal">
+                            With gratitude for their dedication, hard work, and leadership in laying SESA&apos;s foundation.
+                        </p>
+                    </div>
 
+                    <div className="max-w-7xl mx-auto">
                         <motion.div
                             variants={containerVariants}
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true }}
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
                         >
                             {teamData.previousBoard.map((member) => (
                                 <motion.div
@@ -187,11 +195,10 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                     variants={itemVariants}
                                     className="group"
                                 >
-                                    <div className="relative bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-400 transition-all duration-300 hover:shadow-lg">
+                                    <div className="relative bg-white rounded-2xl p-6 border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-lg flex flex-col justify-between h-full min-h-[220px]">
                                         {/* Profile Image */}
-                                        <div className="relative mx-auto mb-6 w-32 h-32">
-                                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-gray-300 to-gray-400 opacity-0 group-hover:opacity-75 transition-opacity blur-md"></div>
-                                            <div className="relative w-full h-full rounded-full border-3 border-gray-300 group-hover:border-gray-400 overflow-hidden bg-gray-100 transition-colors">
+                                        <div className="relative mx-auto mb-4 w-24 h-24">
+                                            <div className="relative w-full h-full rounded-full border-3 border-slate-100 group-hover:border-slate-300 overflow-hidden bg-slate-50">
                                                 <Image
                                                     src={member.image || '/placeholder-user.jpg'}
                                                     alt={member.name}
@@ -202,11 +209,11 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                         </div>
 
                                         {/* Member Info */}
-                                        <div className="text-center">
-                                            <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
+                                        <div className="text-center flex-grow flex flex-col justify-center">
+                                            <h3 className="text-sm font-semibold font-serif text-slate-800 leading-snug">
                                                 {member.name}
                                             </h3>
-                                            <p className="text-gray-600 text-sm font-medium group-hover:text-gray-700 transition-colors">
+                                            <p className="text-slate-500 text-[0.7rem] uppercase tracking-wider mt-1">
                                                 {member.position}
                                             </p>
                                         </div>
@@ -218,65 +225,35 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                 </section>
             )}
 
-            {/* University Logos Section */}
-            <section className="py-12 px-4 md:px-8 lg:px-16 bg-white border-t border-gray-200">
-                <div className="max-w-7xl mx-auto">
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.6 }}
-                            viewport={{ once: true }}
-                            className="text-center"
-                        >
-                            <div className="w-24 h-24 mx-auto mb-4 relative border-2 border-gray-200 rounded-full bg-white shadow-md">
-                                <Image
-                                    src="/placeholder-logo.png"
-                                    alt="University of Kelaniya"
-                                    fill
-                                    className="object-contain p-2"
-                                />
-                            </div>
-                            <p className="text-gray-700 text-sm font-medium">University of Kelaniya</p>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            viewport={{ once: true }}
-                            className="text-center"
-                        >
-                            <div className="w-24 h-24 mx-auto mb-4 relative border-2 border-gray-200 rounded-full bg-white shadow-md">
-                                <Image
-                                    src="/placeholder-logo.png"
-                                    alt="Faculty of Science"
-                                    fill
-                                    className="object-contain p-2"
-                                />
-                            </div>
-                            <p className="text-gray-700 text-sm font-medium">Faculty of Science</p>
-                        </motion.div>
+            {/* University Affiliation Logos Section Card */}
+            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-8 lg:p-10 relative overflow-hidden flex flex-col items-center justify-center gap-6">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                    Institutional Support
+                </span>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
+                    <div className="text-center">
+                        <div className="w-20 h-20 mx-auto mb-3 relative border border-slate-200 rounded-full bg-white shadow-sm flex items-center justify-center p-2">
+                            <Image
+                                src="/placeholder-logo.png"
+                                alt="University of Kelaniya"
+                                fill
+                                className="object-contain p-3"
+                            />
+                        </div>
+                        <p className="text-slate-800 text-xs font-semibold">University of Kelaniya</p>
                     </div>
 
-                    {/* Contact Info */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        viewport={{ once: true }}
-                        className="text-center mt-12"
-                    >
-                        <p className="text-gray-700 mb-2">
-                            <Mail className="inline-block w-4 h-4 mr-2" />
-                            <a href="mailto:sesa@kln.ac.lk" className="hover:text-rose-600 transition-colors">
-                                sesa@kln.ac.lk
-                            </a>
-                        </p>
-                        <p className="text-gray-500 text-sm">
-                            © {new Date().getFullYear()} Software Engineering Students&apos; Association - University of Kelaniya
-                        </p>
-                    </motion.div>
+                    <div className="text-center">
+                        <div className="w-20 h-20 mx-auto mb-3 relative border border-slate-200 rounded-full bg-white shadow-sm flex items-center justify-center p-2">
+                            <Image
+                                src="/placeholder-logo.png"
+                                alt="Faculty of Science"
+                                fill
+                                className="object-contain p-3"
+                            />
+                        </div>
+                        <p className="text-slate-800 text-xs font-semibold">Faculty of Science</p>
+                    </div>
                 </div>
             </section>
         </div>

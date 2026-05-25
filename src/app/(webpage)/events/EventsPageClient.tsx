@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Calendar, MapPin, Users, Clock, Search, ArrowRight, Sparkles, Filter, Code, BookOpen, Trophy, Users as UsersIcon, Heart } from 'lucide-react'
-import SocialLinks from '@/components/SocialLinks'
 import type { Event } from '@/types/event'
 
 type EventCategory = 'all' | 'hackathon' | 'workshop' | 'social' | 'csr' | 'competition'
@@ -46,233 +46,210 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
     const featuredEvents = events.filter(event => event.featured && event.status === 'upcoming')
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-rose-500 via-rose-600 to-rose-700 py-20 px-4 md:px-8 lg:px-16 text-white">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center space-y-6">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-                            SESA Events
-                        </h1>
-                        <p className="text-xl md:text-2xl text-rose-100 max-w-3xl mx-auto">
-                            Discover workshops, hackathons, and networking opportunities that shape your future
-                        </p>
-                    </div>
+        <div className="w-full max-w-[1600px] mx-auto px-3 pt-24 pb-8 md:px-5 md:pt-28 bg-white flex flex-col gap-6 md:gap-8">
+            {/* Hero Section Card */}
+            <section className="relative rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-neutral-900 to-slate-950 text-white border border-white/5 shadow-2xl py-20 px-6 md:px-10 lg:px-12 text-center overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+                <div 
+                    className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay" 
+                    style={{ backgroundImage: 'url(/tech-workshop-and-coding-event-with-students.jpg)' }} 
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+                <div className="relative z-10 space-y-4">
+                    <span className="text-[#EC1640] text-xs font-semibold uppercase tracking-[0.2em]">CALENDAR</span>
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium font-serif text-white tracking-normal leading-tight">
+                        Discover SESA Events
+                    </h1>
+                    <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-light">
+                        Explore workshops, hackathons, and networking opportunities that shape your future
+                    </p>
                 </div>
             </section>
 
-            {/* Featured Events */}
+            {/* Featured Events Card */}
             {featuredEvents.length > 0 && (
-                <section className="py-12 px-4 md:px-8 lg:px-16 bg-white">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="flex items-center gap-3 mb-8">
-                            <Sparkles className="w-6 h-6 text-rose-500" />
-                            <h2 className="text-3xl font-bold text-gray-900">Featured Events</h2>
-                        </div>
-                        <div className="grid md:grid-cols-3 gap-6">
-                            {featuredEvents.map(event => (
-                                <Card key={event.id} className="hover:shadow-2xl transition-all duration-300 border-2 border-rose-200">
-                                    <div className="relative h-48 w-full">
-                                        <Image 
-                                            src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'} 
-                                            alt={event.title} 
-                                            fill 
-                                            className="object-cover rounded-t-xl" 
-                                        />
-                                        <div className="absolute top-3 right-3">
-                                            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500 text-white">
-                                                Featured
-                                            </span>
+                <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
+                    <div className="flex items-center gap-3 mb-8">
+                        <Sparkles className="w-5 h-5 text-[#EC1640] animate-pulse" />
+                        <h2 className="text-2xl md:text-3xl font-semibold font-serif text-slate-950">Featured Events</h2>
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        {featuredEvents.map(event => (
+                            <Card key={event.id} className="hover:shadow-2xl transition-all duration-300 border border-slate-200 hover:border-[#EC1640]/50 rounded-2xl flex flex-col justify-between overflow-hidden">
+                                <div className="relative h-44 w-full bg-slate-50">
+                                    <Image 
+                                        src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'} 
+                                        alt={event.title} 
+                                        fill 
+                                        className="object-cover" 
+                                    />
+                                    <div className="absolute top-3 right-3">
+                                        <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold bg-[#EC1640] text-white">
+                                            Featured
+                                        </span>
+                                    </div>
+                                </div>
+                                <CardHeader className="p-5">
+                                    <CardTitle className="text-lg font-serif font-semibold leading-snug line-clamp-2">{event.title}</CardTitle>
+                                    <div className="space-y-1.5 text-xs text-slate-500 mt-2">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar className="w-3.5 h-3.5 text-[#EC1640]" />
+                                            <span>{event.date}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <MapPin className="w-3.5 h-3.5 text-[#EC1640]" />
+                                            <span>{event.location}</span>
                                         </div>
                                     </div>
-                                    <CardHeader>
-                                        <CardTitle className="text-xl">{event.title}</CardTitle>
-                                        <div className="space-y-2 text-sm text-gray-600">
-                                            <div className="flex items-center gap-2">
-                                                <Calendar className="w-4 h-4" />
-                                                <span>{event.date}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <MapPin className="w-4 h-4" />
-                                                <span>{event.location}</span>
-                                            </div>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p className="text-gray-600">{event.description}</p>
-                                    </CardContent>
-                                    <CardFooter>
-                                        <Button className="w-full bg-rose-500 hover:bg-rose-600">
+                                </CardHeader>
+                                <CardContent className="px-5 pb-4">
+                                    <p className="text-slate-650 text-sm line-clamp-3">{event.description}</p>
+                                </CardContent>
+                                <CardFooter className="px-5 pb-5 pt-0">
+                                    <Link href={`/events/${event.id}`} className="w-full">
+                                        <Button className="w-full bg-[#EC1640] hover:bg-[#d61237] text-white rounded-xl shadow-sm text-xs font-semibold py-2.5">
                                             Register Now
-                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                            <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                                         </Button>
-                                    </CardFooter>
-                                </Card>
-                            ))}
-                        </div>
+                                    </Link>
+                                </CardFooter>
+                            </Card>
+                        ))}
                     </div>
                 </section>
             )}
 
-            {/* Search and Filter Section */}
-            <section className="py-8 px-4 md:px-8 lg:px-16 bg-gray-50 border-y border-gray-200">
-                <div className="max-w-7xl mx-auto">
-                    <div className="flex flex-col lg:flex-row gap-6">
-                        {/* Search Bar */}
-                        <div className="flex-1">
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                                <input
-                                    type="text"
-                                    placeholder="Search events..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Status Filter */}
-                        <div className="flex gap-2">
-                            {(['all', 'upcoming', 'ongoing', 'past'] as const).map((status) => (
-                                <button
-                                    key={status}
-                                    onClick={() => setSelectedStatus(status)}
-                                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${selectedStatus === status
-                                        ? 'bg-rose-500 text-white'
-                                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-                                        }`}
-                                >
-                                    {status.charAt(0).toUpperCase() + status.slice(1)}
-                                </button>
-                            ))}
-                        </div>
+            {/* Search and Filters Card */}
+            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden flex flex-col gap-6">
+                <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                    {/* Search Bar */}
+                    <div className="relative w-full lg:max-w-md">
+                        <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                        <input
+                            type="text"
+                            placeholder="Search events..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 text-sm border border-slate-200 rounded-full focus:ring-2 focus:ring-[#EC1640]/20 focus:border-[#EC1640] outline-none"
+                        />
                     </div>
 
-                    {/* Category Filter */}
-                    <div className="flex flex-wrap gap-3 mt-6">
-                        {categories.map((cat) => {
-                            const Icon = cat.icon
-                            return (
-                                <button
-                                    key={cat.value}
-                                    onClick={() => setSelectedCategory(cat.value as EventCategory)}
-                                    className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all ${selectedCategory === cat.value
-                                        ? 'bg-rose-500 text-white shadow-lg scale-105'
-                                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-                                        }`}
-                                >
-                                    <Icon className="w-4 h-4" />
-                                    {cat.label}
-                                </button>
-                            )
-                        })}
+                    {/* Status Filters */}
+                    <div className="flex gap-2 w-full lg:w-auto overflow-x-auto pb-1 lg:pb-0">
+                        {(['all', 'upcoming', 'ongoing', 'past'] as const).map((status) => (
+                            <button
+                                key={status}
+                                onClick={() => setSelectedStatus(status)}
+                                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${selectedStatus === status
+                                    ? 'bg-[#EC1640] text-white shadow-sm'
+                                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                                    }`}
+                            >
+                                {status.charAt(0).toUpperCase() + status.slice(1)}
+                            </button>
+                        ))}
                     </div>
+                </div>
+
+                {/* Category Filters */}
+                <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    {categories.map((cat) => {
+                        const Icon = cat.icon
+                        return (
+                            <button
+                                key={cat.value}
+                                onClick={() => setSelectedCategory(cat.value as EventCategory)}
+                                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all ${selectedCategory === cat.value
+                                    ? 'bg-slate-900 text-white shadow-sm'
+                                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                                    }`}
+                            >
+                                <Icon className="w-3.5 h-3.5" />
+                                {cat.label}
+                            </button>
+                        )
+                    })}
                 </div>
             </section>
 
-            {/* Events Grid */}
-            <section className="py-12 px-4 md:px-8 lg:px-16">
-                <div className="max-w-7xl mx-auto">
-                    {filteredEvents.length === 0 ? (
-                        <div className="text-center py-20">
-                            <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                            <h3 className="text-2xl font-bold text-gray-900 mb-2">No events found</h3>
-                            <p className="text-gray-600">Try adjusting your filters or search query</p>
+            {/* Events Grid Card */}
+            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
+                {filteredEvents.length === 0 ? (
+                    <div className="text-center py-16 space-y-4">
+                        <Calendar className="w-12 h-12 text-slate-300 mx-auto" />
+                        <h3 className="text-xl font-serif font-semibold text-slate-800">No events found</h3>
+                        <p className="text-slate-500 text-sm max-w-xs mx-auto">Try adjusting your filters or search keywords.</p>
+                    </div>
+                ) : (
+                    <>
+                        <div className="mb-6 text-sm text-slate-500 font-medium">
+                            Showing {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'}
                         </div>
-                    ) : (
-                        <>
-                            <div className="mb-6 text-gray-600">
-                                Showing {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'}
-                            </div>
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {filteredEvents.map((event) => (
-                                    <Card key={event.id} className="hover:shadow-xl transition-all duration-300 flex flex-col">
-                                        <div className="relative h-48 w-full">
-                                            <Image 
-                                                src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'} 
-                                                alt={event.title} 
-                                                fill 
-                                                className="object-cover rounded-t-xl" 
-                                            />
-                                            <div className="absolute top-3 right-3">
-                                                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusBadgeConfig[event.status].color}`}>
-                                                    {statusBadgeConfig[event.status].label}
-                                                </span>
-                                            </div>
-                                            <div className="absolute top-3 left-3">
-                                                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-gray-700 capitalize">
-                                                    {event.category}
-                                                </span>
-                                            </div>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                            {filteredEvents.map((event) => (
+                                <Card key={event.id} className="hover:shadow-xl transition-all duration-300 flex flex-col border border-slate-200 rounded-2xl justify-between overflow-hidden">
+                                    <div className="relative h-44 w-full bg-slate-50">
+                                        <Image 
+                                            src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'} 
+                                            alt={event.title} 
+                                            fill 
+                                            className="object-cover" 
+                                        />
+                                        <div className="absolute top-3 right-3">
+                                            <span className={`px-2.5 py-0.5 rounded-full text-[9px] uppercase tracking-wider font-bold ${statusBadgeConfig[event.status].color}`}>
+                                                {statusBadgeConfig[event.status].label}
+                                            </span>
                                         </div>
+                                        <div className="absolute top-3 left-3">
+                                            <span className="px-2.5 py-0.5 rounded-full text-[9px] uppercase tracking-wider font-semibold bg-white/90 text-slate-800 border border-slate-100">
+                                                {event.category}
+                                            </span>
+                                        </div>
+                                    </div>
 
-                                        <CardHeader className="flex-grow">
-                                            <CardTitle className="text-xl line-clamp-2">{event.title}</CardTitle>
-                                            <div className="space-y-2 text-sm text-gray-600 mt-3">
-                                                <div className="flex items-center gap-2">
-                                                    <Calendar className="w-4 h-4 text-rose-500" />
-                                                    <span>{event.date}</span>
-                                                </div>
-                                                {event.time && (
-                                                    <div className="flex items-center gap-2">
-                                                        <Clock className="w-4 h-4 text-rose-500" />
-                                                        <span>{event.time}</span>
-                                                    </div>
-                                                )}
-                                                {event.location && (
-                                                    <div className="flex items-center gap-2">
-                                                        <MapPin className="w-4 h-4 text-rose-500" />
-                                                        <span className="line-clamp-1">{event.location}</span>
-                                                    </div>
-                                                )}
-                                                {event.participants && event.participants > 0 && (
-                                                    <div className="flex items-center gap-2">
-                                                        <Users className="w-4 h-4 text-rose-500" />
-                                                        <span>{event.participants} participants</span>
-                                                    </div>
-                                                )}
+                                    <CardHeader className="p-5 flex-grow">
+                                        <CardTitle className="text-lg font-serif font-semibold line-clamp-2 leading-snug">{event.title}</CardTitle>
+                                        <div className="space-y-1.5 text-xs text-slate-500 mt-3 font-medium">
+                                            <div className="flex items-center gap-2">
+                                                <Calendar className="w-3.5 h-3.5 text-[#EC1640]" />
+                                                <span>{event.date}</span>
                                             </div>
-                                        </CardHeader>
+                                            {event.time && (
+                                                <div className="flex items-center gap-2">
+                                                    <Clock className="w-3.5 h-3.5 text-[#EC1640]" />
+                                                    <span>{event.time}</span>
+                                                </div>
+                                            )}
+                                            {event.location && (
+                                                <div className="flex items-center gap-2">
+                                                    <MapPin className="w-3.5 h-3.5 text-[#EC1640]" />
+                                                    <span className="line-clamp-1">{event.location}</span>
+                                                </div>
+                                            )}
+                                            {event.participants && event.participants > 0 && (
+                                                <div className="flex items-center gap-2">
+                                                    <Users className="w-3.5 h-3.5 text-[#EC1640]" />
+                                                    <span>{event.participants} participants</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </CardHeader>
 
-                                        <CardContent>
-                                            <p className="text-gray-600 line-clamp-3">{event.description}</p>
-                                        </CardContent>
+                                    <CardContent className="px-5 pb-4">
+                                        <p className="text-slate-650 text-sm line-clamp-3 leading-relaxed">{event.description}</p>
+                                    </CardContent>
 
-                                        <CardFooter className="flex gap-2">
-                                            <Button variant="outline" className="flex-1">
+                                    <CardFooter className="px-5 pb-5 pt-0 flex gap-2">
+                                        <Link href={`/events/${event.id}`} className="w-full">
+                                            <Button variant="outline" className="w-full text-xs font-semibold py-2 rounded-xl hover:bg-slate-50">
                                                 Learn More
                                             </Button>
-                                            {event.status === 'upcoming' && event.registrationLink && (
-                                                <Button className="flex-1 bg-rose-500 hover:bg-rose-600">
-                                                    Register
-                                                </Button>
-                                            )}
-                                        </CardFooter>
-                                    </Card>
-                                ))}
-                            </div>
-                        </>
-                    )}
-                </div>
-            </section>
-
-            {/* CTA Section */}
-            <section className="py-16 px-4 md:px-8 lg:px-16 bg-gradient-to-br from-rose-500 via-rose-600 to-rose-700 text-white">
-                <div className="max-w-4xl mx-auto text-center space-y-6">
-                    <h2 className="text-3xl md:text-4xl font-bold">
-                        Stay Updated on Upcoming Events
-                    </h2>
-                    <p className="text-xl text-rose-50">
-                        Follow us on social media to receive notifications about new events, workshops, and opportunities
-                    </p>
-                    <div className="flex justify-center pt-4">
-                        <SocialLinks variant="buttons" />
-                    </div>
-                    <div className="flex justify-center pt-6">
-                        <SocialLinks variant="icons" className="text-white" />
-                    </div>
-                </div>
+                                        </Link>
+                                    </CardFooter>
+                                </Card>
+                            ))}
+                        </div>
+                    </>
+                )}
             </section>
         </div>
     )
