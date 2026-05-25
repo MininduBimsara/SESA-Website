@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const chokidar = require('chokidar');
 
-const DOCS_DIR = path.join(__dirname, '../V2 Docs');
+const DOC_DIRS = [
+    path.join(__dirname, '../V2 Docs'),
+    path.join(__dirname, '../docs')
+];
 const INDEX_FILE = 'INDEX.md';
 
 function getNextPrefixNumber(files) {
@@ -58,17 +61,15 @@ function extractDescription(filePath) {
     }
 }
 
-function processDocs() {
-    console.log('Automating V2 Docs...');
+function processDocs(dirPath) {
+    console.log(`Automating docs in ${dirPath}...`);
     
-    if (!fs.existsSync(DOCS_DIR)) {
-        fs.mkdirSync(DOCS_DIR, { recursive: true });
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
     }
 
-    let allFiles = fs.readdirSync(DOCS_DIR)
+    let allFiles = fs.readdirSync(dirPath)
         .filter(f => f.endsWith('.md') && f !== INDEX_FILE);
-
-    let needsAnotherPass = false;
 
     // 1. Rename files without a numeric prefix
     for (const file of allFiles) {
@@ -79,19 +80,17 @@ function processDocs() {
             
             console.log(`Renaming: ${file} -> ${newName}`);
             fs.renameSync(
-                path.join(DOCS_DIR, file),
-                path.join(DOCS_DIR, newName)
+                path.join(dirPath, file),
+                path.join(dirPath, newName)
             );
-            needsAnotherPass = true;
             // Update allFiles list for the next iteration to avoid collisions
-            allFiles = fs.readdirSync(DOCS_DIR)
+            allFiles = fs.readdirSync(dirPath)
                 .filter(f => f.endsWith('.md') && f !== INDEX_FILE);
         }
     }
 
     // 2. Generate INDEX.md
-    // Re-read files just in case
-    const sortedFiles = fs.readdirSync(DOCS_DIR)
+    const sortedFiles = fs.readdirSync(dirPath)
         .filter(f => f.endsWith('.md') && f !== INDEX_FILE)
         .sort((a, b) => {
             const numA = parseInt(a.match(/^(\d+)/)?.[1] || 0, 10);
@@ -99,7 +98,7 @@ function processDocs() {
             return numA - numB;
         });
 
-    let indexContent = `# V2 Documentation Index\n\n`;
+    let indexContent = `# Documentation Index\n\n`;
     indexContent += `This index is automatically generated. Do not edit it manually.\n\n`;
     indexContent += `| Order | Document | Description | File |\n`;
     indexContent += `| :---: | :--- | :--- | :--- |\n`;
@@ -107,34 +106,40 @@ function processDocs() {
     for (const file of sortedFiles) {
         const numMatch = file.match(/^(\d+)/);
         const order = numMatch ? parseInt(numMatch[1], 10) : '-';
-        const fullPath = path.join(DOCS_DIR, file);
+        const fullPath = path.join(dirPath, file);
         const title = extractTitle(fullPath);
         const description = extractDescription(fullPath);
         
         indexContent += `| ${order} | **${title}** | ${description} | [${file}](./${encodeURIComponent(file)}) |\n`;
     }
 
-    const indexPath = path.join(DOCS_DIR, INDEX_FILE);
+    const indexPath = path.join(dirPath, INDEX_FILE);
     fs.writeFileSync(indexPath, indexContent, 'utf-8');
-    console.log(`Updated ${INDEX_FILE}`);
+    console.log(`Updated ${indexPath}`);
+}
+
+function processAllDocs() {
+    for (const dir of DOC_DIRS) {
+        processDocs(dir);
+    }
 }
 
 const isWatchMode = process.argv.includes('--watch');
 
 if (isWatchMode) {
-    console.log(`Watching for changes in ${DOCS_DIR}...`);
+    console.log(`Watching for changes in: \n  - ${DOC_DIRS.join('\n  - ')}`);
     let timeout = null;
     
     // We use a debounce to prevent running multiple times for a single save/rename event
     const runDebounced = () => {
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(() => {
-            processDocs();
+            processAllDocs();
         }, 500); // Wait 500ms before processing
     };
 
-    const watcher = chokidar.watch(path.join(DOCS_DIR, '*.md'), {
-        ignored: path.join(DOCS_DIR, INDEX_FILE),
+    const watcher = chokidar.watch(DOC_DIRS.map(d => path.join(d, '*.md')), {
+        ignored: DOC_DIRS.map(d => path.join(d, INDEX_FILE)),
         persistent: true,
         ignoreInitial: false,
     });
@@ -144,5 +149,5 @@ if (isWatchMode) {
         .on('change', runDebounced)
         .on('unlink', runDebounced);
 } else {
-    processDocs();
+    processAllDocs();
 }

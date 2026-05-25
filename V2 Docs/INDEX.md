@@ -1,4 +1,4 @@
-# V2 Documentation Index
+# Documentation Index
 
 This index is automatically generated. Do not edit it manually.
 
