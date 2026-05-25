@@ -1,4 +1,4 @@
-import HeroSlider from '@/components/HeroSlider'
+import HomeHero from '@/components/HomeHero'
 import AboutSection from './AboutSection'
 import FeaturedEvents from './FeaturedEvents'
 import StatsSection from './StatsSection'
@@ -11,7 +11,7 @@ import React from 'react'
 const page = () => {
     return (
         <div>
-            <HeroSlider />
+            <HomeHero />
             <AboutSection />
             <StatsSection />
             <FeaturedEvents />

@@ -3,27 +3,14 @@ import { Newspaper, TrendingUp, Award, Code2 } from 'lucide-react'
 import Link from 'next/link'
 import prisma from '@/lib/prisma'
 
-// Helper function to get icon component based on category
 const getCategoryIcon = (category: string | null) => {
     const categoryLower = category?.toLowerCase() || ''
-    
     if (categoryLower.includes('achievement') || categoryLower.includes('award')) return Award
     if (categoryLower.includes('workshop') || categoryLower.includes('tech')) return Code2
     if (categoryLower.includes('opportunity') || categoryLower.includes('career')) return TrendingUp
     return Newspaper
 }
 
-// Helper function to get color based on category
-const getCategoryColor = (category: string | null) => {
-    const categoryLower = category?.toLowerCase() || ''
-    
-    if (categoryLower.includes('achievement') || categoryLower.includes('award')) return 'rose'
-    if (categoryLower.includes('workshop') || categoryLower.includes('tech')) return 'blue'
-    if (categoryLower.includes('opportunity') || categoryLower.includes('career')) return 'purple'
-    return 'green'
-}
-
-// Helper function to calculate relative time
 const getRelativeTime = (date: Date) => {
     const now = new Date()
     const diffTime = Math.abs(now.getTime() - date.getTime())
@@ -37,7 +24,6 @@ const getRelativeTime = (date: Date) => {
     return `${Math.floor(diffDays / 365)} years ago`
 }
 
-// Type for combined news and blog items
 type UpdateItem = {
     id: string
     title: string
@@ -51,7 +37,6 @@ type UpdateItem = {
 
 async function getLatestUpdates() {
     try {
-        // Fetch news
         const news = await prisma.news.findMany({
             where: { 
                 published: true,
@@ -70,7 +55,6 @@ async function getLatestUpdates() {
             }
         })
 
-        // Fetch blogs
         const blogs = await prisma.blog.findMany({
             where: { 
                 published: true,
@@ -89,11 +73,9 @@ async function getLatestUpdates() {
             }
         })
 
-        // Combine and add type field
         const newsWithType: UpdateItem[] = news.map(item => ({ ...item, type: 'news' as const }))
         const blogsWithType: UpdateItem[] = blogs.map(item => ({ ...item, type: 'blog' as const }))
         
-        // Merge, sort by date, and take top 4
         const combined = [...newsWithType, ...blogsWithType]
             .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
             .slice(0, 4)
@@ -108,111 +90,112 @@ async function getLatestUpdates() {
 const LatestUpdatesSection = async () => {
     const updates = await getLatestUpdates()
 
-    const getColorClasses = (color: string) => {
-        const colors = {
-            rose: 'bg-rose-100 text-rose-600 border-rose-200',
-            blue: 'bg-blue-100 text-blue-600 border-blue-200',
-            purple: 'bg-purple-100 text-purple-600 border-purple-200',
-            green: 'bg-green-100 text-green-600 border-green-200'
-        }
-        return colors[color as keyof typeof colors]
-    }
-
     return (
-        <section className="py-20 px-4 md:px-8 lg:px-16 bg-white">
-            <div className="max-w-7xl mx-auto">
-                <div className="flex items-center justify-between mb-12">
-                    <div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-white">
+            {/* White Rounded Container Card */}
+            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 flex flex-col gap-10 md:gap-12 relative overflow-hidden">
+                
+                {/* Section Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
+                    <div className="space-y-4">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                            Latest News
+                        </div>
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-black tracking-tight leading-none">
                             Latest Updates
                         </h2>
-                        <p className="text-xl text-gray-600">
-                            Stay informed about SESA news, blogs, and opportunities
+                        <p className="text-base md:text-lg text-slate-600 font-normal">
+                            Stay informed about SESA news, blogs, and opportunities.
                         </p>
                     </div>
-                    <div className="hidden md:flex items-center gap-4">
+                    
+                    {/* Header CTA Links */}
+                    <div className="hidden md:flex items-center gap-4 text-sm font-bold">
                         <Link
                             href="/news"
-                            className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-semibold"
+                            className="inline-flex items-center gap-1.5 text-black hover:text-[#EC1640] transition-colors"
                         >
-                            View All News
+                            <span>View All News</span>
                             <span>→</span>
                         </Link>
-                        <span className="text-gray-400">|</span>
+                        <span className="text-slate-300">|</span>
                         <Link
                             href="/blogs"
-                            className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-semibold"
+                            className="inline-flex items-center gap-1.5 text-black hover:text-[#EC1640] transition-colors"
                         >
-                            View All Blogs
+                            <span>View All Blogs</span>
                             <span>→</span>
                         </Link>
                     </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                {/* Grid of Updates */}
+                <div className="grid md:grid-cols-2 gap-6 relative z-10">
                     {updates.length > 0 ? (
                         updates.map((item) => {
                             const Icon = getCategoryIcon(item.category)
-                            const color = getCategoryColor(item.category)
                             const linkPath = item.type === 'blog' ? `/blogs/${item.slug}` : `/news/${item.slug}`
                             return (
                                 <Link 
                                     href={linkPath}
                                     key={item.id}
-                                    className="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-all border border-gray-200 hover:border-gray-300"
+                                    className="bg-slate-50/50 hover:bg-white border border-slate-200/75 hover:border-[#EC1640]/50 rounded-[1.75rem] p-5 md:p-6 hover:shadow-2xl transition-all duration-300 flex items-start gap-4 md:gap-5 group"
                                 >
-                                    <div className="flex items-start gap-4">
-                                        <div className={`w-12 h-12 rounded-xl ${getColorClasses(color)} flex items-center justify-center flex-shrink-0 border`}>
-                                            <Icon className="w-6 h-6" />
+                                    {/* Icon Holder */}
+                                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl border border-slate-200 bg-slate-100 text-[#EC1640] flex items-center justify-center flex-shrink-0 group-hover:bg-[#EC1640] group-hover:text-white group-hover:border-[#EC1640] transition-all duration-300">
+                                        <Icon className="w-5 h-5" />
+                                    </div>
+                                    
+                                    {/* Text Content */}
+                                    <div className="flex-grow space-y-2">
+                                        <div className="flex items-center justify-between gap-4">
+                                            <span className="text-[10px] font-bold text-[#EC1640] uppercase tracking-wider">
+                                                {item.category || (item.type === 'blog' ? 'Blog' : 'News')}
+                                            </span>
+                                            <span className="text-xs text-slate-400 font-medium">
+                                                {getRelativeTime(new Date(item.createdAt))}
+                                            </span>
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center justify-between mb-2">
-                                                <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                                                    {item.category || (item.type === 'blog' ? 'Blog' : 'News')}
-                                                </span>
-                                                <span className="text-sm text-gray-400">
-                                                    {getRelativeTime(new Date(item.createdAt))}
-                                                </span>
-                                            </div>
-                                            <h3 className="text-xl font-bold text-gray-900 mb-2">
-                                                {item.title}
-                                            </h3>
-                                            <p className="text-gray-600 line-clamp-2">
-                                                {item.excerpt || item.content.replace(/<[^>]*>/g, '').slice(0, 150) + '...'}
-                                            </p>
-                                        </div>
+                                        <h3 className="text-lg md:text-[1.125rem] font-bold text-black group-hover:text-[#EC1640] transition-colors leading-snug line-clamp-2">
+                                            {item.title}
+                                        </h3>
+                                        <p className="text-[0.875rem] text-slate-600 leading-relaxed font-normal line-clamp-2">
+                                            {item.excerpt || item.content.replace(/<[^>]*>/g, '').slice(0, 150) + '...'}
+                                        </p>
                                     </div>
                                 </Link>
                             )
                         })
                     ) : (
-                        <div className="col-span-2 text-center py-12 text-gray-500">
+                        <div className="col-span-2 text-center py-12 text-slate-500">
                             <p>No updates available at this time.</p>
                         </div>
                     )}
                 </div>
 
-                <div className="text-center mt-10 md:hidden">
-                    <div className="flex items-center justify-center gap-4">
+                {/* Mobile CTA Links */}
+                <div className="text-center mt-2 md:hidden">
+                    <div className="flex items-center justify-center gap-4 text-xs font-bold">
                         <Link
                             href="/news"
-                            className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-semibold"
+                            className="inline-flex items-center gap-1.5 text-black hover:text-[#EC1640] transition-colors"
                         >
-                            View All News
+                            <span>View All News</span>
                             <span>→</span>
                         </Link>
-                        <span className="text-gray-400">|</span>
+                        <span className="text-slate-300">|</span>
                         <Link
                             href="/blogs"
-                            className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-semibold"
+                            className="inline-flex items-center gap-1.5 text-black hover:text-[#EC1640] transition-colors"
                         >
-                            View All Blogs
+                            <span>View All Blogs</span>
                             <span>→</span>
                         </Link>
                     </div>
                 </div>
-            </div>
-        </section>
+
+            </section>
+        </div>
     )
 }
 

@@ -26,57 +26,62 @@ const StatsSection = async () => {
         return Icon || Users
     }
 
-    const getColorClasses = (color: string) => {
-        const colors: Record<string, string> = {
-            rose: 'bg-rose-100 text-rose-600',
-            blue: 'bg-blue-100 text-blue-600',
-            purple: 'bg-purple-100 text-purple-600',
-            green: 'bg-green-100 text-green-600'
-        }
-        return colors[color] || colors.rose
-    }
-
     return (
-        <section className="py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-br from-rose-500 via-rose-600 to-rose-700">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-white">
+            {/* Black Widescreen Container Card */}
+            <section className="bg-black border border-neutral-900 shadow-2xl rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 lg:p-12 relative overflow-hidden flex flex-col gap-10 md:gap-12">
+                
+                {/* Background Grid Pattern */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+                
+                {/* Glowing red accent blur in background */}
+                <div className="absolute -top-24 -left-24 w-72 h-72 bg-[#EC1640] rounded-full filter blur-[100px] opacity-20 pointer-events-none" />
+
+                {/* Section Header */}
+                <div className="text-center relative z-10 space-y-4">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                        Our Metrics
+                    </div>
+                    <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-none">
                         Our Impact in Numbers
                     </h2>
-                    <p className="text-xl text-rose-100">
-                        Growing stronger together, one milestone at a time
+                    <p className="text-base md:text-lg text-neutral-400 font-normal">
+                        Growing stronger together, one milestone at a time.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                {/* Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative z-10">
                     {statistics.length > 0 ? (
                         statistics.map((stat) => {
                             const Icon = getIconComponent(stat.icon)
                             return (
                                 <div
                                     key={stat.id}
-                                    className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center hover:bg-white/20 transition-all duration-300 border border-white/20"
+                                    className="bg-neutral-950/60 border border-neutral-850 hover:border-[#EC1640]/60 rounded-2xl md:rounded-[1.75rem] p-5 md:p-8 text-center hover:shadow-[0_0_30px_rgba(236,22,64,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-4 group"
                                 >
-                                    <div className={`w-16 h-16 rounded-full ${getColorClasses(stat.color)} flex items-center justify-center mx-auto mb-4`}>
-                                        <Icon className="w-8 h-8" />
+                                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl border border-neutral-800 bg-neutral-900 text-[#EC1640] flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <Icon className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    <div className="text-4xl font-bold text-white mb-2">
-                                        {stat.value}
-                                    </div>
-                                    <div className="text-rose-100 font-medium">
-                                        {stat.label}
+                                    <div className="space-y-1">
+                                        <div className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                                            {stat.value}
+                                        </div>
+                                        <div className="text-xs md:text-[0.875rem] text-neutral-400 font-medium tracking-wide uppercase">
+                                            {stat.label}
+                                        </div>
                                     </div>
                                 </div>
                             )
                         })
                     ) : (
-                        <div className="col-span-full text-center text-white/80 py-12">
+                        <div className="col-span-full text-center text-neutral-500 py-12">
                             <p>No statistics available yet.</p>
                         </div>
                     )}
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     )
 }
 

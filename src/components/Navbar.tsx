@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
@@ -24,6 +26,8 @@ interface NavbarProps {
 }
 
 const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
+    const pathname = usePathname()
+    const isHomepage = pathname === '/'
     const [isOpen, setIsOpen] = useState(false)
     const [hasScrolled, setHasScrolled] = useState(false)
 
@@ -52,29 +56,35 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
 
     const isDetached = hasScrolled
 
+    const isVisible = !isHomepage || hasScrolled
+
     return (
         <motion.header
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ 
+                opacity: isVisible ? 1 : 0, 
+                y: isVisible ? 0 : -100 
+            }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-                'fixed inset-x-0 z-50 transition-all duration-500',
-                isDetached ? 'pointer-events-none top-6 flex justify-center' : 'top-0'
+                'fixed inset-x-0 top-0 z-50 pointer-events-none',
+                !isVisible && 'pointer-events-none'
             )}
         >
-            <div
+            <motion.div
+                layout
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 className={cn(
-                    'flex w-full items-center justify-between transition-all duration-500 mx-auto',
+                    'flex items-center justify-between mx-auto transition-colors duration-300 pointer-events-auto',
                     isDetached
                         ? [
-                            'pointer-events-auto w-[min(92%,1100px)] rounded-full border px-4 py-0 backdrop-blur-lg',
-                            'mx-auto',
+                            'w-[min(92%,1100px)] rounded-full border px-4 py-2 backdrop-blur-lg mt-6 shadow-[0_18px_45px_rgba(0,0,0,0.08)]',
                             isLight
-                                ? 'border-rose-100/80 bg-white/95 text-slate-700 shadow-[0_18px_45px_rgba(244,63,94,0.12)]'
+                                ? 'border-[#EC1640]/25 bg-white/95 text-slate-800 shadow-[0_18px_45px_rgba(236,22,64,0.12)]'
                                 : 'border-white/10 bg-slate-950/80 text-slate-100 shadow-[0_30px_60px_rgba(15,23,42,0.35)]',
                         ]
                         : [
-                            'pointer-events-auto border-b px-6 py-2',
+                            'w-full border-b px-6 py-2.5 rounded-none mt-0',
                             isLight
                                 ? 'border-white/0 bg-white/0 text-slate-700'
                                 : 'border-white/0 bg-slate-950/0 text-slate-100'
@@ -83,27 +93,15 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
             >
                 <Link
                     href="/"
-                    className={cn(
-                        'flex items-center gap-3 rounded-full px-4 py-2 text-sm font-semibold uppercase tracking-[0.2em] transition-colors',
-                        isLight ? 'text-slate-500 hover:text-rose-500' : 'text-slate-100 hover:text-rose-300'
-                    )}
+                    className="flex items-center gap-3 rounded-full px-2 py-1 transition-colors"
                 >
-                    <span
-                        className={cn(
-                            'relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border bg-gradient-to-br text-white shadow-[0_12px_24px_rgba(244,63,94,0.28)]',
-                            isLight ? 'border-rose-200 from-rose-400 via-rose-500 to-rose-600' : 'border-rose-500/60 from-rose-500 via-rose-500 to-rose-400'
-                        )}
-                    >
-                        <span className="text-lg font-bold">S</span>
-                    </span>
-                    <span
-                        className={cn(
-                            'hidden sm:inline-flex text-xs',
-                            isLight ? 'text-slate-600' : 'text-slate-200/80'
-                        )}
-                    >
-                        Software Engineering Student Association
-                    </span>
+                    <Image
+                        src="/SESA_Logo_Black-01.png"
+                        alt="SESA Logo"
+                        width={110}
+                        height={36}
+                        className={cn("h-8 w-auto object-contain", !isLight && "brightness-0 invert")}
+                    />
                 </Link>
 
                 <nav
@@ -118,14 +116,13 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                             href={link.href}
                             className={cn(
                                 'group relative transition-colors duration-300',
-                                isLight ? 'hover:text-rose-500' : 'hover:text-rose-300'
+                                isLight ? 'hover:text-[#EC1640]' : 'hover:text-[#EC1640]'
                             )}
                         >
                             {link.label}
                             <span
                                 className={cn(
-                                    'absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full',
-                                    isLight ? 'bg-gradient-to-r from-rose-400 to-rose-500' : 'bg-gradient-to-r from-rose-300 to-rose-500'
+                                    'absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full bg-[#EC1640]'
                                 )}
                             />
                         </Link>
@@ -135,8 +132,8 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className={cn(
-                            'rounded-full px-5 py-2 text-white shadow-[0_15px_30px_rgba(244,63,94,0.2)] transition-transform duration-300 hover:scale-105 flex items-center gap-2',
-                            isLight ? 'bg-gradient-to-r from-rose-500 via-rose-500 to-rose-400' : 'bg-gradient-to-r from-rose-500 via-rose-500 to-rose-400'
+                            'rounded-full px-5 py-2 text-white shadow-[0_15px_30px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-105 flex items-center gap-2',
+                            'bg-black hover:bg-[#EC1640]'
                         )}
                     >
                         <FacebookIcon className="w-4 h-4" />
@@ -149,15 +146,15 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                     className={cn(
                         'mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full border transition md:hidden',
                         isLight
-                            ? 'border-rose-100 text-rose-400 hover:border-rose-200 hover:text-rose-500'
-                            : 'border-white/20 text-rose-200 hover:border-rose-300/80 hover:text-rose-200'
+                            ? 'border-[#EC1640]/25 text-[#EC1640] hover:border-[#EC1640]/40 hover:text-[#EC1640]'
+                            : 'border-white/20 text-white hover:border-[#EC1640] hover:text-[#EC1640]'
                     )}
                     onClick={() => setIsOpen((prev) => !prev)}
                     aria-label="Toggle navigation menu"
                 >
                     {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                 </button>
-            </div>
+            </motion.div>
 
             <AnimatePresence>
                 {isOpen && (
@@ -167,9 +164,9 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                         exit={{ opacity: 0, y: -12 }}
                         transition={{ duration: 0.25 }}
                         className={cn(
-                            'pointer-events-auto mx-auto mt-3 w-[min(92%,1100px)] overflow-hidden rounded-3xl border px-6 py-6 shadow-[0_24px_60px_rgba(244,63,94,0.14)] md:hidden',
+                            'pointer-events-auto mx-auto mt-3 w-[min(92%,1100px)] overflow-hidden rounded-3xl border px-6 py-6 shadow-[0_24px_60px_rgba(236,22,64,0.12)] md:hidden',
                             isLight
-                                ? 'border-rose-100 bg-white text-slate-700'
+                                ? 'border-slate-100 bg-white text-slate-700'
                                 : 'border-white/10 bg-slate-950/95 text-slate-100'
                         )}
                     >
@@ -181,16 +178,15 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                                     className={cn(
                                         'flex items-center justify-between rounded-2xl border px-4 py-3 transition',
                                         isLight
-                                            ? 'border-rose-100 bg-rose-50/60 hover:border-rose-200 hover:bg-rose-100/60'
-                                            : 'border-white/10 bg-white/5 hover:border-rose-400/60 hover:bg-rose-500/10'
+                                            ? 'border-slate-100 bg-slate-50 hover:border-[#EC1640]/30 hover:bg-[#EC1640]/5 text-slate-800'
+                                            : 'border-white/10 bg-white/5 hover:border-[#EC1640]/60 hover:bg-[#EC1640]/10 text-white'
                                     )}
                                     onClick={() => setIsOpen(false)}
                                 >
                                     <span>{link.label}</span>
                                     <span
                                         className={cn(
-                                            'text-xs uppercase tracking-[0.3em]',
-                                            isLight ? 'text-rose-300' : 'text-rose-200'
+                                            'text-xs uppercase tracking-[0.3em] text-[#EC1640]'
                                         )}
                                     >
                                         Explore
@@ -201,7 +197,7 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                                 href={socialMediaLinks.facebook}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="mt-2 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-rose-400 px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(244,63,94,0.2)]"
+                                className="mt-2 flex items-center justify-center gap-2 rounded-full bg-black hover:bg-[#EC1640] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(0,0,0,0.15)] transition-all duration-300"
                                 onClick={() => setIsOpen(false)}
                             >
                                 <FacebookIcon className="w-4 h-4" />
