@@ -23,7 +23,7 @@ interface NavbarProps {
     initialTheme?: NavbarTheme
 }
 
-const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
+const Navbar = ({ initialTheme = 'light' }: NavbarProps) => {
     const pathname = usePathname()
     const isHomepage = pathname === '/'
     const [isOpen, setIsOpen] = useState(false)
@@ -90,7 +90,7 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                         : [
                             'w-full border-b px-8 py-4 rounded-none mt-0',
                             isLight
-                                ? 'border-slate-200/50 bg-white text-slate-800'
+                                ? 'border-transparent bg-transparent text-slate-800'
                                 : 'border-white/5 bg-slate-950/50 backdrop-blur-md text-slate-100'
                         ]
                 )}
@@ -98,7 +98,7 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                 {/* Desktop Left Navigation Links */}
                 <nav
                     className={cn(
-                        'hidden items-center gap-7 text-[0.875rem] font-medium md:flex',
+                        'hidden items-center gap-7 text-[0.875rem] font-semibold lg:flex',
                         isLight ? 'text-slate-700' : 'text-white/80'
                     )}
                 >
@@ -108,7 +108,7 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                             href={link.href}
                             className={cn(
                                 'group relative py-1 transition-colors duration-300',
-                                isLight ? 'hover:text-[#EC1640]' : 'hover:text-white'
+                                isLight ? 'hover:text-black' : 'hover:text-white'
                             )}
                         >
                             {link.label}
@@ -123,9 +123,9 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                         <Image
                             src="/SESA_Logo_Black-01.png"
                             alt="SESA Logo"
-                            width={115}
-                            height={38}
-                            className={cn("h-8 w-auto object-contain transition-all duration-300", !isLight && "brightness-0 invert")}
+                            width={130}
+                            height={42}
+                            className={cn("h-8 md:h-9 w-auto object-contain transition-all duration-300", !isLight && "brightness-0 invert")}
                         />
                     </Link>
                 </div>
@@ -139,23 +139,23 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className={cn(
-                                "text-[0.875rem] rounded-full pl-4 pr-9 py-2 border focus:outline-none transition-all w-36 focus:w-52",
+                                "text-[0.875rem] rounded-full pl-5 pr-10 py-2 border focus:outline-none transition-all w-40 focus:w-56",
                                 isLight 
-                                    ? "bg-slate-100/80 hover:bg-slate-100 focus:bg-white text-slate-800 placeholder-slate-400 border-slate-200 focus:border-slate-350" 
+                                    ? "bg-slate-100/70 hover:bg-slate-100/90 focus:bg-white text-slate-800 placeholder-slate-400 border-slate-200 focus:border-slate-350" 
                                     : "bg-white/10 hover:bg-white/15 focus:bg-white/20 text-white placeholder-white/40 border-white/10 focus:border-white/30"
                             )}
                         />
                         <button type="submit" className={cn("absolute right-3.5 transition-colors", isLight ? "text-slate-400 hover:text-slate-650" : "text-white/50 hover:text-white")}>
-                            <Search className="w-3.5 h-3.5" />
+                            <Search className="w-4 h-4" />
                         </button>
                     </form>
 
                     <Link
                         href="/about"
                         className={cn(
-                            "text-[0.825rem] font-semibold px-5 py-2 rounded-full transition-all hover:scale-[1.02] active:scale-95 shadow-sm hidden sm:inline-block",
+                            "text-[0.875rem] font-semibold px-6 py-2.5 rounded-full transition-all hover:scale-[1.02] active:scale-95 shadow-md hidden sm:inline-block",
                             isLight
-                                ? "bg-black hover:bg-slate-900 text-white"
+                                ? "bg-[#EC1640] hover:bg-[#d61237] text-white shadow-rose-900/10"
                                 : "bg-[#EC1640] hover:bg-[#d61237] text-white shadow-[#EC1640]/10"
                         )}
                     >
@@ -165,15 +165,15 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                     <button
                         type="button"
                         className={cn(
-                            'inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors md:hidden',
+                            'rounded-full w-10 h-10 flex items-center justify-center transition-all focus:outline-none lg:hidden border',
                             isLight
-                                ? 'border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300'
-                                : 'border-white/10 text-white hover:bg-white/10 hover:border-white/25'
+                                ? 'border-slate-200 text-slate-700 bg-white/80 hover:bg-white'
+                                : 'border-white/10 text-white bg-white/10 hover:border-white/20'
                         )}
                         onClick={() => setIsOpen((prev) => !prev)}
                         aria-label="Toggle navigation menu"
                     >
-                        {isOpen ? <X className="h-4.5 w-4.5" /> : <Menu className="h-4.5 w-4.5" />}
+                        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                     </button>
                 </div>
             </motion.div>
@@ -187,7 +187,7 @@ const Navbar = ({ initialTheme = 'dark' }: NavbarProps) => {
                         exit={{ opacity: 0, y: -12 }}
                         transition={{ duration: 0.25 }}
                         className={cn(
-                            'pointer-events-auto mx-auto mt-3 w-[min(92%,500px)] overflow-hidden rounded-3xl border px-6 py-6 shadow-2xl z-55 relative',
+                            'pointer-events-auto mx-auto mt-3 w-[min(92%,500px)] overflow-hidden rounded-3xl border px-6 py-6 shadow-2xl z-55 relative lg:hidden',
                             isLight
                                 ? 'border-slate-200 bg-white text-slate-750'
                                 : 'border-white/10 bg-slate-950/95 text-white'

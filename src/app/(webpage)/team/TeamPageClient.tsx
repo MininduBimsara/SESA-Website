@@ -83,42 +83,23 @@ const SectionDivider = () => (
     </div>
 );
 
-// Individual Member Card with premium design details
 const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tier2' | 'tier3' | 'tier4' }) => {
-    let cardClass = "";
-    let imgContainerClass = "";
-    let nameClass = "";
-    let positionClass = "";
-    let badgeText = "";
+    // Unified card design for all tiers
+    const cardClass = "relative bg-white rounded-[1.5rem] p-6 border border-slate-100 hover:border-[#EC1640]/30 shadow-sm hover:shadow-[0_20px_50px_rgba(236,22,64,0.1)] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[280px] border-t-[3px] border-t-[#EC1640]";
+    const imgContainerClass = "relative mx-auto mb-5 w-28 h-28 p-1 rounded-full bg-slate-100 group-hover:bg-[#EC1640]/20 transition-all duration-500 shadow-sm";
+    const nameClass = "text-lg font-bold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
+    const positionClass = "text-xs font-semibold text-slate-500 bg-slate-50 group-hover:bg-[#EC1640]/5 group-hover:text-[#EC1640] px-3 py-1.5 rounded-full inline-block mt-2.5 transition-all duration-300 uppercase tracking-wider text-center";
     
-    const initials = getMemberInitials(member.name);
-
+    let badgeText = "";
     if (tier === 'tier1') {
-        cardClass = "relative bg-white rounded-[2rem] p-8 border border-slate-100 hover:border-[#EC1640]/30 shadow-md hover:shadow-[0_25px_60px_rgba(236,22,64,0.12)] hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[320px] border-t-4 border-t-[#EC1640]";
-        imgContainerClass = "relative mx-auto mb-6 w-32 h-32 md:w-36 md:h-36 p-1 rounded-full bg-slate-100 group-hover:bg-[#EC1640] transition-all duration-500 shadow-md";
-        nameClass = "text-lg md:text-xl font-bold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
-        positionClass = "text-xs font-semibold text-slate-500 bg-slate-100/80 group-hover:bg-[#EC1640]/10 group-hover:text-[#EC1640] px-3.5 py-1.5 rounded-full inline-block mt-2.5 transition-all duration-300 uppercase tracking-wider text-center";
         badgeText = "Leadership";
     } else if (tier === 'tier2') {
-        cardClass = "relative bg-white rounded-2xl p-6 border border-slate-100 hover:border-[#EC1640]/20 shadow-sm hover:shadow-[0_18px_45px_rgba(236,22,64,0.08)] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[280px] border-t-3 border-t-[#EC1640]/60";
-        imgContainerClass = "relative mx-auto mb-5 w-28 h-28 p-0.5 rounded-full bg-slate-100 group-hover:bg-[#EC1640]/30 transition-all duration-500 shadow-sm";
-        nameClass = "text-base font-semibold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
-        positionClass = "text-[11px] font-semibold text-slate-500 bg-slate-50 group-hover:bg-[#EC1640]/5 group-hover:text-[#EC1640] px-3 py-1 rounded-full inline-block mt-2 transition-all duration-300 uppercase tracking-wider text-center";
         badgeText = "Executive";
     } else if (tier === 'tier3') {
-        cardClass = "relative bg-white rounded-2xl p-6 border border-slate-100 hover:border-[#EC1640]/15 shadow-sm hover:shadow-[0_15px_35px_rgba(15,23,42,0.06)] hover:-translate-y-1 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[260px] border-t-2 border-t-[#EC1640]/30";
-        imgContainerClass = "relative mx-auto mb-4 w-24 h-24 p-0.5 rounded-full bg-slate-100 group-hover:bg-[#EC1640]/20 transition-all duration-500 shadow-sm";
-        nameClass = "text-sm font-semibold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
-        positionClass = "text-[11px] font-medium text-slate-500 bg-slate-50/50 group-hover:bg-slate-100/80 px-2.5 py-1 rounded-full inline-block mt-2 transition-all duration-300 uppercase tracking-wider text-center";
         badgeText = "Dept Head";
-    } else {
-        // Tier 4: Committee
-        cardClass = "relative bg-white rounded-xl p-5 border border-slate-100 hover:border-slate-200 shadow-sm hover:shadow-[0_10px_25px_rgba(15,23,42,0.04)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-between h-full min-h-[220px]";
-        imgContainerClass = "relative mx-auto mb-3.5 w-20 h-20 p-0.5 rounded-full bg-slate-50 group-hover:bg-slate-100 transition-all duration-500 shadow-sm";
-        nameClass = "text-xs font-semibold font-serif text-slate-900 text-center leading-snug";
-        positionClass = "text-[9px] font-medium text-slate-400 mt-1.5 uppercase tracking-wider text-center";
-        badgeText = "";
     }
+
+    const initials = getMemberInitials(member.name);
 
     return (
         <div className={`${cardClass} group`}>
@@ -126,11 +107,7 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
             {badgeText && (
                 <div 
                     className={
-                        tier === 'tier1' 
-                            ? "absolute top-4 right-4 bg-[#EC1640]/5 border border-[#EC1640]/20 text-[#EC1640] text-[8px] font-bold tracking-widest px-2 py-0.5 rounded-full uppercase"
-                            : tier === 'tier2'
-                            ? "absolute top-3 right-3 bg-slate-50 border border-slate-150 text-slate-400 group-hover:text-[#EC1640] group-hover:bg-[#EC1640]/5 group-hover:border-[#EC1640]/10 text-[8px] font-semibold tracking-wider px-2 py-0.5 rounded-full uppercase transition-all duration-300"
-                            : "absolute top-3 right-3 bg-slate-50 text-slate-400 text-[8px] font-medium tracking-wider px-1.5 py-0.5 rounded uppercase"
+                        "absolute top-3.5 right-3.5 bg-slate-50 border border-slate-150 text-slate-400 group-hover:text-[#EC1640] group-hover:bg-[#EC1640]/5 group-hover:border-[#EC1640]/10 text-[9px] font-bold tracking-wider px-2.5 py-0.5 rounded-full uppercase transition-all duration-300 shadow-sm"
                     }
                 >
                     {badgeText}
@@ -294,10 +271,14 @@ const BoardSection = ({
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, margin: "-100px" }}
-                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+                        className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto"
                     >
                         {tier3.map((member) => (
-                            <motion.div key={member.id} variants={itemVariants}>
+                            <motion.div 
+                                key={member.id} 
+                                variants={itemVariants}
+                                className="w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)]"
+                            >
                                 <MemberCard member={member} tier="tier3" />
                             </motion.div>
                         ))}
@@ -321,10 +302,14 @@ const BoardSection = ({
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, margin: "-100px" }}
-                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 max-w-7xl mx-auto"
+                        className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto"
                     >
                         {tier4.map((member) => (
-                            <motion.div key={member.id} variants={itemVariants}>
+                            <motion.div 
+                                key={member.id} 
+                                variants={itemVariants}
+                                className="w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)]"
+                            >
                                 <MemberCard member={member} tier="tier4" />
                             </motion.div>
                         ))}
@@ -365,24 +350,27 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
     }
 
     return (
-        <div className="w-full max-w-[1600px] mx-auto px-3 pt-24 pb-8 md:px-5 md:pt-28 bg-white flex flex-col gap-6 md:gap-8">
-            {/* Hero Section Card */}
-            <section className="relative rounded-[2rem] md:rounded-[2.5rem] bg-black text-white border border-white/5 shadow-2xl py-20 px-6 md:px-10 lg:px-12 text-center overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
-                <div 
-                    className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay" 
-                    style={{ backgroundImage: 'url(/modern-tech-workspace-with-coding-screens-and-coll.jpg)' }} 
-                />
-                <div className="absolute inset-0 bg-black/50" />
-                <div className="relative z-10 space-y-4">
-                    <span className="text-[#EC1640] text-xs font-semibold uppercase tracking-[0.2em]">EXECUTIVE COMMITTEE</span>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium font-serif text-white tracking-normal leading-tight">
-                        Meet Our Executive Board
-                    </h1>
-                    <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-light">
-                        The minds driving innovation, teamwork, and growth at SESA for {teamData.currentYear}/{(teamData.currentYear + 1).toString().slice(-2)}.
-                    </p>
-                </div>
-            </section>
+        <div className="w-full min-h-screen bg-[#f4f2ec] px-3 pt-24 pb-12 md:px-6 lg:px-8 md:pt-32 flex flex-col gap-6 md:gap-8 transition-colors duration-300">
+            <div className="w-full max-w-7xl mx-auto flex flex-col gap-6 md:gap-8">
+                {/* Hero Section Card */}
+                <section 
+                    className="relative w-full rounded-[32px] overflow-hidden border border-[#e5e3dd] shadow-sm bg-cover bg-center py-20 px-6 md:px-10 lg:px-12 text-center flex flex-col items-center justify-center min-h-[400px]"
+                    style={{ backgroundImage: `url('/tech_watercolor_bg.png')` }}
+                >
+                    <div className="absolute inset-0 bg-white/30 pointer-events-none backdrop-blur-[1px]" />
+                    <div className="relative z-10 space-y-4">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#C00F38]/20 bg-[#C00F38]/5 px-3.5 py-1.5 text-[0.675rem] font-bold uppercase tracking-[0.2em] text-[#C00F38]">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#C00F38] animate-pulse" />
+                            EXECUTIVE COMMITTEE
+                        </span>
+                        <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold font-sans text-slate-900 leading-[1.15] tracking-tight max-w-2xl mx-auto">
+                            Meet Our Executive Board
+                        </h1>
+                        <p className="text-sm md:text-base text-slate-700 max-w-xl mx-auto font-medium mt-4">
+                            The minds driving innovation, teamwork, and growth at SESA for {teamData.currentYear}/{(teamData.currentYear + 1).toString().slice(-2)}.
+                        </p>
+                    </div>
+                </section>
 
             {/* Current Executive Board Card */}
             <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
@@ -459,6 +447,7 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                     </div>
                 </div>
             </section>
+        </div>
         </div>
     )
 }
