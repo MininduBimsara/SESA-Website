@@ -2,6 +2,8 @@
 
 import React from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
+import { GraduationCap, Code, Users } from 'lucide-react'
 
 const coreFocus = [
     {
@@ -68,47 +70,140 @@ const AboutSection = () => {
     return (
         <div className="w-full max-w-[1600px] mx-auto px-3 py-6 md:px-5 md:py-8 bg-[#FCFCFC] flex flex-col gap-6 md:gap-8">
             
-            {/* About SESA Card */}
-            <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-xl overflow-hidden relative">
-                <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px] items-stretch">
-                    {/* Left: Text Content */}
-                    <div className="lg:col-span-5 p-8 md:p-12 lg:p-16 flex flex-col justify-center items-start space-y-6">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#11112A]">
+            {/* About SESA Section */}
+            <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-xl overflow-hidden relative p-8 md:p-12 lg:p-16 flex flex-col gap-12 lg:gap-16">
+                
+                {/* Decorative background grids/dots */}
+                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[radial-gradient(#11112A_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none rounded-full" />
+                <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-[radial-gradient(#11112A_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none rounded-full" />
+
+                {/* Section Header & Narrative */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative z-10">
+                    {/* Left Column: Heading */}
+                    <div className="lg:col-span-7 space-y-6">
+                        <motion.div 
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5 }}
+                            className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#11112A]"
+                        >
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#11112A] animate-pulse" />
                             Who We Are
-                        </div>
-                        <h2 className="text-3xl md:text-5xl font-extrabold text-[#11112A] tracking-tight leading-tight">
-                            About <span className="text-[#11112A]">SESA</span>
-                        </h2>
-                        <div className="space-y-4">
-                            <p className="text-[0.975rem] md:text-[1.05rem] text-[#32324E] leading-relaxed font-normal">
-                                SESA is the <strong className="text-[#11112A] font-semibold">official student society</strong> for Software Engineering
-                                undergraduates in the Faculty of Science at University of Kelaniya.
-                            </p>
-                            <p className="text-[0.975rem] md:text-[1.05rem] text-[#32324E] leading-relaxed font-normal">
-                                Our mission is to help students build both <strong className="text-[#11112A] font-semibold">technical (&quot;hard&quot;) skills</strong> and
-                                <strong className="text-[#11112A] font-semibold"> interpersonal (&quot;soft&quot;) skills</strong>, encouraging collaboration and creating
-                                unity among students throughout their academic journey.
-                            </p>
-                            <p className="text-[0.975rem] md:text-[1.05rem] text-[#32324E] leading-relaxed font-normal">
-                                We represent one of the <strong className="text-[#11112A] font-semibold">pioneering software engineering degree programmes
-                                in Sri Lanka&apos;s state university system</strong>, fostering innovation and
-                                excellence in software engineering education.
-                            </p>
-                        </div>
+                        </motion.div>
+                        <motion.h2 
+                            initial={{ opacity: 0, y: 15 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#11112A] tracking-tight leading-[1.1]"
+                        >
+                            Pioneering the Future of <span className="bg-gradient-to-r from-[#11112A] via-[#32324E] to-[#11112A] bg-clip-text text-transparent">Software Engineering</span>
+                        </motion.h2>
                     </div>
 
-                    {/* Right: Image (No container, split design) */}
-                    <div className="relative lg:col-span-7 min-h-[350px] lg:min-h-full w-full">
-                        <Image
-                             src="/students-collaborating-on-software-development-pro.jpg"
-                            alt="SESA members collaborating"
-                            fill
-                            className="object-cover"
-                            priority
-                        />
-                        <div className="absolute inset-0 bg-black/5" />
+                    {/* Right Column: Detailed Narrative */}
+                    <div className="lg:col-span-5 lg:pt-8">
+                        <motion.p 
+                            initial={{ opacity: 0, y: 15 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="text-lg text-[#32324E] leading-relaxed font-normal border-l-2 border-[#11112A]/20 pl-6"
+                        >
+                            The Software Engineering Students&apos; Association (SESA) is the official student body representing undergraduates in the Faculty of Science at the University of Kelaniya. We are dedicated to bridging the gap between academic theories and industry standards, creating a launchpad for future tech leaders.
+                        </motion.p>
                     </div>
                 </div>
+
+                {/* Interactive Pillars Grid (3 Columns) */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                    {[
+                        {
+                            icon: GraduationCap,
+                            title: "Official Student Body",
+                            description: "Representing the pioneering SE degree programme at the Faculty of Science, University of Kelaniya.",
+                            accent: "from-[#11112A]/10 to-[#11112A]/0"
+                        },
+                        {
+                            icon: Code,
+                            title: "Skill Synthesis",
+                            description: "Fostering both cutting-edge technical proficiency and professional leadership traits through hands-on projects.",
+                            accent: "from-[#32324E]/10 to-[#32324E]/0"
+                        },
+                        {
+                            icon: Users,
+                            title: "Collaborative Community",
+                            description: "Cultivating unity, peer mentoring, and a lifelong network of industry professionals and alumni.",
+                            accent: "from-[#11112A]/10 to-[#11112A]/0"
+                        }
+                    ].map((pillar, idx) => (
+                        <motion.div 
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.3 + (idx * 0.1) }}
+                            whileHover={{ y: -6, borderColor: '#11112A' }}
+                            className="relative bg-white/50 backdrop-blur-sm border border-[#D2D2D2] p-8 rounded-3xl transition-all duration-300 flex flex-col justify-between min-h-[260px] group overflow-hidden"
+                        >
+                            {/* Card Hover Ambient Glow */}
+                            <div className={`absolute -right-16 -top-16 w-32 h-32 rounded-full bg-gradient-to-br ${pillar.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`} />
+                            
+                            {/* Decorative background grid inside card */}
+                            <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                            <div className="space-y-6 relative z-10">
+                                <div className="w-12 h-12 rounded-2xl bg-[#11112A]/5 border border-[#11112A]/10 flex items-center justify-center text-[#11112A] group-hover:bg-[#11112A] group-hover:text-white transition-all duration-500 group-hover:scale-110 shadow-sm">
+                                    <pillar.icon className="w-6 h-6 transition-transform duration-500 group-hover:rotate-6" />
+                                </div>
+                                <h3 className="text-xl font-bold text-[#11112A] group-hover:text-[#11112A]/90 transition-colors duration-300">{pillar.title}</h3>
+                                <p className="text-sm text-[#32324E]/80 leading-relaxed font-normal">{pillar.description}</p>
+                            </div>
+                            
+                            {/* Bottom interactive indicator */}
+                            <div className="pt-6 border-t border-[#D2D2D2]/30 mt-6 flex items-center justify-between relative z-10">
+                                <span className="text-xs font-semibold text-[#11112A]/40 uppercase tracking-widest group-hover:text-[#11112A]/80 transition-colors duration-300">Pillar 0{idx + 1}</span>
+                                <div className="w-6 h-6 rounded-full bg-[#11112A]/5 flex items-center justify-center text-[#11112A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                                    <svg className="w-3.5 h-3.5 stroke-[2.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* Minimalist Stats / Quick Facts Banner */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                    className="border-t border-[#D2D2D2] pt-8 md:pt-10 flex flex-wrap gap-y-6 justify-between items-center relative z-10"
+                >
+                    <div className="flex flex-wrap gap-x-12 gap-y-4">
+                        <div className="space-y-1">
+                            <p className="text-xs font-semibold text-[#32324E]/50 uppercase tracking-wider">Established</p>
+                            <p className="text-lg font-bold text-[#11112A]">Year 2017</p>
+                        </div>
+                        <div className="w-[1px] h-10 bg-[#D2D2D2] hidden sm:block" />
+                        <div className="space-y-1">
+                            <p className="text-xs font-semibold text-[#32324E]/50 uppercase tracking-wider">Affiliation</p>
+                            <p className="text-lg font-bold text-[#11112A]">University of Kelaniya</p>
+                        </div>
+                        <div className="w-[1px] h-10 bg-[#D2D2D2] hidden sm:block" />
+                        <div className="space-y-1">
+                            <p className="text-xs font-semibold text-[#32324E]/50 uppercase tracking-wider">Representation</p>
+                            <p className="text-lg font-bold text-[#11112A]">Faculty of Science</p>
+                        </div>
+                    </div>
+                    
+                    <div className="bg-[#11112A] text-white px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-md flex items-center gap-2 border border-white/10 hover:bg-[#32324E] transition-colors duration-300">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        Official Student Body
+                    </div>
+                </motion.div>
             </section>
 
             {/* What We Do Sticky Slide Section */}

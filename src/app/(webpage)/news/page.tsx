@@ -12,7 +12,6 @@ import {
     Briefcase, 
     TrendingUp, 
     ExternalLink, 
-    Loader2,
     MessageSquare,
     Clock,
     Flame,
@@ -20,6 +19,7 @@ import {
     Send,
     BookOpen
 } from 'lucide-react'
+import LoadingAnimation from '@/components/LoadingAnimation'
 import { YoutubeIcon, FacebookIcon } from '@/components/icons/SocialIcons'
 import { Button } from '@/components/ui/button'
 import type { News } from '@/types/news'
@@ -304,14 +304,7 @@ const NewsPage = () => {
     }
 
     if (loading) {
-        return (
-            <div className="min-h-screen bg-[#FCFCFC] flex items-center justify-center">
-                <div className="text-center">
-                    <Loader2 className="w-12 h-12 text-[#11112A] animate-spin mx-auto mb-4" />
-                    <p className="text-sm text-[#32324E] font-medium">Loading SESA news...</p>
-                </div>
-            </div>
-        )
+        return <LoadingAnimation text="Loading SESA news..." />
     }
 
     if (error) {
@@ -426,13 +419,13 @@ const NewsPage = () => {
                         {displayNews[0] && (
                             <article className="lg:col-span-6 rounded-[2rem] bg-[#FCFCFC] border border-[#D2D2D2] shadow-sm p-6 md:p-8 overflow-hidden min-h-[580px] md:min-h-[640px] flex flex-col justify-between group hover:shadow-md transition-all duration-300 relative">
                                 {/* Ferris wheel background style */}
-                                <div className="absolute top-0 right-0 w-[75%] h-[60%] opacity-15 pointer-events-none filter grayscale transition-all duration-500 group-hover:opacity-20 group-hover:scale-105">
+                                <div className="absolute inset-0 opacity-15 pointer-events-none filter grayscale transition-all duration-500 group-hover:opacity-20 group-hover:scale-105 group-hover:grayscale-0">
                                     <Image 
                                         src={displayNews[0].image || '/news-ferris-wheel.png'} 
                                         alt=""
                                         fill
                                         sizes="(max-width: 768px) 100vw, 50vw"
-                                        className="object-contain object-right-top"
+                                        className="object-cover"
                                         priority
                                     />
                                 </div>

@@ -11,12 +11,12 @@ import {
   Clock,
   Code,
   Lightbulb,
-  Loader2,
   Search,
   TrendingUp,
   Users,
   User,
 } from "lucide-react";
+import LoadingAnimation from "@/components/LoadingAnimation";
 import {
   Card,
   CardContent,
@@ -233,16 +233,7 @@ const BlogsPage = () => {
   }, 0);
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#FCFCFC] flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="mx-auto mb-4 h-12 w-12 animate-spin text-[#11112A]" />
-          <p className="text-sm font-medium text-[#32324E]">
-            Loading blog articles...
-          </p>
-        </div>
-      </div>
-    );
+    return <LoadingAnimation text="Loading blog articles..." />;
   }
 
   if (error) {
@@ -456,13 +447,13 @@ const BlogsPage = () => {
                   </p>
                 </div>
               ) : (
-                <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <div className="mt-6 flex flex-col gap-6">
                   {filteredPosts.map((post) => (
                     <Card
                       key={post.id}
-                      className="group overflow-hidden rounded-3xl border-[#D2D2D2] bg-[#FCFCFC] shadow-none transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                      className="group overflow-hidden rounded-3xl border-[#D2D2D2] bg-[#FCFCFC] shadow-none transition-all duration-300 hover:-translate-y-1 hover:shadow-md flex flex-col md:flex-row"
                     >
-                      <div className="relative h-48 w-full overflow-hidden bg-[#FCFCFC]">
+                      <div className="relative h-48 md:h-auto w-full md:w-64 xl:w-72 shrink-0 overflow-hidden bg-[#FCFCFC]">
                         <Image
                           src={
                             post.image ||
@@ -487,65 +478,72 @@ const BlogsPage = () => {
                         </div>
                       </div>
 
-                      <CardHeader className="space-y-3 p-5">
-                        <CardTitle className="line-clamp-2 text-xl font-bold leading-snug text-[#11112A] transition-colors group-hover:text-[#32324E]">
-                          {post.title}
-                        </CardTitle>
-                        {post.excerpt && (
-                          <CardDescription className="line-clamp-3 text-sm leading-relaxed text-[#32324E]/90">
-                            {post.excerpt}
-                          </CardDescription>
-                        )}
-                      </CardHeader>
+                      <div className="flex flex-col justify-between flex-grow p-5 md:p-6">
+                        <div>
+                          <CardHeader className="space-y-2 p-0">
+                            <CardTitle className="line-clamp-2 text-xl font-bold leading-snug text-[#11112A] transition-colors group-hover:text-[#32324E]">
+                              {post.title}
+                            </CardTitle>
+                            {post.excerpt && (
+                              <CardDescription className="line-clamp-2 text-sm leading-relaxed text-[#32324E]/90 mt-2">
+                                {post.excerpt}
+                              </CardDescription>
+                            )}
+                          </CardHeader>
 
-                      <CardContent className="space-y-3 px-5 pb-4 text-sm text-[#32324E]/80">
-                        <div className="flex items-center gap-4">
-                          <span className="flex items-center gap-1.5">
-                            <User className="h-3.5 w-3.5 text-[#11112A]" />
-                            <span className="line-clamp-1">{post.author}</span>
-                          </span>
-                          {post.readTime && (
-                            <span className="flex items-center gap-1.5">
-                              <Clock className="h-3.5 w-3.5 text-[#11112A]" />
-                              {post.readTime}
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-1.5 text-xs font-medium text-[#32324E]/70">
-                          <Calendar className="h-3.5 w-3.5 text-[#11112A]" />
-                          <span>{formatDate(post.createdAt)}</span>
-                        </div>
-                        {post.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 pt-1">
-                            {post.tags.slice(0, 3).map((tag) => (
-                              <span
-                                key={`${post.id}-${tag}`}
-                                className="rounded-full border border-[#32324E]/20 bg-[#D2D2D2]/25 px-2.5 py-1 text-[10px] font-semibold text-[#32324E]"
-                              >
-                                #{tag}
+                          <CardContent className="p-0 mt-4 text-sm text-[#32324E]/80">
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                              <span className="flex items-center gap-1.5">
+                                <User className="h-3.5 w-3.5 text-[#11112A]" />
+                                <span className="line-clamp-1">{post.author}</span>
                               </span>
-                            ))}
-                          </div>
-                        )}
-                      </CardContent>
+                              {post.readTime && (
+                                <span className="flex items-center gap-1.5">
+                                  <Clock className="h-3.5 w-3.5 text-[#11112A]" />
+                                  {post.readTime}
+                                </span>
+                              )}
+                              <span className="flex items-center gap-1.5 text-xs font-medium text-[#32324E]/70">
+                                <Calendar className="h-3.5 w-3.5 text-[#11112A]" />
+                                <span>{formatDate(post.createdAt)}</span>
+                              </span>
+                            </div>
+                          </CardContent>
+                        </div>
 
-                      <CardFooter className="px-5 pb-5 pt-0">
-                        <Link href={`/blogs/${post.slug}`} className="w-full">
-                          <Button
-                            variant="outline"
-                            className="flex w-full items-center justify-center gap-1.5 rounded-xl border-[#D2D2D2] text-[#11112A] text-xs font-semibold transition-all hover:bg-[#11112A] hover:text-[#FCFCFC] hover:border-[#11112A]"
-                          >
-                            Read Article
-                            <ArrowRight className="h-3.5 w-3.5" />
-                          </Button>
-                        </Link>
-                      </CardFooter>
+                        <CardFooter className="p-0 mt-6 pt-4 border-t border-[#D2D2D2]/30 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                          {post.tags.length > 0 ? (
+                            <div className="flex flex-wrap gap-1.5">
+                              {post.tags.slice(0, 3).map((tag) => (
+                                <span
+                                  key={`${post.id}-${tag}`}
+                                  className="rounded-full border border-[#32324E]/20 bg-[#D2D2D2]/25 px-2.5 py-1 text-[10px] font-semibold text-[#32324E]"
+                                >
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <div />
+                          )}
+                          <Link href={`/blogs/${post.slug}`} className="shrink-0 w-full sm:w-auto">
+                            <Button
+                              variant="outline"
+                              className="flex w-full sm:w-auto items-center justify-center gap-1.5 rounded-xl border-[#D2D2D2] text-[#11112A] text-xs font-semibold transition-all hover:bg-[#11112A] hover:text-[#FCFCFC] hover:border-[#11112A] px-4 py-2"
+                            >
+                              Read Article
+                              <ArrowRight className="h-3.5 w-3.5" />
+                            </Button>
+                          </Link>
+                        </CardFooter>
+                      </div>
                     </Card>
                   ))}
                 </div>
               )}
             </div>
-          </div>          <aside className="space-y-6">
+          </div>
+          <aside className="space-y-6">
             <div className="rounded-[2rem] border border-[#D2D2D2] bg-[#FCFCFC] p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <h3 className="text-base font-bold text-[#11112A]">

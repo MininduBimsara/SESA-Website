@@ -32,6 +32,7 @@ type UpdateItem = {
     excerpt: string | null
     slug: string
     category: string | null
+    image: string | null
     createdAt: Date
     type: 'news' | 'blog'
 }
@@ -52,6 +53,7 @@ async function getLatestUpdates() {
                 excerpt: true,
                 slug: true,
                 category: true,
+                image: true,
                 createdAt: true,
             }
         })
@@ -70,6 +72,7 @@ async function getLatestUpdates() {
                 excerpt: true,
                 slug: true,
                 category: true,
+                image: true,
                 createdAt: true,
             }
         })

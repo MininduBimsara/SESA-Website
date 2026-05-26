@@ -8,11 +8,11 @@ import {
   BookOpen,
   Calendar,
   Clock,
-  Loader2,
   Sparkles,
   Tag,
   User,
 } from "lucide-react";
+import LoadingAnimation from "@/components/LoadingAnimation";
 import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
 import { ArticleContent } from "@/components/ArticleContent";
@@ -99,16 +99,7 @@ const BlogDetailPage = () => {
   }, [slug]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#FCFCFC] flex items-center justify-center px-4">
-        <div className="text-center">
-          <Loader2 className="mx-auto mb-4 h-14 w-14 animate-spin text-[#11112A]" />
-          <p className="text-base font-medium text-[#32324E]">
-            Loading blog post...
-          </p>
-        </div>
-      </div>
-    );
+    return <LoadingAnimation text="Loading blog post..." size="lg" />;
   }
 
   if (error || !blog) {

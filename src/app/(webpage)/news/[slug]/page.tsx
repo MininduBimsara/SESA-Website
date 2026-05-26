@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { ArrowLeft, Loader2, Newspaper, Clock, Flame } from 'lucide-react'
+import { ArrowLeft, Newspaper, Clock, Flame } from 'lucide-react'
+import LoadingAnimation from '@/components/LoadingAnimation'
 import type { News } from '@/types/news'
 import { ArticleContent } from '@/components/ArticleContent'
 import { ShareButtons } from '@/components/ShareButtons'
@@ -72,14 +73,7 @@ const NewsDetailPage = () => {
     const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
 
     if (loading) {
-        return (
-            <div className="min-h-screen bg-[#FCFCFC] flex items-center justify-center">
-                <div className="text-center">
-                    <Loader2 className="w-12 h-12 text-[#11112A] animate-spin mx-auto mb-4" />
-                    <p className="text-sm text-[#32324E] font-medium">Loading news article...</p>
-                </div>
-            </div>
-        )
+        return <LoadingAnimation text="Loading news article..." />
     }
 
     if (error || !newsItem) {
