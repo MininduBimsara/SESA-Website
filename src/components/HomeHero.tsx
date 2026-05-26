@@ -25,6 +25,7 @@ const slides = [
         subtitle: 'Where ideas transform into code. SESA hosts premier coding events, bringing together developers to build solutions for real-world challenges.',
         cta: 'Explore Events',
         ctaLink: '/events',
+        image: '/1.jpeg',
     },
     {
         id: 2,
@@ -33,6 +34,7 @@ const slides = [
         subtitle: 'Stay ahead of the curve with our hands-on workshops, seminars, and tech talks led by senior software engineering professionals.',
         cta: 'Upcoming Events',
         ctaLink: '/events',
+        image: '/2.jpeg',
     },
     {
         id: 3,
@@ -41,6 +43,7 @@ const slides = [
         subtitle: 'Connecting passionate developers, UI/UX designers, and tech innovators. Join a network that supports your growth from day one.',
         cta: 'Join SESA',
         ctaLink: '/about',
+        image: '/3.jpeg',
     },
     {
         id: 4,
@@ -49,6 +52,7 @@ const slides = [
         subtitle: 'Launch your career with mock interviews, resume reviews, and direct networking opportunities with top-tier technology companies.',
         cta: 'Meet Our Team',
         ctaLink: '/team',
+        image: '/1.jpeg',
     },
 ]
 
@@ -120,36 +124,36 @@ export default function HomeHero() {
         switch (status) {
             case 'Completed':
                 return {
-                    dotColor: 'bg-emerald-500',
-                    borderColor: 'border-t-emerald-500',
+                    dotColor: 'bg-[#11112A]',
+                    borderColor: 'border-t-[#11112A]',
                     text: 'Completed',
                 }
             case 'In progress':
                 return {
-                    dotColor: 'bg-orange-500',
-                    borderColor: 'border-t-orange-500',
+                    dotColor: 'bg-[#32324E]',
+                    borderColor: 'border-t-[#32324E]',
                     text: 'In progress',
                 }
             case 'Planned':
                 return {
-                    dotColor: 'bg-slate-400',
-                    borderColor: 'border-t-slate-400',
+                    dotColor: 'bg-[#D2D2D2]',
+                    borderColor: 'border-t-[#D2D2D2]',
                     text: 'Planned',
                 }
         }
     }
 
     return (
-        <div className="w-full bg-[#f4f2ec] p-3 md:p-6 lg:p-8 min-h-screen flex flex-col justify-center transition-colors duration-300">
+        <div className="w-full bg-[#FCFCFC] p-3 md:p-6 lg:p-8 min-h-screen flex flex-col justify-center transition-colors duration-300">
             {/* Inner Rounded Card Frame */}
             <div 
-                className="relative w-full min-h-[880px] rounded-[32px] overflow-hidden border border-[#e5e3dd] shadow-sm bg-cover bg-center flex flex-col justify-between"
+                className="relative w-full min-h-[880px] rounded-[32px] overflow-hidden border border-[#D2D2D2] shadow-sm bg-cover bg-center flex flex-col justify-between transition-all duration-1000 ease-in-out"
                 style={{ 
-                    backgroundImage: `url('/tech_watercolor_bg.png')`,
+                    backgroundImage: `url('${slides[activeIndex]?.image || '/1.jpeg'}')`,
                 }}
             >
                 {/* Subtle soft overlay for improved contrast */}
-                <div className="absolute inset-0 bg-white/5 pointer-events-none" />
+                <div className="absolute inset-0 bg-[#FCFCFC]/75 backdrop-blur-[2px] pointer-events-none" />
 
                 {/* Header Navbar */}
                 <header className="relative w-full z-40 px-6 py-5 md:px-10 md:py-6 flex items-center justify-between">
@@ -162,7 +166,7 @@ export default function HomeHero() {
                                 className="relative hover:text-black transition-colors py-1 group"
                             >
                                 {link.label}
-                                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#C00F38] transition-all duration-300 group-hover:w-full" />
+                                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#11112A] transition-all duration-300 group-hover:w-full" />
                             </Link>
                         ))}
                     </nav>
@@ -198,7 +202,7 @@ export default function HomeHero() {
                         
                         <Link
                             href="/about"
-                            className="bg-[#C00F38] hover:bg-[#A80B2E] text-white text-[0.875rem] font-semibold px-6 py-2.5 rounded-full transition-all hover:scale-[1.02] active:scale-95 shadow-md shadow-rose-900/10"
+                            className="bg-[#11112A] hover:bg-[#32324E] text-[#FCFCFC] text-[0.875rem] font-semibold px-6 py-2.5 rounded-full transition-all hover:scale-[1.02] active:scale-95 shadow-md shadow-[#11112A]/10"
                         >
                             Join Us
                         </Link>
@@ -281,9 +285,9 @@ export default function HomeHero() {
                                             initial={{ opacity: 0, y: 15 }}
                                             animate={activeIndex === index ? { opacity: 1, y: 0 } : {}}
                                             transition={{ duration: 0.5 }}
-                                            className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/20 bg-[#EC1640]/5 px-3.5 py-1.5 text-[0.675rem] font-bold uppercase tracking-[0.2em] text-[#EC1640]"
+                                            className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1.5 text-[0.675rem] font-bold uppercase tracking-[0.2em] text-[#11112A]"
                                         >
-                                            <span className="h-1.5 w-1.5 rounded-full bg-[#EC1640] animate-pulse" />
+                                            <span className="h-1.5 w-1.5 rounded-full bg-[#11112A] animate-pulse" />
                                             {slide.badge}
                                         </motion.div>
                                     </div>
@@ -320,7 +324,7 @@ export default function HomeHero() {
                                     >
                                         <Link
                                             href={slide.ctaLink}
-                                            className="group inline-flex items-center gap-2 rounded-xl bg-[#C00F38] hover:bg-[#A80B2E] text-white font-bold px-6 py-3 text-xs shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-95"
+                                            className="group inline-flex items-center gap-2 rounded-xl bg-[#11112A] hover:bg-[#32324E] text-[#FCFCFC] font-bold px-6 py-3 text-xs shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-95"
                                         >
                                             <span>{slide.cta}</span>
                                             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -336,12 +340,12 @@ export default function HomeHero() {
                 </div>
 
                 {/* SESA Interactive Mockup Roadmap Dashboard */}
-                <div className="w-full max-w-5xl mx-auto bg-white rounded-t-[24px] border-t border-x border-slate-200/60 shadow-[0_-8px_40px_rgba(0,0,0,0.04)] overflow-hidden mt-auto shrink-0 z-20 flex flex-col sm:flex-row">
+                <div className="w-full max-w-5xl mx-auto bg-[#FCFCFC] rounded-t-[24px] border-t border-x border-[#D2D2D2] shadow-sm overflow-hidden mt-auto shrink-0 z-20 flex flex-col sm:flex-row">
                     {/* Sidebar menu - Desktop */}
-                    <div className="hidden sm:flex flex-col gap-6 w-56 border-r border-slate-100 p-5 shrink-0 bg-slate-50/30">
-                        <div className="flex items-center gap-2.5 font-bold text-[0.9rem] text-slate-800">
+                    <div className="hidden sm:flex flex-col gap-6 w-56 border-r border-[#D2D2D2] p-5 shrink-0 bg-[#D2D2D2]/10">
+                        <div className="flex items-center gap-2.5 font-bold text-[0.9rem] text-[#11112A]">
                             {/* Custom S-curve roadmap SVG logo */}
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#C00F38] shrink-0">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#11112A] shrink-0">
                                 <path d="M8 6h8a4 4 0 0 1 0 8H8a4 4 0 0 0 0 8h8" />
                                 <circle cx="8" cy="6" r="1.75" fill="currentColor" />
                                 <circle cx="8" cy="14" r="1.75" fill="currentColor" />
@@ -357,8 +361,8 @@ export default function HomeHero() {
                                     onClick={() => setActiveTab(tab)}
                                     className={`text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all ${
                                         activeTab === tab
-                                            ? 'bg-slate-100 text-slate-800 font-bold shadow-sm'
-                                            : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50/50'
+                                            ? 'bg-[#D2D2D2] text-[#11112A] font-bold shadow-sm'
+                                            : 'text-[#32324E] hover:text-[#11112A] hover:bg-[#D2D2D2]/25'
                                     }`}
                                 >
                                     {tab === 'events' ? 'Events & Projects' : tab === 'academic' ? 'Academic Calendar' : 'SESA Committee'}
@@ -368,15 +372,15 @@ export default function HomeHero() {
                     </div>
 
                     {/* Sidebar menu - Mobile */}
-                    <div className="sm:hidden flex flex-row gap-2 p-3.5 border-b border-slate-100 overflow-x-auto whitespace-nowrap scrollbar-none bg-slate-50/50">
+                    <div className="sm:hidden flex flex-row gap-2 p-3.5 border-b border-[#D2D2D2] overflow-x-auto whitespace-nowrap bg-[#D2D2D2]/10">
                         {(['events', 'academic', 'committee'] as const).map((tab) => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${
                                     activeTab === tab
-                                        ? 'bg-[#C00F38] text-white shadow-sm font-bold'
-                                        : 'bg-slate-100 text-slate-500 hover:text-slate-800'
+                                        ? 'bg-[#11112A] text-[#FCFCFC] shadow-sm font-bold'
+                                        : 'bg-[#D2D2D2]/30 text-[#32324E] hover:text-[#11112A]'
                                 }`}
                             >
                                 {tab === 'events' ? 'Events & Projects' : tab === 'academic' ? 'Academic Calendar' : 'SESA Committee'}
@@ -388,7 +392,7 @@ export default function HomeHero() {
                     <div className="flex-1 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-200">
                         <div className="min-w-[760px] md:min-w-0 flex flex-col h-full">
                             {/* Column headers */}
-                            <div className="grid grid-cols-4 border-b border-slate-100 text-center py-3 bg-slate-50/30 text-slate-400 text-[0.65rem] font-bold tracking-widest uppercase">
+                            <div className="grid grid-cols-4 border-b border-[#D2D2D2] text-center py-3 bg-[#D2D2D2]/10 text-[#32324E]/70 text-[0.65rem] font-bold tracking-widest uppercase">
                                 <div>Q1 2025</div>
                                 <div>Q2 2025</div>
                                 <div>Q3 2025</div>
@@ -417,12 +421,12 @@ export default function HomeHero() {
                                             key={item.id}
                                             layout
                                             onClick={() => handleCardClick(item.id)}
-                                            className={`bg-white rounded-xl border border-slate-200/60 p-4 shadow-[0_2px_8px_rgba(0,0,0,0.015)] transition-all duration-300 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 cursor-pointer border-t-[3px] ${details.borderColor} ${colStartClasses[item.colStart - 1]} ${colSpanClasses[item.colSpan - 1]} flex flex-col justify-between`}
+                                            className={`bg-[#FCFCFC] rounded-xl border border-[#D2D2D2] hover:border-[#32324E] p-4 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 cursor-pointer border-t-[3px] ${details.borderColor} ${colStartClasses[item.colStart - 1]} ${colSpanClasses[item.colSpan - 1]} flex flex-col justify-between`}
                                         >
-                                            <h4 className="font-semibold text-slate-800 text-xs md:text-[0.8rem] leading-snug mb-3">
+                                            <h4 className="font-semibold text-[#11112A] text-xs md:text-[0.8rem] leading-snug mb-3">
                                                 {item.title}
                                             </h4>
-                                            <div className="flex items-center text-[0.65rem] font-bold text-slate-400 mt-auto">
+                                            <div className="flex items-center text-[0.65rem] font-bold text-[#32324E] mt-auto">
                                                 <span className={`w-1.5 h-1.5 rounded-full ${details.dotColor} inline-block mr-1.5`} />
                                                 {details.text}
                                             </div>
@@ -441,17 +445,17 @@ export default function HomeHero() {
                     width: 24px;
                     height: 4px;
                     border-radius: 99px;
-                    background-color: rgba(0, 0, 0, 0.12);
+                    background-color: rgba(50, 50, 78, 0.15);
                     cursor: pointer;
                     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                 }
                 .swiper-bullet-custom-hero:hover {
-                    background-color: rgba(0, 0, 0, 0.25);
+                    background-color: rgba(50, 50, 78, 0.35);
                 }
                 .swiper-bullet-active-custom-hero {
                     width: 48px;
-                    background-color: #C00F38;
-                    box-shadow: 0 0 10px rgba(192, 15, 56, 0.25);
+                    background-color: #11112A;
+                    box-shadow: 0 0 10px rgba(17, 17, 42, 0.25);
                 }
                 .swiper-slide {
                     opacity: 0 !important;

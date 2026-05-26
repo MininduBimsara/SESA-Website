@@ -22,13 +22,13 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ variant = 'icons', className 
         return (
             <div className={`flex flex-col sm:flex-row gap-4 ${className}`}>
                 <a href={socialMediaLinks.facebook} target="_blank" rel="noopener noreferrer">
-                    <Button size="lg" className="w-full sm:w-auto bg-white text-rose-600 hover:bg-rose-50 shadow-lg">
+                    <Button size="lg" className="w-full sm:w-auto bg-[#FCFCFC] text-[#11112A] hover:bg-[#D2D2D2]/25 border border-[#D2D2D2] shadow-sm">
                         <FacebookIcon className="w-5 h-5 mr-2" />
                         Follow on Facebook
                     </Button>
                 </a>
                 <a href={socialMediaLinks.instagram} target="_blank" rel="noopener noreferrer">
-                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-white text-white hover:bg-white/10">
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-[#FCFCFC] text-[#FCFCFC] hover:bg-[#FCFCFC]/10">
                         <InstagramIcon className="w-5 h-5 mr-2" />
                         Follow on Instagram
                     </Button>

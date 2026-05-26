@@ -21,34 +21,34 @@ async function getFeaturedEvents() {
 const statusConfig = {
     ongoing: {
         label: "Ongoing",
-        color: "bg-green-600 border-green-600 text-white"
+        color: "bg-black border-black text-[#FCFCFC]"
     },
     upcoming: {
         label: "Upcoming",
-        color: "bg-[#EC1640] border-[#EC1640] text-white shadow-[0_4px_12px_rgba(236,22,64,0.2)]"
+        color: "bg-[#11112A] border-[#11112A] text-[#FCFCFC]"
     },
     past: {
         label: "Past",
-        color: "bg-neutral-800 border-neutral-800 text-neutral-300"
+        color: "bg-[#32324E] border-[#32324E] text-[#D2D2D2]"
     }
 }
 
 const FeaturedEvents = async () => {
     const events = await getFeaturedEvents()
     return (
-        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-white">
+        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-[#FCFCFC]">
             {/* White Rounded Frame Card */}
-            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 flex flex-col gap-10 md:gap-12 relative overflow-hidden">
+            <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-xl p-6 md:p-10 lg:p-12 flex flex-col gap-10 md:gap-12 relative overflow-hidden">
                 
                 {/* Section Header */}
                 <div className="text-center space-y-4">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#11112A]">
                         What&apos;s Happening
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-extrabold text-black tracking-tight leading-none">
+                    <h2 className="text-3xl md:text-5xl font-extrabold text-[#11112A] tracking-tight leading-none">
                         Featured Events
                     </h2>
-                    <p className="text-base md:text-lg text-slate-600 max-w-xl mx-auto font-normal">
+                    <p className="text-base md:text-lg text-[#32324E] max-w-xl mx-auto font-normal">
                         Discover our latest workshops, hackathons, and networking opportunities.
                     </p>
                 </div>
@@ -61,12 +61,12 @@ const FeaturedEvents = async () => {
                             return (
                                 <div
                                     key={event.id}
-                                    className="bg-white border border-slate-200/75 rounded-[1.75rem] overflow-hidden hover:border-[#EC1640]/50 hover:shadow-2xl transition-all duration-300 flex flex-col group"
+                                    className="bg-[#FCFCFC] border border-[#D2D2D2] rounded-[1.75rem] overflow-hidden hover:border-[#32324E] hover:shadow-md transition-all duration-300 flex flex-col group"
                                 >
                                     {/* Event Image */}
-                                    <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+                                    <div className="relative h-48 w-full overflow-hidden bg-[#D2D2D2]/10">
                                         <Image
-                                            src={event.image || '/placeholder-event.jpg'}
+                                            src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'}
                                             alt={event.title}
                                             fill
                                             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -82,20 +82,20 @@ const FeaturedEvents = async () => {
                                     {/* Event Details */}
                                     <div className="p-5 flex-grow flex flex-col justify-between gap-5">
                                         <div className="space-y-3">
-                                            <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold uppercase tracking-wider">
-                                                <Calendar className="w-3.5 h-3.5 text-[#EC1640]" />
+                                            <div className="flex items-center gap-1.5 text-xs text-[#32324E] font-semibold uppercase tracking-wider">
+                                                <Calendar className="w-3.5 h-3.5 text-[#11112A]" />
                                                 <span>{event.date}</span>
                                             </div>
-                                            <h3 className="text-[1.125rem] font-bold text-black group-hover:text-[#EC1640] transition-colors leading-snug line-clamp-2">
+                                            <h3 className="text-[1.125rem] font-bold text-[#11112A] group-hover:text-[#32324E] transition-colors leading-snug line-clamp-2">
                                                 {event.title}
                                             </h3>
-                                            <p className="text-[0.875rem] text-slate-600 leading-relaxed font-normal line-clamp-3">
+                                            <p className="text-[0.875rem] text-[#32324E]/85 leading-relaxed font-normal line-clamp-3">
                                                 {event.description}
                                             </p>
                                         </div>
 
                                         <Link href={`/events/${event.id}`} className="block w-full">
-                                            <button className="w-full bg-slate-50 hover:bg-black text-slate-800 hover:text-white border border-slate-200/80 hover:border-black font-bold rounded-2xl py-3 text-xs flex items-center justify-center gap-1.5 transition-all duration-300">
+                                            <button className="w-full bg-[#D2D2D2]/20 hover:bg-[#11112A] text-[#11112A] hover:text-[#FCFCFC] border border-[#D2D2D2] hover:border-[#11112A] font-bold rounded-2xl py-3 text-xs flex items-center justify-center gap-1.5 transition-all duration-300">
                                                 <span>View Details</span>
                                                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                                             </button>
@@ -105,7 +105,7 @@ const FeaturedEvents = async () => {
                             )
                         })
                     ) : (
-                        <div className="col-span-full text-center py-12 text-slate-500">
+                        <div className="col-span-full text-center py-12 text-[#32324E]">
                             <p>No featured events available at this time.</p>
                         </div>
                     )}
@@ -114,7 +114,7 @@ const FeaturedEvents = async () => {
                 {/* View All Button */}
                 <div className="text-center pt-2">
                     <Link href="/events" className="inline-block">
-                        <button className="bg-black hover:bg-[#EC1640] text-white border border-black hover:border-[#EC1640] font-bold rounded-full px-8 py-3.5 text-sm transition-all duration-300 flex items-center gap-1.5 hover:scale-[1.02] active:scale-95 shadow-md">
+                        <button className="bg-[#11112A] hover:bg-[#32324E] text-[#FCFCFC] border border-[#11112A] hover:border-[#32324E] font-bold rounded-full px-8 py-3.5 text-sm transition-all duration-300 flex items-center gap-1.5 hover:scale-[1.02] active:scale-95 shadow-md">
                             <span>View All Events</span>
                             <ArrowRight className="w-4 h-4" />
                         </button>

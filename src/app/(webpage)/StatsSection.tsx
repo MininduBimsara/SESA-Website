@@ -27,21 +27,21 @@ const StatsSection = async () => {
     }
 
     return (
-        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-white">
-            {/* Black Widescreen Container Card */}
-            <section className="bg-black border border-neutral-900 shadow-2xl rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 lg:p-12 relative overflow-hidden flex flex-col gap-10 md:gap-12">
+        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-[#FCFCFC]">
+            {/* Dark Widescreen Container Card */}
+            <section className="bg-[#11112A] border border-[#32324E]/50 shadow-2xl rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 lg:p-12 relative overflow-hidden flex flex-col gap-10 md:gap-12">
                 
 
 
                 {/* Section Header */}
                 <div className="text-center relative z-10 space-y-4">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[#FCFCFC]/20 bg-[#FCFCFC]/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#FCFCFC]">
                         Our Metrics
                     </div>
                     <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-none">
                         Our Impact in Numbers
                     </h2>
-                    <p className="text-base md:text-lg text-neutral-400 font-normal">
+                    <p className="text-base md:text-lg text-[#D2D2D2] font-normal">
                         Growing stronger together, one milestone at a time.
                     </p>
                 </div>
@@ -54,16 +54,16 @@ const StatsSection = async () => {
                             return (
                                 <div
                                     key={stat.id}
-                                    className="bg-neutral-950/60 border border-neutral-850 hover:border-[#EC1640]/60 rounded-2xl md:rounded-[1.75rem] p-5 md:p-8 text-center hover:shadow-[0_0_30px_rgba(236,22,64,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-4 group"
+                                    className="bg-[#32324E]/40 border border-[#32324E]/60 hover:border-[#FCFCFC]/50 rounded-2xl md:rounded-[1.75rem] p-5 md:p-8 text-center hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-4 group"
                                 >
-                                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl border border-neutral-800 bg-neutral-900 text-[#EC1640] flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl border border-[#32324E] bg-[#11112A] text-[#FCFCFC] flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <Icon className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
                                     <div className="space-y-1">
                                         <div className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
                                             {stat.value}
                                         </div>
-                                        <div className="text-xs md:text-[0.875rem] text-neutral-400 font-medium tracking-wide uppercase">
+                                        <div className="text-xs md:text-[0.875rem] text-[#D2D2D2] font-medium tracking-wide uppercase">
                                             {stat.label}
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@ const StatsSection = async () => {
                             )
                         })
                     ) : (
-                        <div className="col-span-full text-center text-neutral-500 py-12">
+                        <div className="col-span-full text-center text-[#D2D2D2]/50 py-12">
                             <p>No statistics available yet.</p>
                         </div>
                     )}

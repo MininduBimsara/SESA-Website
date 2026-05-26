@@ -21,19 +21,19 @@ const TestimonialsSection = async () => {
     const testimonials = await getTestimonials()
 
     return (
-        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-white">
+        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-[#FCFCFC]">
             {/* White Rounded Frame Card */}
-            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 flex flex-col gap-10 md:gap-12 relative overflow-hidden">
+            <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-xl p-6 md:p-10 lg:p-12 flex flex-col gap-10 md:gap-12 relative overflow-hidden">
                 
                 {/* Section Header */}
                 <div className="text-center space-y-4">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#11112A]">
                         Member Voices
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-extrabold text-black tracking-tight leading-none">
+                    <h2 className="text-3xl md:text-5xl font-extrabold text-[#11112A] tracking-tight leading-none">
                         What Our Members Say
                     </h2>
-                    <p className="text-base md:text-lg text-slate-600 max-w-xl mx-auto font-normal">
+                    <p className="text-base md:text-lg text-[#32324E] max-w-xl mx-auto font-normal">
                         Hear from students who are shaping the future of software engineering.
                     </p>
                 </div>
@@ -44,17 +44,17 @@ const TestimonialsSection = async () => {
                         testimonials.map((testimonial) => (
                             <div
                                 key={testimonial.id}
-                                className="bg-slate-50/50 hover:bg-white border border-slate-200/75 hover:border-[#EC1640]/50 rounded-[1.75rem] p-6 md:p-8 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between gap-6 group"
+                                className="bg-[#FCFCFC] hover:bg-[#FCFCFC] border border-[#D2D2D2] hover:border-[#32324E] rounded-[1.75rem] p-6 md:p-8 hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6 group"
                             >
                                 <div className="space-y-4">
-                                    <Quote className="w-8 h-8 text-[#EC1640] opacity-35" />
-                                    <p className="text-[0.95rem] text-slate-600 leading-relaxed font-normal italic">
+                                    <Quote className="w-8 h-8 text-[#11112A] opacity-35" />
+                                    <p className="text-[0.95rem] text-[#32324E] leading-relaxed font-normal italic">
                                         &ldquo;{testimonial.quote}&rdquo;
                                     </p>
                                 </div>
 
-                                <div className="flex items-center gap-4 border-t border-slate-100 pt-5 mt-2">
-                                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-slate-200 group-hover:border-[#EC1640] transition-colors flex-shrink-0">
+                                <div className="flex items-center gap-4 border-t border-[#D2D2D2]/40 pt-5 mt-2">
+                                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#D2D2D2] group-hover:border-[#32324E] transition-colors flex-shrink-0">
                                         <Image
                                             src={testimonial.image || '/placeholder-user.jpg'}
                                             alt={testimonial.name}
@@ -63,10 +63,10 @@ const TestimonialsSection = async () => {
                                         />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-black text-sm md:text-base leading-snug">
+                                        <h3 className="font-bold text-[#11112A] text-sm md:text-base leading-snug">
                                             {testimonial.name}
                                         </h3>
-                                        <p className="text-xs text-[#EC1640] font-semibold tracking-wide uppercase mt-0.5">
+                                        <p className="text-xs text-[#32324E] font-semibold tracking-wide uppercase mt-0.5">
                                             {testimonial.role}
                                         </p>
                                     </div>
@@ -74,7 +74,7 @@ const TestimonialsSection = async () => {
                             </div>
                         ))
                     ) : (
-                        <div className="col-span-3 text-center text-slate-500 py-12">
+                        <div className="col-span-3 text-center text-[#32324E] py-12">
                             <p>No testimonials available yet. Check back soon!</p>
                         </div>
                     )}

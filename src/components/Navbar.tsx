@@ -112,7 +112,10 @@ const Navbar = ({ initialTheme = 'light' }: NavbarProps) => {
                             )}
                         >
                             {link.label}
-                            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#EC1640] transition-all duration-300 group-hover:w-full" />
+                            <span className={cn(
+                                "absolute bottom-0 left-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full",
+                                isLight ? "bg-[#11112A]" : "bg-[#FCFCFC]"
+                            )} />
                         </Link>
                     ))}
                 </nav>
@@ -155,8 +158,8 @@ const Navbar = ({ initialTheme = 'light' }: NavbarProps) => {
                         className={cn(
                             "text-[0.875rem] font-semibold px-6 py-2.5 rounded-full transition-all hover:scale-[1.02] active:scale-95 shadow-md hidden sm:inline-block",
                             isLight
-                                ? "bg-[#EC1640] hover:bg-[#d61237] text-white shadow-rose-900/10"
-                                : "bg-[#EC1640] hover:bg-[#d61237] text-white shadow-[#EC1640]/10"
+                                ? "bg-[#11112A] hover:bg-[#32324E] text-[#FCFCFC] shadow-[#11112A]/10"
+                                : "bg-[#FCFCFC] hover:bg-[#D2D2D2] text-[#11112A] shadow-white/5"
                         )}
                     >
                         Join Us
@@ -207,7 +210,7 @@ const Navbar = ({ initialTheme = 'light' }: NavbarProps) => {
                                             : "bg-white/5 border-white/10 text-white placeholder-white/40"
                                     )}
                                 />
-                                <button type="submit" className="absolute right-4 text-slate-400 hover:text-[#EC1640] transition-colors">
+                                <button type="submit" className={cn("absolute right-4 transition-colors", isLight ? "text-[#32324E] hover:text-[#11112A]" : "text-[#D2D2D2] hover:text-[#FCFCFC]")}>
                                     <Search className="w-4 h-4" />
                                 </button>
                             </form>
@@ -219,8 +222,8 @@ const Navbar = ({ initialTheme = 'light' }: NavbarProps) => {
                                     className={cn(
                                         'flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-semibold transition-all',
                                         isLight
-                                            ? 'border-slate-100 bg-slate-50 hover:border-[#EC1640]/30 hover:bg-[#EC1640]/5 text-slate-850'
-                                            : 'border-white/10 bg-white/5 hover:border-[#EC1640]/50 hover:bg-white/10 text-white'
+                                            ? 'border-[#D2D2D2] bg-[#FCFCFC] hover:border-[#11112A]/30 hover:bg-[#11112A]/5 text-[#11112A]'
+                                            : 'border-[#32324E] bg-[#11112A] hover:border-[#FCFCFC]/50 hover:bg-[#32324E] text-[#FCFCFC]'
                                     )}
                                     onClick={() => setIsOpen(false)}
                                 >
@@ -231,7 +234,12 @@ const Navbar = ({ initialTheme = 'light' }: NavbarProps) => {
 
                             <Link
                                 href="/about"
-                                className="mt-2 text-center rounded-full bg-[#EC1640] hover:bg-[#d61237] text-white px-5 py-3 text-sm font-semibold shadow-lg shadow-rose-900/10 transition-colors"
+                                className={cn(
+                                    "mt-2 text-center rounded-full px-5 py-3 text-sm font-semibold shadow-md transition-colors",
+                                    isLight
+                                        ? "bg-[#11112A] hover:bg-[#32324E] text-[#FCFCFC] shadow-[#11112A]/10"
+                                        : "bg-[#FCFCFC] hover:bg-[#D2D2D2] text-[#11112A]"
+                                )}
                                 onClick={() => setIsOpen(false)}
                             >
                                 Join Us

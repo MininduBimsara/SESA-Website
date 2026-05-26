@@ -71,24 +71,24 @@ const categorizeMembers = (members: TeamMember[]) => {
     return { tier1, tier2, tier3, tier4 };
 };
 
-// Elegant section divider with a red dot
+// Elegant section divider with a dark dot
 const SectionDivider = () => (
     <div className="relative py-4 flex items-center justify-center">
         <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-100/60"></div>
+            <div className="w-full border-t border-[#D2D2D2]/50"></div>
         </div>
-        <div className="relative bg-white px-4">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#EC1640]/40"></div>
+        <div className="relative bg-[#FCFCFC] px-4">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#11112A]/40"></div>
         </div>
     </div>
 );
 
 const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tier2' | 'tier3' | 'tier4' }) => {
     // Unified card design for all tiers
-    const cardClass = "relative bg-white rounded-[1.5rem] p-6 border border-slate-100 hover:border-[#EC1640]/30 shadow-sm hover:shadow-[0_20px_50px_rgba(236,22,64,0.1)] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[280px] border-t-[3px] border-t-[#EC1640]";
-    const imgContainerClass = "relative mx-auto mb-5 w-28 h-28 p-1 rounded-full bg-slate-100 group-hover:bg-[#EC1640]/20 transition-all duration-500 shadow-sm";
-    const nameClass = "text-lg font-bold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
-    const positionClass = "text-xs font-semibold text-slate-500 bg-slate-50 group-hover:bg-[#EC1640]/5 group-hover:text-[#EC1640] px-3 py-1.5 rounded-full inline-block mt-2.5 transition-all duration-300 uppercase tracking-wider text-center";
+    const cardClass = "relative bg-[#FCFCFC] rounded-[1.5rem] p-6 border border-[#D2D2D2] hover:border-[#32324E]/50 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[280px] border-t-[3px] border-t-[#11112A]";
+    const imgContainerClass = "relative mx-auto mb-5 w-28 h-28 p-1 rounded-full bg-[#D2D2D2]/30 group-hover:bg-[#32324E]/20 transition-all duration-500 shadow-sm";
+    const nameClass = "text-lg font-bold font-serif text-[#11112A] group-hover:text-[#32324E] transition-colors duration-300 leading-snug text-center";
+    const positionClass = "text-xs font-semibold text-[#32324E]/80 bg-[#D2D2D2]/35 group-hover:bg-[#11112A]/10 group-hover:text-[#11112A] px-3 py-1.5 rounded-full inline-block mt-2.5 transition-all duration-300 uppercase tracking-wider text-center";
     
     let badgeText = "";
     if (tier === 'tier1') {
@@ -107,7 +107,7 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
             {badgeText && (
                 <div 
                     className={
-                        "absolute top-3.5 right-3.5 bg-slate-50 border border-slate-150 text-slate-400 group-hover:text-[#EC1640] group-hover:bg-[#EC1640]/5 group-hover:border-[#EC1640]/10 text-[9px] font-bold tracking-wider px-2.5 py-0.5 rounded-full uppercase transition-all duration-300 shadow-sm"
+                        "absolute top-3.5 right-3.5 bg-[#FCFCFC] border border-[#D2D2D2] text-[#32324E]/70 group-hover:text-[#11112A] group-hover:bg-[#11112A]/5 group-hover:border-[#11112A]/20 text-[9px] font-bold tracking-wider px-2.5 py-0.5 rounded-full uppercase transition-all duration-300 shadow-sm"
                     }
                 >
                     {badgeText}
@@ -116,7 +116,7 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
 
             {/* Profile Image */}
             <div className={imgContainerClass}>
-                <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-50 flex items-center justify-center">
+                <div className="relative w-full h-full rounded-full overflow-hidden bg-[#FCFCFC] flex items-center justify-center">
                     {member.image ? (
                         <Image
                             src={member.image}
@@ -126,7 +126,7 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
                             className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                         />
                     ) : (
-                        <div className="w-full h-full bg-[#EC1640]/10 text-[#EC1640] font-bold text-lg font-serif flex items-center justify-center">
+                        <div className="w-full h-full bg-[#11112A]/10 text-[#11112A] font-bold text-lg font-serif flex items-center justify-center">
                             {initials}
                         </div>
                     )}
@@ -146,11 +146,11 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
 
                 {/* Social Links */}
                 {(member.email || member.linkedin || member.github) ? (
-                    <div className="flex justify-center gap-2 mt-5 pt-3 border-t border-slate-100/60 w-full">
+                    <div className="flex justify-center gap-2 mt-5 pt-3 border-t border-[#D2D2D2]/60 w-full">
                         {member.email && (
                             <a
                                 href={`mailto:${member.email}`}
-                                className="w-8 h-8 rounded-full bg-slate-50/50 hover:bg-[#EC1640] text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300 border border-slate-100 hover:border-[#EC1640] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
+                                className="w-8 h-8 rounded-full bg-[#FCFCFC] hover:bg-[#11112A] text-[#32324E] hover:text-[#FCFCFC] flex items-center justify-center transition-all duration-300 border border-[#D2D2D2] hover:border-[#11112A] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
                                 title="Email"
                             >
                                 <Mail className="w-3.5 h-3.5" />
@@ -161,7 +161,7 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
                                 href={member.linkedin}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-slate-50/50 hover:bg-[#EC1640] text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300 border border-slate-100 hover:border-[#EC1640] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
+                                className="w-8 h-8 rounded-full bg-[#FCFCFC] hover:bg-[#11112A] text-[#32324E] hover:text-[#FCFCFC] flex items-center justify-center transition-all duration-300 border border-[#D2D2D2] hover:border-[#11112A] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
                                 title="LinkedIn"
                             >
                                 <LinkedinIcon className="w-3.5 h-3.5" />
@@ -172,7 +172,7 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
                                 href={member.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-slate-50/50 hover:bg-[#EC1640] text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300 border border-slate-100 hover:border-[#EC1640] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
+                                className="w-8 h-8 rounded-full bg-[#FCFCFC] hover:bg-[#11112A] text-[#32324E] hover:text-[#FCFCFC] flex items-center justify-center transition-all duration-300 border border-[#D2D2D2] hover:border-[#11112A] hover:shadow-md hover:-translate-y-0.5 hover:scale-110"
                                 title="GitHub"
                             >
                                 <GithubIcon className="w-3.5 h-3.5" />
@@ -207,8 +207,8 @@ const BoardSection = ({
             {tier1.length > 0 && (
                 <div className="space-y-6">
                     <div className="text-center mb-8 mt-4">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50/50 backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#EC1640]"></span>
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D2D2D2] bg-[#FCFCFC] backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-[#32324E] shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#11112A]"></span>
                             Advisory & Presidency
                         </div>
                     </div>
@@ -234,8 +234,8 @@ const BoardSection = ({
             {tier2.length > 0 && (
                 <div className="space-y-6">
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50/50 backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#EC1640]/70"></span>
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D2D2D2] bg-[#FCFCFC] backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-[#32324E] shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#32324E]"></span>
                             Executive Committee
                         </div>
                     </div>
@@ -261,8 +261,8 @@ const BoardSection = ({
             {tier3.length > 0 && (
                 <div className="space-y-6">
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50/50 backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#EC1640]/55"></span>
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D2D2D2] bg-[#FCFCFC] backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-[#32324E] shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#D2D2D2]"></span>
                             Heads of Departments & Web Master
                         </div>
                     </div>
@@ -292,8 +292,8 @@ const BoardSection = ({
             {tier4.length > 0 && (
                 <div className="space-y-6">
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-100 bg-slate-50/50 backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 shadow-sm">
-                            <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D2D2D2] bg-[#FCFCFC] backdrop-blur-sm text-[11px] font-semibold uppercase tracking-[0.2em] text-[#32324E] shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-black"></span>
                             Committee Members
                         </div>
                     </div>
@@ -350,35 +350,35 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
     }
 
     return (
-        <div className="w-full min-h-screen bg-[#f4f2ec] px-3 pt-24 pb-12 md:px-6 lg:px-8 md:pt-32 flex flex-col gap-6 md:gap-8 transition-colors duration-300">
+        <div className="w-full min-h-screen bg-[#FCFCFC] px-3 pt-24 pb-12 md:px-6 lg:px-8 md:pt-32 flex flex-col gap-6 md:gap-8 transition-colors duration-300">
             <div className="w-full max-w-7xl mx-auto flex flex-col gap-6 md:gap-8">
                 {/* Hero Section Card */}
                 <section 
-                    className="relative w-full rounded-[32px] overflow-hidden border border-[#e5e3dd] shadow-sm bg-cover bg-center py-20 px-6 md:px-10 lg:px-12 text-center flex flex-col items-center justify-center min-h-[400px]"
+                    className="relative w-full rounded-[32px] overflow-hidden border border-[#D2D2D2] shadow-sm bg-cover bg-center py-20 px-6 md:px-10 lg:px-12 text-center flex flex-col items-center justify-center min-h-[400px]"
                     style={{ backgroundImage: `url('/tech_watercolor_bg.png')` }}
                 >
-                    <div className="absolute inset-0 bg-white/30 pointer-events-none backdrop-blur-[1px]" />
+                    <div className="absolute inset-0 bg-[#FCFCFC]/35 pointer-events-none backdrop-blur-[1px]" />
                     <div className="relative z-10 space-y-4">
-                        <span className="inline-flex items-center gap-2 rounded-full border border-[#C00F38]/20 bg-[#C00F38]/5 px-3.5 py-1.5 text-[0.675rem] font-bold uppercase tracking-[0.2em] text-[#C00F38]">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#C00F38] animate-pulse" />
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1.5 text-[0.675rem] font-bold uppercase tracking-[0.2em] text-[#11112A]">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#11112A] animate-pulse" />
                             EXECUTIVE COMMITTEE
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold font-sans text-slate-900 leading-[1.15] tracking-tight max-w-2xl mx-auto">
+                        <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold font-sans text-[#11112A] leading-[1.15] tracking-tight max-w-2xl mx-auto">
                             Meet Our Executive Board
                         </h1>
-                        <p className="text-sm md:text-base text-slate-700 max-w-xl mx-auto font-medium mt-4">
+                        <p className="text-sm md:text-base text-[#32324E] max-w-xl mx-auto font-medium mt-4">
                             The minds driving innovation, teamwork, and growth at SESA for {teamData.currentYear}/{(teamData.currentYear + 1).toString().slice(-2)}.
                         </p>
                     </div>
                 </section>
 
             {/* Current Executive Board Card */}
-            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
+            <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-sm p-6 md:p-10 lg:p-12 relative overflow-hidden">
                 <div className="text-center mb-12 space-y-3">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#11112A]">
                         Leadership
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-semibold font-serif text-slate-950">
+                    <h2 className="text-3xl md:text-4xl font-bold font-sans text-[#11112A]">
                         Current Executive Board & Committee
                     </h2>
                 </div>
@@ -393,16 +393,16 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
 
             {/* Previous Executive Board Card */}
             {teamData.previousBoard.length > 0 && (
-                <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
+                <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-sm p-6 md:p-10 lg:p-12 relative overflow-hidden">
                     <div className="text-center mb-12 space-y-3">
-                        <span className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#32324E]/25 bg-[#32324E]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#32324E]">
                             Alumni
                         </span>
-                        <h2 className="text-3xl md:text-4xl font-semibold font-serif text-slate-950">
+                        <h2 className="text-3xl md:text-4xl font-bold font-sans text-[#11112A]">
                             Honoring Our Previous Executive Board
                             {teamData.previousYear && ` (${teamData.previousYear}/${(teamData.previousYear + 1).toString().slice(-2)})`}
                         </h2>
-                        <p className="text-sm text-slate-500 max-w-xl mx-auto font-normal">
+                        <p className="text-sm text-[#32324E]/80 max-w-xl mx-auto font-normal">
                             With gratitude for their dedication, hard work, and leadership in laying SESA&apos;s foundation.
                         </p>
                     </div>
@@ -417,13 +417,13 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
             )}
 
             {/* University Affiliation Logos Section Card */}
-            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-8 lg:p-10 relative overflow-hidden flex flex-col items-center justify-center gap-6">
-                <span className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+            <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-sm p-6 md:p-8 lg:p-10 relative overflow-hidden flex flex-col items-center justify-center gap-6">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#11112A]">
                     Institutional Support
                 </span>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
                     <div className="text-center">
-                        <div className="w-20 h-20 mx-auto mb-3 relative border border-slate-200 rounded-full bg-white shadow-sm flex items-center justify-center p-2">
+                        <div className="w-20 h-20 mx-auto mb-3 relative border border-[#D2D2D2] rounded-full bg-[#FCFCFC] shadow-sm flex items-center justify-center p-2">
                             <Image
                                 src="/placeholder-logo.png"
                                 alt="University of Kelaniya"
@@ -431,11 +431,11 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                 className="object-contain p-3"
                             />
                         </div>
-                        <p className="text-slate-800 text-xs font-semibold">University of Kelaniya</p>
+                        <p className="text-[#11112A] text-xs font-semibold">University of Kelaniya</p>
                     </div>
 
                     <div className="text-center">
-                        <div className="w-20 h-20 mx-auto mb-3 relative border border-slate-200 rounded-full bg-white shadow-sm flex items-center justify-center p-2">
+                        <div className="w-20 h-20 mx-auto mb-3 relative border border-[#D2D2D2] rounded-full bg-[#FCFCFC] shadow-sm flex items-center justify-center p-2">
                             <Image
                                 src="/placeholder-logo.png"
                                 alt="Faculty of Science"
@@ -443,7 +443,7 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
                                 className="object-contain p-3"
                             />
                         </div>
-                        <p className="text-slate-800 text-xs font-semibold">Faculty of Science</p>
+                        <p className="text-[#11112A] text-xs font-semibold">Faculty of Science</p>
                     </div>
                 </div>
             </section>

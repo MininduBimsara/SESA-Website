@@ -25,9 +25,9 @@ const categories = [
 ]
 
 const statusBadgeConfig = {
-    upcoming: { label: 'Upcoming', color: 'bg-blue-500 text-white' },
-    ongoing: { label: 'Ongoing', color: 'bg-green-500 text-white' },
-    past: { label: 'Past', color: 'bg-gray-500 text-white' }
+    upcoming: { label: 'Upcoming', color: 'bg-[#11112A] text-[#FCFCFC] border border-[#11112A]' },
+    ongoing: { label: 'Ongoing', color: 'bg-black text-[#FCFCFC] border border-black' },
+    past: { label: 'Past', color: 'bg-[#32324E] text-[#D2D2D2] border border-[#32324E]' }
 }
 
 const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
@@ -46,36 +46,39 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
     const featuredEvents = events.filter(event => event.featured && event.status === 'upcoming')
 
     return (
-        <div className="w-full max-w-[1600px] mx-auto px-3 pt-24 pb-8 md:px-5 md:pt-28 bg-white flex flex-col gap-6 md:gap-8">
-            {/* Hero Section Card */}
-            <section className="relative rounded-[2rem] md:rounded-[2.5rem] bg-black text-white border border-white/5 shadow-2xl py-20 px-6 md:px-10 lg:px-12 text-center overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
-                <div 
-                    className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay" 
-                    style={{ backgroundImage: 'url(/tech-workshop-and-coding-event-with-students.jpg)' }} 
-                />
-                <div className="absolute inset-0 bg-black/50" />
-                <div className="relative z-10 space-y-4">
-                    <span className="text-[#EC1640] text-xs font-semibold uppercase tracking-[0.2em]">CALENDAR</span>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium font-serif text-white tracking-normal leading-tight">
-                        Discover SESA Events
-                    </h1>
-                    <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-light">
-                        Explore workshops, hackathons, and networking opportunities that shape your future
-                    </p>
-                </div>
-            </section>
+        <div className="w-full min-h-screen bg-[#FCFCFC] px-3 pt-24 pb-12 md:px-6 lg:px-8 md:pt-32 flex flex-col gap-6 md:gap-8 transition-colors duration-300">
+            <div className="w-full max-w-7xl mx-auto flex flex-col gap-6 md:gap-8">
+                {/* Hero Section Card */}
+                <section 
+                    className="relative w-full rounded-[32px] overflow-hidden border border-[#D2D2D2] shadow-sm bg-cover bg-center py-20 px-6 md:px-10 lg:px-12 text-center flex flex-col items-center justify-center min-h-[400px]"
+                    style={{ backgroundImage: `url('/tech_watercolor_bg.png')` }}
+                >
+                    <div className="absolute inset-0 bg-[#FCFCFC]/35 pointer-events-none backdrop-blur-[1px]" />
+                    <div className="relative z-10 space-y-4">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1.5 text-[0.675rem] font-bold uppercase tracking-[0.2em] text-[#11112A]">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#11112A] animate-pulse" />
+                            CALENDAR
+                        </span>
+                        <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold font-sans text-[#11112A] leading-[1.15] tracking-tight max-w-2xl mx-auto">
+                            Discover SESA Events
+                        </h1>
+                        <p className="text-sm md:text-base text-[#32324E] max-w-xl mx-auto font-medium mt-4">
+                            Explore workshops, hackathons, and networking opportunities that shape your future
+                        </p>
+                    </div>
+                </section>
 
             {/* Featured Events Card */}
             {featuredEvents.length > 0 && (
-                <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
+                <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-sm p-6 md:p-10 lg:p-12 relative overflow-hidden">
                     <div className="flex items-center gap-3 mb-8">
-                        <Sparkles className="w-5 h-5 text-[#EC1640] animate-pulse" />
-                        <h2 className="text-2xl md:text-3xl font-semibold font-serif text-slate-950">Featured Events</h2>
+                        <Sparkles className="w-5 h-5 text-[#11112A]" />
+                        <h2 className="text-2xl md:text-3xl font-bold font-sans text-[#11112A]">Featured Events</h2>
                     </div>
                     <div className="grid md:grid-cols-3 gap-6">
                         {featuredEvents.map(event => (
-                            <Card key={event.id} className="hover:shadow-2xl transition-all duration-300 border border-slate-200 hover:border-[#EC1640]/50 rounded-2xl flex flex-col justify-between overflow-hidden">
-                                <div className="relative h-44 w-full bg-slate-50">
+                            <Card key={event.id} className="hover:shadow-md transition-all duration-300 border border-[#D2D2D2] hover:border-[#11112A]/50 rounded-2xl flex flex-col justify-between overflow-hidden bg-[#FCFCFC]">
+                                <div className="relative h-44 w-full bg-[#FCFCFC]">
                                     <Image 
                                         src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'} 
                                         alt={event.title} 
@@ -83,30 +86,30 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                                         className="object-cover" 
                                     />
                                     <div className="absolute top-3 right-3">
-                                        <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold bg-[#EC1640] text-white">
+                                        <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold bg-[#11112A] text-[#FCFCFC]">
                                             Featured
                                         </span>
                                     </div>
                                 </div>
                                 <CardHeader className="p-5">
-                                    <CardTitle className="text-lg font-serif font-semibold leading-snug line-clamp-2">{event.title}</CardTitle>
-                                    <div className="space-y-1.5 text-xs text-slate-500 mt-2">
+                                    <CardTitle className="text-lg font-bold font-sans text-[#11112A] leading-snug line-clamp-2">{event.title}</CardTitle>
+                                    <div className="space-y-1.5 text-xs text-[#32324E]/80 mt-2">
                                         <div className="flex items-center gap-2">
-                                            <Calendar className="w-3.5 h-3.5 text-[#EC1640]" />
+                                            <Calendar className="w-3.5 h-3.5 text-[#11112A]" />
                                             <span>{event.date}</span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <MapPin className="w-3.5 h-3.5 text-[#EC1640]" />
+                                            <MapPin className="w-3.5 h-3.5 text-[#11112A]" />
                                             <span>{event.location}</span>
                                         </div>
                                     </div>
                                 </CardHeader>
                                 <CardContent className="px-5 pb-4">
-                                    <p className="text-slate-650 text-sm line-clamp-3">{event.description}</p>
+                                    <p className="text-[#32324E]/90 text-sm line-clamp-3">{event.description}</p>
                                 </CardContent>
                                 <CardFooter className="px-5 pb-5 pt-0">
                                     <Link href={`/events/${event.id}`} className="w-full">
-                                        <Button className="w-full bg-[#EC1640] hover:bg-[#d61237] text-white rounded-xl shadow-sm text-xs font-semibold py-2.5">
+                                        <Button className="w-full bg-[#11112A] hover:bg-[#32324E] text-[#FCFCFC] rounded-xl shadow-sm text-xs font-semibold py-2.5">
                                             Register Now
                                             <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                                         </Button>
@@ -119,7 +122,7 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
             )}
 
             {/* Search and Filters Card */}
-            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden flex flex-col gap-6">
+            <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-sm p-6 md:p-10 lg:p-12 relative overflow-hidden flex flex-col gap-6">
                 <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
                     {/* Search Bar */}
                     <div className="relative w-full lg:max-w-md">
@@ -129,7 +132,7 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                             placeholder="Search events..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 text-sm border border-slate-200 rounded-full focus:ring-2 focus:ring-[#EC1640]/20 focus:border-[#EC1640] outline-none"
+                            className="w-full pl-10 pr-4 py-2 text-sm border border-[#D2D2D2] bg-[#FCFCFC] text-[#11112A] rounded-full focus:ring-2 focus:ring-[#11112A]/20 focus:border-[#11112A] outline-none"
                         />
                     </div>
 
@@ -140,8 +143,8 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                                 key={status}
                                 onClick={() => setSelectedStatus(status)}
                                 className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${selectedStatus === status
-                                    ? 'bg-[#EC1640] text-white shadow-sm'
-                                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                                    ? 'bg-[#11112A] text-[#FCFCFC] shadow-sm'
+                                    : 'bg-[#FCFCFC] text-[#32324E] hover:bg-[#D2D2D2]/25 border border-[#D2D2D2]'
                                     }`}
                             >
                                 {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -151,7 +154,7 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                 </div>
 
                 {/* Category Filters */}
-                <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                <div className="flex flex-wrap gap-2 pt-2 border-t border-[#D2D2D2]/50">
                     {categories.map((cat) => {
                         const Icon = cat.icon
                         return (
@@ -159,8 +162,8 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                                 key={cat.value}
                                 onClick={() => setSelectedCategory(cat.value as EventCategory)}
                                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all ${selectedCategory === cat.value
-                                    ? 'bg-slate-900 text-white shadow-sm'
-                                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                                    ? 'bg-[#11112A] text-[#FCFCFC] shadow-sm'
+                                    : 'bg-[#FCFCFC] text-[#32324E] hover:bg-[#D2D2D2]/25 border border-[#D2D2D2]'
                                     }`}
                             >
                                 <Icon className="w-3.5 h-3.5" />
@@ -172,22 +175,22 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
             </section>
 
             {/* Events Grid Card */}
-            <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 relative overflow-hidden">
+            <section className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-sm p-6 md:p-10 lg:p-12 relative overflow-hidden">
                 {filteredEvents.length === 0 ? (
                     <div className="text-center py-16 space-y-4">
-                        <Calendar className="w-12 h-12 text-slate-300 mx-auto" />
-                        <h3 className="text-xl font-serif font-semibold text-slate-800">No events found</h3>
-                        <p className="text-slate-500 text-sm max-w-xs mx-auto">Try adjusting your filters or search keywords.</p>
+                        <Calendar className="w-12 h-12 text-[#D2D2D2] mx-auto" />
+                        <h3 className="text-xl font-bold font-sans text-[#11112A]">No events found</h3>
+                        <p className="text-[#32324E] text-sm max-w-xs mx-auto">Try adjusting your filters or search keywords.</p>
                     </div>
                 ) : (
                     <>
-                        <div className="mb-6 text-sm text-slate-500 font-medium">
+                        <div className="mb-6 text-sm text-[#32324E]/80 font-medium">
                             Showing {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'}
                         </div>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                             {filteredEvents.map((event) => (
-                                <Card key={event.id} className="hover:shadow-xl transition-all duration-300 flex flex-col border border-slate-200 rounded-2xl justify-between overflow-hidden">
-                                    <div className="relative h-44 w-full bg-slate-50">
+                                <Card key={event.id} className="hover:shadow-md transition-all duration-300 flex flex-col border border-[#D2D2D2] rounded-2xl justify-between overflow-hidden bg-[#FCFCFC]">
+                                    <div className="relative h-44 w-full bg-[#FCFCFC]">
                                         <Image 
                                             src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'} 
                                             alt={event.title} 
@@ -200,34 +203,34 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                                             </span>
                                         </div>
                                         <div className="absolute top-3 left-3">
-                                            <span className="px-2.5 py-0.5 rounded-full text-[9px] uppercase tracking-wider font-semibold bg-white/90 text-slate-800 border border-slate-100">
+                                            <span className="px-2.5 py-0.5 rounded-full text-[9px] uppercase tracking-wider font-semibold bg-[#FCFCFC]/90 text-[#11112A] border border-[#D2D2D2]">
                                                 {event.category}
                                             </span>
                                         </div>
                                     </div>
 
                                     <CardHeader className="p-5 flex-grow">
-                                        <CardTitle className="text-lg font-serif font-semibold line-clamp-2 leading-snug">{event.title}</CardTitle>
-                                        <div className="space-y-1.5 text-xs text-slate-500 mt-3 font-medium">
+                                        <CardTitle className="text-lg font-bold font-sans text-[#11112A] line-clamp-2 leading-snug">{event.title}</CardTitle>
+                                        <div className="space-y-1.5 text-xs text-[#32324E]/80 mt-3 font-medium">
                                             <div className="flex items-center gap-2">
-                                                <Calendar className="w-3.5 h-3.5 text-[#EC1640]" />
+                                                <Calendar className="w-3.5 h-3.5 text-[#11112A]" />
                                                 <span>{event.date}</span>
                                             </div>
                                             {event.time && (
                                                 <div className="flex items-center gap-2">
-                                                    <Clock className="w-3.5 h-3.5 text-[#EC1640]" />
+                                                    <Clock className="w-3.5 h-3.5 text-[#11112A]" />
                                                     <span>{event.time}</span>
                                                 </div>
                                             )}
                                             {event.location && (
                                                 <div className="flex items-center gap-2">
-                                                    <MapPin className="w-3.5 h-3.5 text-[#EC1640]" />
+                                                    <MapPin className="w-3.5 h-3.5 text-[#11112A]" />
                                                     <span className="line-clamp-1">{event.location}</span>
                                                 </div>
                                             )}
                                             {event.participants && event.participants > 0 && (
                                                 <div className="flex items-center gap-2">
-                                                    <Users className="w-3.5 h-3.5 text-[#EC1640]" />
+                                                    <Users className="w-3.5 h-3.5 text-[#11112A]" />
                                                     <span>{event.participants} participants</span>
                                                 </div>
                                             )}
@@ -235,12 +238,12 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                                     </CardHeader>
 
                                     <CardContent className="px-5 pb-4">
-                                        <p className="text-slate-650 text-sm line-clamp-3 leading-relaxed">{event.description}</p>
+                                        <p className="text-[#32324E]/90 text-sm line-clamp-3 leading-relaxed">{event.description}</p>
                                     </CardContent>
 
                                     <CardFooter className="px-5 pb-5 pt-0 flex gap-2">
                                         <Link href={`/events/${event.id}`} className="w-full">
-                                            <Button variant="outline" className="w-full text-xs font-semibold py-2 rounded-xl hover:bg-slate-50">
+                                            <Button variant="outline" className="w-full text-xs font-semibold py-2 rounded-xl hover:bg-[#D2D2D2]/25 border-[#D2D2D2] text-[#11112A]">
                                                 Learn More
                                             </Button>
                                         </Link>
@@ -252,6 +255,7 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                 )}
             </section>
         </div>
+    </div>
     )
 }
 

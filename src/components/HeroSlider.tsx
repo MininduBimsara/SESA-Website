@@ -129,9 +129,9 @@ export default function HeroSlider() {
                                                 initial={{ opacity: 0, y: 18 }}
                                                 animate={activeIndex === index ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
                                                 transition={{ duration: 0.7, delay: 0.15 }}
-                                                className="inline-flex items-center gap-2 rounded-full border border-rose-500/50 bg-rose-500/15 px-4 py-1.5 text-[0.75rem] font-medium uppercase tracking-[0.18em] text-rose-100"
+                                                className="inline-flex items-center gap-2 rounded-full border border-[#32324E]/50 bg-[#32324E]/15 px-4 py-1.5 text-[0.75rem] font-medium uppercase tracking-[0.18em] text-[#D2D2D2]"
                                             >
-                                                <span className="h-1.5 w-1.5 rounded-full bg-rose-300" />
+                                                <span className="h-1.5 w-1.5 rounded-full bg-[#D2D2D2]" />
                                                 {slide.badge}
                                             </motion.div>
                                         </div>
@@ -166,7 +166,7 @@ export default function HeroSlider() {
                                         >
                                             <a
                                                 href={slide.ctaLink}
-                                                className="inline-flex items-center gap-2 rounded-full bg-[#EC1640] hover:bg-[#d61237] px-8 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 active:scale-95"
+                                                className="inline-flex items-center gap-2 rounded-full bg-[#FCFCFC] hover:bg-[#D2D2D2] px-8 py-3 text-sm font-semibold text-[#11112A] shadow-lg transition-all duration-300 active:scale-95"
                                             >
                                                 <span>{slide.cta}</span>
                                                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,14 +176,14 @@ export default function HeroSlider() {
 
                                             <a
                                                 href="/team"
-                                                className="inline-flex items-center gap-2 rounded-full border border-white/15 px-8 py-3 text-sm font-semibold text-slate-100 transition-all duration-300 hover:border-rose-400/70 hover:text-white"
+                                                className="inline-flex items-center gap-2 rounded-full border border-white/15 px-8 py-3 text-sm font-semibold text-slate-100 transition-all duration-300 hover:border-[#FCFCFC] hover:text-white"
                                             >
                                                 <span>Meet the Team</span>
                                             </a>
                                         </motion.div>
                                     </div>
                                 </div>
-                            </div>
+                             </div>
                         </div>
                     </SwiperSlide>
                 ))}
@@ -191,7 +191,7 @@ export default function HeroSlider() {
 
             {/* Simple Navigation Buttons */}
             <button className="swiper-button-prev-custom absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30">
-                <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-slate-950/70 text-rose-200 shadow-[0_12px_28px_rgba(15,23,42,0.45)] backdrop-blur transition hover:border-rose-400/60 hover:text-rose-100">
+                <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-slate-950/70 text-[#D2D2D2] shadow-[0_12px_28px_rgba(15,23,42,0.45)] backdrop-blur transition hover:border-[#FCFCFC] hover:text-white">
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 6l-6 6 6 6" />
                     </svg>
@@ -199,7 +199,7 @@ export default function HeroSlider() {
             </button>
 
             <button className="swiper-button-next-custom absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30">
-                <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-slate-950/70 text-rose-200 shadow-[0_12px_28px_rgba(15,23,42,0.45)] backdrop-blur transition hover:border-rose-400/60 hover:text-rose-100">
+                <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-slate-950/70 text-[#D2D2D2] shadow-[0_12px_28px_rgba(15,23,42,0.45)] backdrop-blur transition hover:border-[#FCFCFC] hover:text-white">
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6l6 6-6 6" />
                     </svg>
@@ -219,19 +219,19 @@ export default function HeroSlider() {
                     width: 8px;
                     height: 8px;
                     border-radius: 9999px;
-                    background-color: rgba(248, 113, 113, 0.24);
+                    background-color: rgba(210, 210, 210, 0.24);
                     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
                     transition: all 0.3s ease;
                 }
 
                 .swiper-pagination-bullet-custom:hover {
-                    background-color: rgba(244, 63, 94, 0.45);
+                    background-color: rgba(252, 252, 252, 0.45);
                 }
 
                 .swiper-pagination-bullet-active-custom {
                     width: 28px;
-                    background-color: #EC1640;
-                    box-shadow: 0 12px 24px rgba(236, 22, 64, 0.35);
+                    background-color: #FCFCFC;
+                    box-shadow: 0 12px 24px rgba(252, 252, 252, 0.2);
                 }
 
                 .swiper-slide {

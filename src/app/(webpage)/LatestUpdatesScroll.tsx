@@ -94,25 +94,25 @@ export default function LatestUpdatesScroll({ updates }: { updates: UpdateItem[]
     const currentTranslation = -maxTravel * scrollProgress
 
     return (
-        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-white">
+        <div className="w-full max-w-[1600px] mx-auto px-3 pb-6 md:px-5 md:pb-8 bg-[#FCFCFC]">
             <section 
                 ref={containerRef} 
                 className="relative block" 
                 style={{ height: maxTravel > 0 ? '200vh' : 'auto' }}
             >
                 <div className={maxTravel > 0 ? "sticky top-20 md:top-24 w-full overflow-hidden" : "w-full"}>
-                    <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl p-6 md:p-10 lg:p-12 flex flex-col gap-10 md:gap-12 relative overflow-hidden">
+                    <div className="bg-[#FCFCFC] rounded-[2rem] md:rounded-[2.5rem] border border-[#D2D2D2] shadow-xl p-6 md:p-10 lg:p-12 flex flex-col gap-10 md:gap-12 relative overflow-hidden">
                         
                         {/* Section Header */}
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 shrink-0">
                             <div className="space-y-4">
-                                <div className="inline-flex items-center gap-2 rounded-full border border-[#EC1640]/30 bg-[#EC1640]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#EC1640]">
+                                <div className="inline-flex items-center gap-2 rounded-full border border-[#11112A]/20 bg-[#11112A]/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#11112A]">
                                     Latest News
                                 </div>
-                                <h2 className="text-3xl md:text-5xl font-extrabold text-black tracking-tight leading-none">
+                                <h2 className="text-3xl md:text-5xl font-extrabold text-[#11112A] tracking-tight leading-none">
                                     Latest Updates
                                 </h2>
-                                <p className="text-base md:text-lg text-slate-600 font-normal">
+                                <p className="text-base md:text-lg text-[#32324E] font-normal">
                                     Stay informed about SESA news, blogs, and opportunities.
                                 </p>
                             </div>
@@ -121,15 +121,15 @@ export default function LatestUpdatesScroll({ updates }: { updates: UpdateItem[]
                             <div className="hidden md:flex items-center gap-4 text-sm font-bold">
                                 <Link
                                     href="/news"
-                                    className="inline-flex items-center gap-1.5 text-black hover:text-[#EC1640] transition-colors"
+                                    className="inline-flex items-center gap-1.5 text-[#11112A] hover:text-[#32324E] transition-colors"
                                 >
                                     <span>View All News</span>
                                     <span>→</span>
                                 </Link>
-                                <span className="text-slate-300">|</span>
+                                <span className="text-[#D2D2D2]">|</span>
                                 <Link
                                     href="/blogs"
-                                    className="inline-flex items-center gap-1.5 text-black hover:text-[#EC1640] transition-colors"
+                                    className="inline-flex items-center gap-1.5 text-[#11112A] hover:text-[#32324E] transition-colors"
                                 >
                                     <span>View All Blogs</span>
                                     <span>→</span>
@@ -152,27 +152,27 @@ export default function LatestUpdatesScroll({ updates }: { updates: UpdateItem[]
                                             <Link 
                                                 href={linkPath}
                                                 key={item.id}
-                                                className="w-[300px] md:w-[400px] shrink-0 bg-slate-50/50 hover:bg-white border border-slate-200/75 hover:border-[#EC1640]/50 rounded-[1.75rem] p-5 md:p-6 hover:shadow-2xl transition-all duration-300 flex flex-col items-start gap-4 md:gap-5 group"
+                                                className="w-[300px] md:w-[400px] shrink-0 bg-[#FCFCFC] hover:bg-[#FCFCFC] border border-[#D2D2D2] hover:border-[#32324E] rounded-[1.75rem] p-5 md:p-6 hover:shadow-md transition-all duration-300 flex flex-col items-start gap-4 md:gap-5 group"
                                             >
                                                 {/* Icon Holder */}
-                                                <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl border border-slate-200 bg-slate-100 text-[#EC1640] flex items-center justify-center flex-shrink-0 group-hover:bg-[#EC1640] group-hover:text-white group-hover:border-[#EC1640] transition-all duration-300">
+                                                <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl border border-[#D2D2D2] bg-[#FCFCFC] text-[#11112A] flex items-center justify-center flex-shrink-0 group-hover:bg-[#11112A] group-hover:text-[#FCFCFC] group-hover:border-[#11112A] transition-all duration-300">
                                                     <Icon className="w-5 h-5" />
                                                 </div>
                                                 
                                                 {/* Text Content */}
                                                 <div className="flex-grow space-y-3 w-full">
                                                     <div className="flex items-center justify-between gap-4">
-                                                        <span className="text-[10px] font-bold text-[#EC1640] uppercase tracking-wider">
+                                                        <span className="text-[10px] font-bold text-[#32324E] uppercase tracking-wider">
                                                             {item.category || (item.type === 'blog' ? 'Blog' : 'News')}
                                                         </span>
-                                                        <span className="text-xs text-slate-400 font-medium">
+                                                        <span className="text-xs text-[#32324E]/70 font-medium">
                                                             {getRelativeTime(item.createdAt)}
                                                         </span>
                                                     </div>
-                                                    <h3 className="text-lg md:text-[1.125rem] font-bold text-black group-hover:text-[#EC1640] transition-colors leading-snug line-clamp-2">
+                                                    <h3 className="text-lg md:text-[1.125rem] font-bold text-[#11112A] group-hover:text-[#32324E] transition-colors leading-snug line-clamp-2">
                                                         {item.title}
                                                     </h3>
-                                                    <p className="text-[0.875rem] text-slate-600 leading-relaxed font-normal line-clamp-3">
+                                                    <p className="text-[0.875rem] text-[#32324E]/85 leading-relaxed font-normal line-clamp-3">
                                                         {item.excerpt || item.content.replace(/<[^>]*>/g, '').slice(0, 150) + '...'}
                                                     </p>
                                                 </div>
@@ -180,7 +180,7 @@ export default function LatestUpdatesScroll({ updates }: { updates: UpdateItem[]
                                         )
                                     })
                                 ) : (
-                                    <div className="w-full text-center py-12 text-slate-500">
+                                    <div className="w-full text-center py-12 text-[#32324E]">
                                         <p>No updates available at this time.</p>
                                     </div>
                                 )}
@@ -192,15 +192,15 @@ export default function LatestUpdatesScroll({ updates }: { updates: UpdateItem[]
                             <div className="flex items-center justify-center gap-4 text-xs font-bold">
                                 <Link
                                     href="/news"
-                                    className="inline-flex items-center gap-1.5 text-black hover:text-[#EC1640] transition-colors"
+                                    className="inline-flex items-center gap-1.5 text-[#11112A] hover:text-[#32324E] transition-colors"
                                 >
                                     <span>View All News</span>
                                     <span>→</span>
                                 </Link>
-                                <span className="text-slate-300">|</span>
+                                <span className="text-[#D2D2D2]">|</span>
                                 <Link
                                     href="/blogs"
-                                    className="inline-flex items-center gap-1.5 text-black hover:text-[#EC1640] transition-colors"
+                                    className="inline-flex items-center gap-1.5 text-[#11112A] hover:text-[#32324E] transition-colors"
                                 >
                                     <span>View All Blogs</span>
                                     <span>→</span>
