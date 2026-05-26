@@ -24,14 +24,7 @@ import type { Blog } from "@/types/blog";
 const createPlaceholderImage = (label: string, accent = "#EC1640") => {
   const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="${label}">
-            <defs>
-                <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#020617" />
-                    <stop offset="55%" stop-color="#111827" />
-                    <stop offset="100%" stop-color="#1f2937" />
-                </linearGradient>
-            </defs>
-            <rect width="1600" height="900" fill="url(#bg)" />
+            <rect width="1600" height="900" fill="#020617" />
             <circle cx="1320" cy="120" r="240" fill="${accent}" fill-opacity="0.18" />
             <circle cx="240" cy="720" r="200" fill="#ffffff" fill-opacity="0.08" />
             <rect x="120" y="620" width="540" height="20" rx="10" fill="#ffffff" fill-opacity="0.22" />
@@ -107,7 +100,7 @@ const BlogDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(236,22,64,0.08),transparent_30%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-white flex items-center justify-center px-4">
         <div className="text-center">
           <Loader2 className="mx-auto mb-4 h-14 w-14 animate-spin text-[#EC1640]" />
           <p className="text-base font-medium text-slate-500">
@@ -120,7 +113,7 @@ const BlogDetailPage = () => {
 
   if (error || !blog) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,rgba(236,22,64,0.08),transparent_30%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] px-4">
+      <div className="flex min-h-screen items-center justify-center bg-white px-4">
         <div className="max-w-md rounded-4xl border border-slate-200 bg-white p-8 text-center shadow-[0_24px_60px_-30px_rgba(15,23,42,0.25)]">
           <BookOpen className="mx-auto mb-4 h-14 w-14 text-slate-300" />
           <h2 className="text-2xl font-semibold text-slate-950">
@@ -168,7 +161,7 @@ const BlogDetailPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(236,22,64,0.08),transparent_30%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] text-slate-950">
+    <div className="min-h-screen bg-white text-slate-950">
       <div className="mx-auto w-full max-w-screen-2xl px-4 pb-12 pt-24 md:px-6 md:pt-28 lg:px-10">
         <div className="mb-6 flex items-center justify-between gap-4">
           <Link href="/blogs">
@@ -195,7 +188,7 @@ const BlogDetailPage = () => {
                 alt={blog.title}
                 className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/25 to-transparent" />
+              <div className="absolute inset-0 bg-slate-950/60" />
               <div className="absolute left-5 top-5 flex flex-wrap gap-2">
                 {blog.category && (
                   <span className="rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-900 backdrop-blur">

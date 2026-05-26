@@ -9,12 +9,7 @@ const CTASection = () => {
             {/* Black Widescreen Container Card */}
             <section className="bg-black border border-neutral-900 shadow-2xl rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 lg:p-14 relative overflow-hidden flex flex-col gap-10 md:gap-12 text-white">
                 
-                {/* Background Grid Pattern */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-                
-                {/* Glowing red radial blur in background */}
-                <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#EC1640] rounded-full filter blur-[120px] opacity-25 pointer-events-none" />
-                <div className="absolute -top-32 -left-32 w-80 h-80 bg-purple-600 rounded-full filter blur-[120px] opacity-15 pointer-events-none" />
+
 
                 {/* Section Header */}
                 <div className="text-center relative z-10 space-y-4">

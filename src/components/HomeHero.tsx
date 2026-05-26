@@ -107,7 +107,7 @@ export default function HomeHero() {
                 className={`fixed lg:absolute top-0 left-0 w-full z-40 transition-all duration-300 px-6 py-4 md:px-10 md:py-6 flex items-center justify-between ${
                     hasScrolledHeader 
                         ? 'bg-slate-950/75 backdrop-blur-md border-b border-white/5 py-3 md:py-4' 
-                        : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent'
+                        : 'bg-slate-950/90 border-b border-white/5'
                 }`}
             >
                 {/* Desktop Navigation Links */}
@@ -243,9 +243,7 @@ export default function HomeHero() {
                                     }}
                                 />
                                 {/* Overlay Gradient for excellent text readability */}
-                                <div className="absolute inset-0 bg-slate-950/65" />
-                                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/60 to-slate-950/40" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-transparent to-black/30" />
+                                <div className="absolute inset-0 bg-black/75" />
                             </div>
 
                             {/* Content */}
@@ -323,7 +321,7 @@ export default function HomeHero() {
 
             {/* Social Links Side Overlay */}
             <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-5 z-30 hidden md:flex">
-                <div className="h-16 w-px bg-gradient-to-b from-transparent to-white/20 mb-2" />
+                <div className="h-16 w-px bg-white/20 mb-2" />
                 {socialLinks.map((s, i) => {
                     const Icon = s.icon
                     return (
@@ -342,7 +340,7 @@ export default function HomeHero() {
                         </motion.a>
                     )
                 })}
-                <div className="h-16 w-px bg-gradient-to-t from-transparent to-white/20 mt-2" />
+                <div className="h-16 w-px bg-white/20 mt-2" />
             </div>
 
             {/* Bottom Panel Info */}

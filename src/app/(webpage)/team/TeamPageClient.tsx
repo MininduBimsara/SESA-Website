@@ -95,7 +95,7 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
 
     if (tier === 'tier1') {
         cardClass = "relative bg-white rounded-[2rem] p-8 border border-slate-100 hover:border-[#EC1640]/30 shadow-md hover:shadow-[0_25px_60px_rgba(236,22,64,0.12)] hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col items-center justify-between h-full min-h-[320px] border-t-4 border-t-[#EC1640]";
-        imgContainerClass = "relative mx-auto mb-6 w-32 h-32 md:w-36 md:h-36 p-1 rounded-full bg-gradient-to-tr from-slate-200 to-slate-100 group-hover:from-[#EC1640] group-hover:to-rose-500 transition-all duration-500 shadow-md";
+        imgContainerClass = "relative mx-auto mb-6 w-32 h-32 md:w-36 md:h-36 p-1 rounded-full bg-slate-100 group-hover:bg-[#EC1640] transition-all duration-500 shadow-md";
         nameClass = "text-lg md:text-xl font-bold font-serif text-slate-900 group-hover:text-[#EC1640] transition-colors duration-300 leading-snug text-center";
         positionClass = "text-xs font-semibold text-slate-500 bg-slate-100/80 group-hover:bg-[#EC1640]/10 group-hover:text-[#EC1640] px-3.5 py-1.5 rounded-full inline-block mt-2.5 transition-all duration-300 uppercase tracking-wider text-center";
         badgeText = "Leadership";
@@ -149,7 +149,7 @@ const MemberCard = ({ member, tier }: { member: TeamMember; tier: 'tier1' | 'tie
                             className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                         />
                     ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-[#EC1640]/10 to-rose-500/5 text-[#EC1640] font-bold text-lg font-serif flex items-center justify-center">
+                        <div className="w-full h-full bg-[#EC1640]/10 text-[#EC1640] font-bold text-lg font-serif flex items-center justify-center">
                             {initials}
                         </div>
                     )}
@@ -367,12 +367,12 @@ const TeamPageClient = ({ teamData }: TeamPageClientProps) => {
     return (
         <div className="w-full max-w-[1600px] mx-auto px-3 pt-24 pb-8 md:px-5 md:pt-28 bg-white flex flex-col gap-6 md:gap-8">
             {/* Hero Section Card */}
-            <section className="relative rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-neutral-900 to-slate-950 text-white border border-white/5 shadow-2xl py-20 px-6 md:px-10 lg:px-12 text-center overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+            <section className="relative rounded-[2rem] md:rounded-[2.5rem] bg-black text-white border border-white/5 shadow-2xl py-20 px-6 md:px-10 lg:px-12 text-center overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
                 <div 
                     className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay" 
                     style={{ backgroundImage: 'url(/modern-tech-workspace-with-coding-screens-and-coll.jpg)' }} 
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+                <div className="absolute inset-0 bg-black/50" />
                 <div className="relative z-10 space-y-4">
                     <span className="text-[#EC1640] text-xs font-semibold uppercase tracking-[0.2em]">EXECUTIVE COMMITTEE</span>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium font-serif text-white tracking-normal leading-tight">

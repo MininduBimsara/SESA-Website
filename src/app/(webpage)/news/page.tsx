@@ -305,7 +305,7 @@ const NewsPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#FAF9F6] flex items-center justify-center">
+            <div className="min-h-screen bg-white flex items-center justify-center">
                 <div className="text-center">
                     <Loader2 className="w-12 h-12 text-[#EC1640] animate-spin mx-auto mb-4" />
                     <p className="text-sm text-slate-500 font-medium">Loading SESA news...</p>
@@ -316,7 +316,7 @@ const NewsPage = () => {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-[#FAF9F6] flex items-center justify-center p-6">
+            <div className="min-h-screen bg-white flex items-center justify-center p-6">
                 <div className="text-center space-y-4 max-w-sm">
                     <Newspaper className="w-12 h-12 text-slate-350 mx-auto" />
                     <h2 className="text-xl font-serif font-semibold text-slate-800">Error Loading News</h2>
@@ -352,7 +352,7 @@ const NewsPage = () => {
     const overflowNews = filteredNews.slice(4)
 
     return (
-        <div className="w-full min-h-screen bg-[#FAF9F6] text-slate-900 pt-28 pb-16 px-4 md:px-8 xl:px-12">
+        <div className="w-full min-h-screen bg-white text-slate-900 pt-28 pb-16 px-4 md:px-8 xl:px-12">
             <div className="max-w-[1400px] mx-auto flex flex-col gap-8">
                 {/* Hero / Header Section */}
                 <header className="flex flex-col gap-6 border-b border-black/10 pb-8">
@@ -567,7 +567,7 @@ const NewsPage = () => {
                                             className="object-cover object-bottom"
                                         />
                                     </div>
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                    <div className="absolute inset-0 bg-black/60" />
 
                                     <div className="relative z-10">
                                         <h3 className="text-sm font-serif font-medium text-slate-100 group-hover:text-[#EC1640] transition-colors leading-snug max-w-[85%]">

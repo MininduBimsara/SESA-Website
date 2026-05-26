@@ -8,12 +8,12 @@ const AboutPage = () => {
     return (
         <div className="w-full max-w-[1600px] mx-auto px-3 pt-24 pb-8 md:px-5 md:pt-28 bg-white flex flex-col gap-6 md:gap-8">
             {/* Hero Section Card */}
-            <section className="relative rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-neutral-900 to-slate-950 text-white border border-white/5 shadow-2xl py-20 px-6 md:px-10 lg:px-12 text-center overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+            <section className="relative rounded-[2rem] md:rounded-[2.5rem] bg-black text-white border border-white/5 shadow-2xl py-20 px-6 md:px-10 lg:px-12 text-center overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
                 <div 
                     className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay" 
                     style={{ backgroundImage: 'url(/students-collaborating-on-software-development-pro.jpg)' }} 
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+                <div className="absolute inset-0 bg-black/50" />
                 <div className="relative z-10 space-y-4">
                     <span className="text-[#EC1640] text-xs font-semibold uppercase tracking-[0.2em]">LEARN MORE</span>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium font-serif text-white tracking-normal leading-tight">

@@ -48,14 +48,7 @@ const categories = [
 const createPlaceholderImage = (label: string, accent = "#EC1640") => {
   const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="${label}">
-            <defs>
-                <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#0f172a" />
-                    <stop offset="55%" stop-color="#111827" />
-                    <stop offset="100%" stop-color="#1e293b" />
-                </linearGradient>
-            </defs>
-            <rect width="1200" height="800" fill="url(#background)" />
+            <rect width="1200" height="800" fill="#0f172a" />
             <circle cx="960" cy="120" r="220" fill="${accent}" fill-opacity="0.2" />
             <circle cx="180" cy="620" r="180" fill="#ffffff" fill-opacity="0.07" />
             <rect x="84" y="590" width="340" height="14" rx="7" fill="#ffffff" fill-opacity="0.25" />
@@ -241,7 +234,7 @@ const BlogsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(236,22,64,0.08),transparent_30%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="mx-auto mb-4 h-12 w-12 animate-spin text-[#EC1640]" />
           <p className="text-sm font-medium text-slate-500">
@@ -254,7 +247,7 @@ const BlogsPage = () => {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,rgba(236,22,64,0.08),transparent_30%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] p-6">
+      <div className="flex min-h-screen items-center justify-center bg-white p-6">
         <div className="max-w-sm space-y-4 text-center">
           <BookOpen className="mx-auto h-12 w-12 text-slate-300" />
           <h2 className="text-xl font-semibold text-slate-900">
@@ -273,10 +266,10 @@ const BlogsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(236,22,64,0.08),transparent_30%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] text-slate-950">
+    <div className="min-h-screen bg-white text-slate-950">
       <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-6 px-4 pb-10 pt-24 md:px-6 md:pt-28 lg:px-10">
         <section className="relative overflow-hidden rounded-4xl border border-slate-200 bg-slate-950 text-white shadow-[0_30px_80px_-24px_rgba(15,23,42,0.35)]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(236,22,64,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_30%)]" />
+          <div className="absolute inset-0 bg-slate-950/70" />
           <div className="relative grid gap-8 p-6 md:p-10 lg:grid-cols-[1.25fr_0.75fr] lg:p-12">
             <div className="flex flex-col justify-center gap-6">
               <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-300">
@@ -344,7 +337,7 @@ const BlogsPage = () => {
                     className="object-cover"
                     priority
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                  <div className="absolute inset-0 bg-slate-950/60" />
                   <div className="absolute left-4 right-4 bottom-4 space-y-3">
                     {featuredStory?.category && (
                       <span className="inline-flex rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-900">
@@ -456,7 +449,7 @@ const BlogsPage = () => {
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-linear-to-t from-slate-950/60 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-slate-950/45" />
                         <div className="absolute left-3 top-3 flex gap-2">
                           {post.category && (
                             <span className="rounded-full bg-white/90 px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-900">

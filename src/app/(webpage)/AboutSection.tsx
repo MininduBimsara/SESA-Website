@@ -111,7 +111,7 @@ const AboutSection = () => {
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                             priority
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                        <div className="absolute inset-0 bg-black/20" />
                     </div>
                 </div>
             </section>
@@ -142,7 +142,7 @@ const AboutSection = () => {
                                         fill
                                         className="object-cover"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                    <div className="absolute inset-0 bg-black/45" />
                                     <div className="absolute bottom-4 left-4 right-4 flex items-center gap-4">
                                         <div className="w-10 h-10 rounded-xl bg-[#EC1640] flex items-center justify-center text-white shrink-0">
                                             <item.icon className="w-5 h-5" />
@@ -163,11 +163,7 @@ const AboutSection = () => {
                 {/* Desktop View: Sticky Slides (Hidden on Mobile) */}
                 <div className="hidden lg:flex relative w-full sticky top-0 h-screen items-center p-12 xl:p-16 overflow-hidden rounded-[2rem] md:rounded-[2.5rem]">
                     
-                    {/* Subtle Modern Blob Background */}
-                    <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-                        <div className="absolute top-10 left-10 w-72 h-72 bg-[#EC1640] rounded-full mix-blend-screen filter blur-3xl animate-blob"></div>
-                        <div className="absolute bottom-10 right-10 w-72 h-72 bg-purple-600 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-3000"></div>
-                    </div>
+
 
                     <div className="relative z-10 w-full grid grid-cols-2 gap-16 xl:gap-24 items-center h-full max-h-[800px] mx-auto max-w-[1400px]">
                         
@@ -238,7 +234,7 @@ const AboutSection = () => {
                                             className="object-cover"
                                             priority={idx === 0}
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                                        <div className="absolute inset-0 bg-black/45" />
                                     </div>
                                 )
                             })}

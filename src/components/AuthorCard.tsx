@@ -22,9 +22,9 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
     const displayBio = bio || description || 'SESA Executive Board Member and passionate software engineer dedicated to sharing knowledge with the community.'
     
     return (
-        <div className={`bg-gradient-to-r from-rose-50 to-white border border-rose-200 rounded-xl p-6 mb-8 ${className}`}>
+        <div className={`bg-[#F8F9FA] border border-slate-200 rounded-xl p-6 mb-8 ${className}`}>
             <div className="flex items-start gap-4">
-                <div className="w-16 h-16 rounded-full bg-rose-500 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                <div className="w-16 h-16 rounded-full bg-[#EC1640] flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
                     {displayName.charAt(0).toUpperCase()}
                 </div>
                 <div>

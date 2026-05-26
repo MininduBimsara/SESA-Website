@@ -77,7 +77,7 @@ export default function HeroSlider() {
     const [activeIndex, setActiveIndex] = React.useState(0)
 
     return (
-        <div className="relative w-full h-screen min-h-[680px] overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+        <div className="relative w-full h-screen min-h-[680px] overflow-hidden bg-black">
             <Swiper
                 modules={[Navigation, Pagination, Autoplay, EffectFade]}
                 effect="fade"
@@ -116,8 +116,7 @@ export default function HeroSlider() {
                                     style={{ backgroundImage: `url(${slide.image})` }}
                                 />
                                 {/* Elegant Dark Overlay */}
-                                <div className="absolute inset-0 bg-slate-950/75" />
-                                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/65 to-slate-950/80" />
+                                <div className="absolute inset-0 bg-black/75" />
                             </motion.div>
 
                             {/* Content Container */}
@@ -167,7 +166,7 @@ export default function HeroSlider() {
                                         >
                                             <a
                                                 href={slide.ctaLink}
-                                                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 via-rose-500 to-rose-400 px-8 py-3 text-sm font-semibold text-white shadow-[0_20px_40px_rgba(244,63,94,0.28)] transition-all duration-300 hover:brightness-110"
+                                                className="inline-flex items-center gap-2 rounded-full bg-[#EC1640] hover:bg-[#d61237] px-8 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 active:scale-95"
                                             >
                                                 <span>{slide.cta}</span>
                                                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -231,8 +230,8 @@ export default function HeroSlider() {
 
                 .swiper-pagination-bullet-active-custom {
                     width: 28px;
-                    background-image: linear-gradient(90deg, rgba(244, 63, 94, 0.9), rgba(248, 113, 113, 0.95));
-                    box-shadow: 0 12px 24px rgba(244, 63, 94, 0.35);
+                    background-color: #EC1640;
+                    box-shadow: 0 12px 24px rgba(236, 22, 64, 0.35);
                 }
 
                 .swiper-slide {

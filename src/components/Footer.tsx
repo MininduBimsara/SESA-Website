@@ -96,7 +96,7 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="mt-12 pt-8 border-t border-neutral-900 text-center text-xs text-neutral-500 relative z-10">
                     <p>
-                        &copy; {new Date().getFullYear()} Software Engineering Students&apos; Association - University of Kelaniya.
+                        &copy; {new Date().getFullYear()}{" "}Software Engineering Students&apos; Association - University of Kelaniya.
                         All rights reserved.
                     </p>
                 </div>

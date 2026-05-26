@@ -31,11 +31,7 @@ const StatsSection = async () => {
             {/* Black Widescreen Container Card */}
             <section className="bg-black border border-neutral-900 shadow-2xl rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 lg:p-12 relative overflow-hidden flex flex-col gap-10 md:gap-12">
                 
-                {/* Background Grid Pattern */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-                
-                {/* Glowing red accent blur in background */}
-                <div className="absolute -top-24 -left-24 w-72 h-72 bg-[#EC1640] rounded-full filter blur-[100px] opacity-20 pointer-events-none" />
+
 
                 {/* Section Header */}
                 <div className="text-center relative z-10 space-y-4">
