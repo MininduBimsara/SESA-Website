@@ -80,7 +80,7 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                             <Card key={event.id} className="hover:shadow-md transition-all duration-300 border border-[#D2D2D2] hover:border-[#11112A]/50 rounded-2xl flex flex-col justify-between overflow-hidden bg-[#FCFCFC]">
                                 <div className="relative h-44 w-full bg-[#FCFCFC]">
                                     <Image 
-                                        src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'} 
+                                        src={event.image || '/2.jpeg'} 
                                         alt={event.title} 
                                         fill 
                                         className="object-cover" 
@@ -192,7 +192,7 @@ const EventsPageClient: React.FC<EventsPageClientProps> = ({ events }) => {
                                 <Card key={event.id} className="hover:shadow-md transition-all duration-300 flex flex-col border border-[#D2D2D2] rounded-2xl justify-between overflow-hidden bg-[#FCFCFC]">
                                     <div className="relative h-44 w-full bg-[#FCFCFC]">
                                         <Image 
-                                            src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'} 
+                                            src={event.image || '/2.jpeg'} 
                                             alt={event.title} 
                                             fill 
                                             className="object-cover" 

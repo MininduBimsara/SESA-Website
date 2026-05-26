@@ -16,7 +16,7 @@ const slides = [
         subtitle: 'Follow our community of passionate developers and innovators shaping the future of technology',
         cta: 'Follow Us',
         ctaLink: 'https://facebook.com/sesa.uok',
-        image: '/students-collaborating-on-software-development-pro.jpg',
+        image: '/1.jpeg',
         badge: 'SESA Innovation & Leadership Network',
     },
     {
@@ -25,7 +25,7 @@ const slides = [
         subtitle: 'Connect with peers, share knowledge, and build amazing projects in a supportive environment',
         cta: 'Learn More',
         ctaLink: '/about',
-        image: '/modern-tech-workspace-with-coding-screens-and-coll.jpg',
+        image: '/2.jpeg',
         badge: 'Collaboration in Action',
     },
     {
@@ -34,7 +34,7 @@ const slides = [
         subtitle: 'Participate in hackathons, workshops, and tech talks led by industry professionals',
         cta: 'View Events',
         ctaLink: '/events',
-        image: '/tech-workshop-and-coding-event-with-students.jpg',
+        image: '/3.jpeg',
         badge: 'Workshops • Hackathons • Tech Talks',
     },
     {
@@ -43,7 +43,7 @@ const slides = [
         subtitle: 'Access mentorship, networking opportunities, and career development resources',
         cta: 'Get Started',
         ctaLink: '/team',
-        image: '/professional-software-engineering-career-developme.jpg',
+        image: '/4.jpeg',
         badge: 'Mentorship & Career Growth Hub',
     },
 ]

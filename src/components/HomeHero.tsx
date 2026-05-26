@@ -52,7 +52,7 @@ const slides = [
         subtitle: 'Launch your career with mock interviews, resume reviews, and direct networking opportunities with top-tier technology companies.',
         cta: 'Meet Our Team',
         ctaLink: '/team',
-        image: '/1.jpeg',
+        image: '/4.jpeg',
     },
 ]
 

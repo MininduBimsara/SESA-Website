@@ -9,22 +9,22 @@ const coreFocus = [
     {
         title: "Skill Development",
         description: "Build technical and interpersonal skills through workshops, hackathons, and hands-on projects.",
-        image: "/tech-workshop-and-coding-event-with-students.jpg",
+        image: "/1.jpeg",
     },
     {
         title: "Research & Innovation",
         description: "Promote research and innovation in emerging technologies and software engineering practices.",
-        image: "/modern-tech-workspace-with-coding-screens-and-coll.jpg",
+        image: "/2.jpeg",
     },
     {
         title: "Industry Collaboration",
         description: "Enhance learning through partnerships with industry, providing real-world exposure and networking.",
-        image: "/professional-software-engineering-career-developme.jpg",
+        image: "/3.jpeg",
     },
     {
         title: "Community Building",
         description: "Foster interaction and unity among students, lecturers, and alumni for collaborative growth.",
-        image: "/student-community-collaboration.png",
+        image: "/5.jpeg",
     },
 ]
 

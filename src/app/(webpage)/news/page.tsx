@@ -52,7 +52,7 @@ const DEFAULT_MOCK_NEWS: News[] = [
         author: 'Yagami Souichirou',
         featured: true,
         published: true,
-        image: '/news-ferris-wheel.png',
+        image: '/1.jpeg',
         category: 'announcements',
         tags: ['productivity', 'focus', 'digital-health'],
         createdAt: new Date('2026-01-30T10:00:00Z'),
@@ -67,7 +67,7 @@ const DEFAULT_MOCK_NEWS: News[] = [
         author: 'Lind Tailor',
         featured: false,
         published: true,
-        image: '/news-winter-tree.png',
+        image: '/3.jpeg',
         category: 'student-spotlight',
         tags: ['design', 'frontend', 'inspiration'],
         createdAt: new Date('2026-01-28T09:00:00Z'),
@@ -82,7 +82,7 @@ const DEFAULT_MOCK_NEWS: News[] = [
         author: 'Alexa Ruyk',
         featured: false,
         published: true,
-        image: '/placeholder-news.jpg',
+        image: '/4.jpeg',
         category: 'partnerships',
         tags: ['partnerships', 'industry', 'collaboration'],
         createdAt: new Date('2026-01-27T08:00:00Z'),
@@ -97,7 +97,7 @@ const DEFAULT_MOCK_NEWS: News[] = [
         author: 'Marcus Aurelius',
         featured: false,
         published: true,
-        image: '/news-privacy-ai.png',
+        image: '/5.jpeg',
         category: 'media',
         tags: ['ai', 'privacy', 'security'],
         createdAt: new Date('2026-01-25T11:00:00Z'),
@@ -421,7 +421,7 @@ const NewsPage = () => {
                                 {/* Ferris wheel background style */}
                                 <div className="absolute inset-0 opacity-15 pointer-events-none filter grayscale transition-all duration-500 group-hover:opacity-20 group-hover:scale-105 group-hover:grayscale-0">
                                     <Image 
-                                        src={displayNews[0].image || '/news-ferris-wheel.png'} 
+                                        src={displayNews[0].image || '/1.jpeg'} 
                                         alt=""
                                         fill
                                         sizes="(max-width: 768px) 100vw, 50vw"
@@ -481,7 +481,7 @@ const NewsPage = () => {
                                         {/* Centered Grayscale Image */}
                                         <div className="relative w-full h-32 rounded-2xl overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-500 my-3">
                                             <Image 
-                                                src={displayNews[1].image || '/news-winter-tree.png'} 
+                                                src={displayNews[1].image || '/3.jpeg'} 
                                                 alt=""
                                                 fill
                                                 sizes="(max-width: 768px) 100vw, 25vw"
@@ -562,7 +562,7 @@ const NewsPage = () => {
                                     {/* Waves background */}
                                     <div className="absolute inset-0 opacity-20 pointer-events-none">
                                         <Image 
-                                            src={displayNews[3].image || '/news-privacy-ai.png'} 
+                                            src={displayNews[3].image || '/5.jpeg'} 
                                             alt=""
                                             fill
                                             sizes="25vw"

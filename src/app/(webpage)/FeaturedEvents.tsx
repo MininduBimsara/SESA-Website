@@ -66,7 +66,7 @@ const FeaturedEvents = async () => {
                                     {/* Event Image */}
                                     <div className="relative h-48 w-full overflow-hidden bg-[#D2D2D2]/10">
                                         <Image
-                                            src={event.image || '/tech-workshop-and-coding-event-with-students.jpg'}
+                                            src={event.image || '/2.jpeg'}
                                             alt={event.title}
                                             fill
                                             className="object-cover transition-transform duration-700 group-hover:scale-105"

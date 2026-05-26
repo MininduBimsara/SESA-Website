@@ -56,7 +56,7 @@ const AboutPage = () => {
 
                         <div className="relative h-[360px] rounded-[24px] overflow-hidden shadow-sm border border-[#D2D2D2]">
                             <Image
-                                src="/students-collaborating-on-software-development-pro.jpg"
+                                src="/6.jpeg"
                                 alt="SESA Students Collaboration"
                                 fill
                                 className="object-cover"
